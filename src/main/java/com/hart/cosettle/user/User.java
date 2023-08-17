@@ -106,6 +106,7 @@ public class User implements UserDetails {
         return lastName;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
