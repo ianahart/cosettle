@@ -26,6 +26,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.GenerationType;
 
 @Entity()
@@ -51,6 +52,11 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "logged_in")
+    private boolean loggedIn;
+
+    @Transient
+    private String abbreviation;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
@@ -82,12 +88,15 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public User(String email, String firstName, String lastName, String password, Role role) {
-        this.email = email;
+    public User(String firstName, String lastName, String email, String password, boolean loggedIn, Role role,
+            Profile profile) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.password = password;
+        this.loggedIn = loggedIn;
         this.role = role;
+        this.profile = profile;
     }
 
     public Long getId() {
@@ -98,12 +107,20 @@ public class User implements UserDetails {
         return email;
     }
 
+    public String getAbbreviation() {
+        return firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
+    }
+
     public Profile getProfile() {
         return profile;
     }
 
     public String getLastName() {
         return lastName;
+    }
+
+    public boolean getLoggedIn() {
+        return loggedIn;
     }
 
     @Override
@@ -115,6 +132,10 @@ public class User implements UserDetails {
         return createdAt;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -123,8 +144,16 @@ public class User implements UserDetails {
         return updatedAt;
     }
 
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setEmail(String email) {
