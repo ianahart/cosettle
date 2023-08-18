@@ -12,6 +12,8 @@ import com.hart.cosettle.authentication.response.LoginResponse;
 import com.hart.cosettle.authentication.response.RegisterResponse;
 import com.hart.cosettle.config.JwtService;
 import com.hart.cosettle.profile.ProfileService;
+import com.hart.cosettle.refreshtoken.RefreshToken;
+import com.hart.cosettle.refreshtoken.RefreshTokenService;
 import com.hart.cosettle.token.Token;
 import com.hart.cosettle.token.TokenRepository;
 import com.hart.cosettle.token.TokenType;
@@ -37,6 +39,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
+    private final RefreshTokenService refreshTokenService;
 
     @Autowired
     public AuthenticationService(
@@ -45,13 +48,15 @@ public class AuthenticationService {
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
             JwtService jwtService,
-            TokenRepository tokenRepository) {
+            TokenRepository tokenRepository,
+            RefreshTokenService refreshTokenService) {
         this.passwordEncoder = passwordEncoder;
         this.profileService = profileService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.tokenRepository = tokenRepository;
+        this.refreshTokenService = refreshTokenService;
     }
 
     public RegisterResponse register(RegisterRequest request) {
@@ -92,6 +97,25 @@ public class AuthenticationService {
         this.tokenRepository.saveAll(tokens);
     }
 
+    private UserDto updateAuthUser(User user, String jwtToken) {
+
+        user.setLoggedIn(true);
+
+        this.userRepository.save(user);
+        this.saveTokenWithUser(jwtToken, user);
+
+        return new UserDto(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole(),
+                user.getAbbreviation(),
+                user.getLoggedIn(),
+                user.getProfile().getId());
+
+    }
+
     public LoginResponse login(LoginRequest request) {
 
         try {
@@ -109,22 +133,10 @@ public class AuthenticationService {
         String jwtToken = this.jwtService.generateToken(user);
 
         this.revokeAllUserTokens(user);
-        user.setLoggedIn(true);
+        UserDto userDto = this.updateAuthUser(user, jwtToken);
+        RefreshToken refreshToken = this.refreshTokenService.generateRefreshToken(user.getId());
 
-        this.userRepository.save(user);
-        this.saveTokenWithUser(jwtToken, user);
-
-        UserDto userDto = new UserDto(
-                user.getId(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getRole(),
-                user.getAbbreviation(),
-                user.getLoggedIn(),
-                user.getProfile().getId());
-
-        return new LoginResponse(userDto, jwtToken, "");
+        return new LoginResponse(userDto, jwtToken, refreshToken.getRefreshToken());
     }
 
     public void saveTokenWithUser(String token, User user) {
