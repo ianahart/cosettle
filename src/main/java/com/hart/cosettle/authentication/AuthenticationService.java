@@ -86,7 +86,6 @@ public class AuthenticationService {
         return new RegisterResponse("User created.");
     }
 
-
     private UserDto updateAuthUser(User user, String jwtToken) {
 
         user.setLoggedIn(true);
