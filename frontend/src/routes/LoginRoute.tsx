@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
-const Login = () => {
+const LoginRoute = () => {
   return <Box>Login</Box>;
 };
 
-export default Login;
+export default LoginRoute;

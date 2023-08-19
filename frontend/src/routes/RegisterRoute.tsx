@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
-const Register = () => {
+const RegisterRoute = () => {
   return <Box>Register</Box>;
 };
 
-export default Register;
+export default RegisterRoute;

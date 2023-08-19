@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
-const Home = () => {
+const HomeRoute = () => {
   return <Box>Home</Box>;
 };
 
-export default Home;
+export default HomeRoute;
