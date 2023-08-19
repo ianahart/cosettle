@@ -17,6 +17,7 @@ import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.refreshtoken.RefreshTokenService;
 import com.hart.cosettle.refreshtoken.request.RefreshTokenRequest;
 import com.hart.cosettle.refreshtoken.response.RefreshTokenResponse;
+import com.hart.cosettle.token.TokenService;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
 
@@ -40,19 +41,22 @@ public class AuthenticationController {
     private final EmailService emailService;
     private final UserService userService;
     private final PasswordResetService passwordResetService;
+    private final TokenService tokenService;
 
     public AuthenticationController(AuthenticationService authenticationService,
             RefreshTokenService refreshTokenService,
             JwtService jwtService,
             EmailService emailService,
             UserService userService,
-            PasswordResetService passwordResetService) {
+            PasswordResetService passwordResetService,
+            TokenService tokenService) {
         this.authenticationService = authenticationService;
         this.refreshTokenService = refreshTokenService;
         this.jwtService = jwtService;
         this.emailService = emailService;
         this.userService = userService;
         this.passwordResetService = passwordResetService;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/register")
@@ -72,7 +76,7 @@ public class AuthenticationController {
     public ResponseEntity<RefreshTokenResponse> refresh(@RequestBody RefreshTokenRequest request) {
         RefreshToken refreshToken = this.refreshTokenService.verifyRefreshToken(request.getRefreshToken());
 
-        this.authenticationService.revokeAllUserTokens(refreshToken.getUser());
+        this.tokenService.revokeAllUserTokens(refreshToken.getUser());
         String token = this.jwtService.generateToken(refreshToken.getUser());
         this.authenticationService.saveTokenWithUser(token, refreshToken.getUser());
 
@@ -95,9 +99,9 @@ public class AuthenticationController {
     @PostMapping("/password-reset")
     public ResponseEntity<PasswordResetResponse> passwordReset(@RequestBody PasswordResetRequest request) {
 
-         this.passwordResetService.isResetTokenValid(request.getToken());
+        this.passwordResetService.isResetTokenValid(request.getToken());
 
-         this.userService.passwordReset(request);
+        this.userService.passwordReset(request);
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 new PasswordResetResponse("Password has been reset"));

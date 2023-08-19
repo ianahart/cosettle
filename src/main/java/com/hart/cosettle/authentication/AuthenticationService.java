@@ -16,6 +16,7 @@ import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.refreshtoken.RefreshTokenService;
 import com.hart.cosettle.token.Token;
 import com.hart.cosettle.token.TokenRepository;
+import com.hart.cosettle.token.TokenService;
 import com.hart.cosettle.token.TokenType;
 import com.hart.cosettle.user.Role;
 import com.hart.cosettle.user.User;
@@ -40,6 +41,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
     private final RefreshTokenService refreshTokenService;
+    private final TokenService tokenService;
 
     @Autowired
     public AuthenticationService(
@@ -49,7 +51,8 @@ public class AuthenticationService {
             AuthenticationManager authenticationManager,
             JwtService jwtService,
             TokenRepository tokenRepository,
-            RefreshTokenService refreshTokenService) {
+            RefreshTokenService refreshTokenService,
+            TokenService tokenService) {
         this.passwordEncoder = passwordEncoder;
         this.profileService = profileService;
         this.userRepository = userRepository;
@@ -57,6 +60,7 @@ public class AuthenticationService {
         this.jwtService = jwtService;
         this.tokenRepository = tokenRepository;
         this.refreshTokenService = refreshTokenService;
+        this.tokenService = tokenService;
     }
 
     public RegisterResponse register(RegisterRequest request) {
@@ -82,20 +86,6 @@ public class AuthenticationService {
         return new RegisterResponse("User created.");
     }
 
-    public void revokeAllUserTokens(User user) {
-        List<Token> tokens = this.tokenRepository.findAllValidTokens(user.getId());
-
-        if (tokens.isEmpty()) {
-            return;
-        }
-
-        tokens.forEach(t -> {
-            t.setExpired(true);
-            t.setRevoked(true);
-        });
-
-        this.tokenRepository.saveAll(tokens);
-    }
 
     private UserDto updateAuthUser(User user, String jwtToken) {
 
@@ -132,7 +122,7 @@ public class AuthenticationService {
 
         String jwtToken = this.jwtService.generateToken(user);
 
-        this.revokeAllUserTokens(user);
+        this.tokenService.revokeAllUserTokens(user);
         UserDto userDto = this.updateAuthUser(user, jwtToken);
         RefreshToken refreshToken = this.refreshTokenService.generateRefreshToken(user.getId());
 
