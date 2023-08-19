@@ -69,4 +69,18 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public boolean tokenElapsedDay(String token) {
+        Claims claims = extractAllClaims(token);
+        int currentTimeInSeconds = (int) ((System.currentTimeMillis() / 1000));
+
+        Date expiry = claims.getExpiration();
+        int expiryInSeconds = (int) (expiry.getTime() / 1000);
+
+        int oneDay = 60 * 60 * 24;
+        int elapsedTime = (currentTimeInSeconds + (oneDay)) - expiryInSeconds;
+
+        return elapsedTime < oneDay ? false : true;
+
+    }
 }

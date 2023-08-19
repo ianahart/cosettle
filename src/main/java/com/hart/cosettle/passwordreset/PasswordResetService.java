@@ -1,18 +1,24 @@
 package com.hart.cosettle.passwordreset;
 
 import com.hart.cosettle.advice.ForbiddenException;
+import com.hart.cosettle.config.JwtService;
 import com.hart.cosettle.user.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Jwts;
+
 @Service
 public class PasswordResetService {
-    @Autowired
     private final PasswordResetRepository passwordResetRepository;
+    private final JwtService jwtService;
 
-    public PasswordResetService(PasswordResetRepository passwordResetRepository) {
+    @Autowired
+    public PasswordResetService(PasswordResetRepository passwordResetRepository,
+            JwtService jwtService) {
         this.passwordResetRepository = passwordResetRepository;
+        this.jwtService = jwtService;
     }
 
     public void deleteUserPasswordResetsById(Long id) {
@@ -30,5 +36,9 @@ public class PasswordResetService {
             this.passwordResetRepository.save(passwordReset);
 
         }
+    }
+
+    public boolean checkPasswordResetExpired(String token) {
+        return this.jwtService.tokenElapsedDay(token);
     }
 }

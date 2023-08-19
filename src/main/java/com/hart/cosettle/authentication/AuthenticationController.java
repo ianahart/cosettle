@@ -11,6 +11,8 @@ import com.hart.cosettle.email.EmailService;
 import com.hart.cosettle.email.request.ForgotPasswordEmailRequest;
 import com.hart.cosettle.email.response.ForgotPasswordEmailResponse;
 import com.hart.cosettle.passwordreset.PasswordResetService;
+import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
+import com.hart.cosettle.passwordreset.response.PasswordResetResponse;
 import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.refreshtoken.RefreshTokenService;
 import com.hart.cosettle.refreshtoken.request.RefreshTokenRequest;
@@ -88,6 +90,17 @@ public class AuthenticationController {
                 .status(200)
                 .body(this.emailService.sendForgotPasswordEmail(request));
 
+    }
+
+    @PostMapping("/password-reset")
+    public ResponseEntity<PasswordResetResponse> passwordReset(@RequestBody PasswordResetRequest request) {
+
+         this.passwordResetService.isResetTokenValid(request.getToken());
+
+         this.userService.passwordReset(request);
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new PasswordResetResponse("Password has been reset"));
     }
 
 }
