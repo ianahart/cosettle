@@ -4,6 +4,7 @@ import './App.css';
 import HomeRoute from './routes/HomeRoute';
 import RegisterRoute from './routes/RegisterRoute';
 import LoginRoute from './routes/LoginRoute';
+import Footer from './components/Shared/Footer';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           </Routes>
         </Box>
       </Router>
-      {/*Footer*/}
+      <Footer />
     </Box>
   );
 }
