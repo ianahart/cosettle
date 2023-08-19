@@ -7,11 +7,17 @@ import LoginRoute from './routes/LoginRoute';
 import Footer from './components/Shared/Footer';
 import RequireGuest from './components/Guard/RequireGuest';
 import ExplorerRoute from './routes/ExplorerRoute';
+import { useContext } from 'react';
+import { UserContext } from './context/user';
+import { IUserContext } from './interfaces';
+import MainNavbar from './components/MainNavbar';
 
 function App() {
+  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Box className="App">
       <Router>
+        {!user.loggedIn && <MainNavbar />}
         <Box minH="100vh">
           <Routes>
             <Route index element={<HomeRoute />} />
