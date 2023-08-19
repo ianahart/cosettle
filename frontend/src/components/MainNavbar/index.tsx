@@ -13,7 +13,6 @@ const MainNavbar = () => {
     (e: MouseEvent) => {
       const target = e.target as Element;
       if (menuRef.current !== null && triggerRef !== null) {
-        console.log(triggerRef.current);
         if (!menuRef.current.contains(target) && !triggerRef?.current?.contains(target)) {
           setShowMobileMenu(false);
         }
