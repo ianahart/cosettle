@@ -6,6 +6,7 @@ import RegisterRoute from './routes/RegisterRoute';
 import LoginRoute from './routes/LoginRoute';
 import Footer from './components/Shared/Footer';
 import RequireGuest from './components/Guard/RequireGuest';
+import ExplorerRoute from './routes/ExplorerRoute';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 </RequireGuest>
               }
             />
+            <Route path="/explorer" element={<ExplorerRoute />} />
           </Routes>
         </Box>
       </Router>
