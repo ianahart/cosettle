@@ -49,46 +49,44 @@ const FormField = ({
   };
 
   return (
-    <FormControl
-      color="light.primary"
-      position="relative"
-      my="1.5rem"
-      display="flex"
-      flexDir="column"
-      textAlign="center"
-      alignItems="center"
-    >
+    <FormControl color="light.primary" my="1.5rem" textAlign="center">
       <FormLabel display="inline-block" width={width} htmlFor={id}>
         {label}
       </FormLabel>
-      <Input
-        width={width}
-        border="1px solid"
-        borderColor="light.primary"
-        fontSize="0.9rem"
-        onBlur={handleOnBlur}
-        onFocus={handleOnFocus}
-        type={type}
-        name={name}
-        value={value}
-        onChange={handleOnChange}
-        id={id}
-      />
-      {name === 'password' && (
-        <Box
-          onClick={togglePasswordVisibility}
-          fontSize="1.2rem"
-          color="light.primary"
-          zIndex={5}
-          cursor="pointer"
-          position="absolute"
-          bottom="10px"
-          right="50px"
-        >
-          {type === 'password' ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
-        </Box>
+      <Box position="relative">
+        <Input
+          width={width}
+          border="1px solid"
+          borderColor="light.primary"
+          fontSize="0.9rem"
+          onBlur={handleOnBlur}
+          onFocus={handleOnFocus}
+          type={type}
+          name={name}
+          value={value}
+          onChange={handleOnChange}
+          id={id}
+        />
+        {name === 'password' && (
+          <Box
+            onClick={togglePasswordVisibility}
+            fontSize="1.2rem"
+            color="light.primary"
+            zIndex={5}
+            cursor="pointer"
+            position="absolute"
+            bottom="10px"
+            right="50px"
+          >
+            {type === 'password' ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+          </Box>
+        )}
+      </Box>
+      {error.length > 0 && (
+        <Text color="red.400" mt="0.25rem" fontSize="0.8rem">
+          {error}
+        </Text>
       )}
-      {error.length > 0 && <Text fontSize="0.85rem">{error}</Text>}
     </FormControl>
   );
 };

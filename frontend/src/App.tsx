@@ -7,14 +7,35 @@ import LoginRoute from './routes/LoginRoute';
 import Footer from './components/Shared/Footer';
 import RequireGuest from './components/Guard/RequireGuest';
 import ExplorerRoute from './routes/ExplorerRoute';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { UserContext } from './context/user';
 import { IUserContext } from './interfaces';
 import MainNavbar from './components/MainNavbar';
 import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
+import { Client } from './util/client';
+import { retreiveTokens } from './util';
 
 function App() {
-  const { user } = useContext(UserContext) as IUserContext;
+  const { updateUser, stowTokens, user } = useContext(UserContext) as IUserContext;
+    const shouldRun = useRef(true);
+  const storeUser = useCallback(async () => {
+    Client.syncUser(retreiveTokens()?.token)
+      .then((res) => {
+        updateUser(res.data);
+        stowTokens(retreiveTokens());
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (shouldRun.current && retreiveTokens()?.token) {
+            shouldRun.current = false;
+      storeUser();
+    }
+  }, [shouldRun.current, storeUser]);
+
   return (
     <Box className="App">
       <Router>

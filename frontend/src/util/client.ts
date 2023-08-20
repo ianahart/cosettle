@@ -6,6 +6,9 @@ export const http = axios.create({
 });
 
 export const Client = {
+  login: (email: string, password: string) => {
+    return http.post('/auth/login', { email, password });
+  },
   register: (form: IRegisterForm, role: string) => {
     const data = {
       role,
@@ -16,5 +19,10 @@ export const Client = {
       confirmPassword: form.confirmPassword.value,
     };
     return http.post('/auth/register', data);
+  },
+  syncUser: (token: string) => {
+    return http.get('/users/sync', {
+      headers: { Authorization: 'Bearer ' + token },
+    });
   },
 };

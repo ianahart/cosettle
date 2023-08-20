@@ -1,9 +1,7 @@
-import {Box} from "@chakra-ui/react"
+import { Box } from '@chakra-ui/react';
 
 const ForgotPasswordRoute = () => {
-    return (
-    <Box>Forgot password route</Box>
-    )
-}
+  return <Box>Forgot password route</Box>;
+};
 
 export default ForgotPasswordRoute;
