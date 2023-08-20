@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { UserContext } from './context/user';
 import { IUserContext } from './interfaces';
 import MainNavbar from './components/MainNavbar';
+import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 
 function App() {
   const { user } = useContext(UserContext) as IUserContext;
@@ -37,6 +38,15 @@ function App() {
                 </RequireGuest>
               }
             />
+            <Route
+              path="/forgot-password"
+              element={
+                <RequireGuest>
+                  <ForgotPasswordRoute />
+                </RequireGuest>
+              }
+            />
+
             <Route path="/explorer" element={<ExplorerRoute />} />
           </Routes>
         </Box>
