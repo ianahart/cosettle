@@ -65,6 +65,7 @@ const FormField = ({
         width={width}
         border="1px solid"
         borderColor="light.primary"
+        fontSize="0.9rem"
         onBlur={handleOnBlur}
         onFocus={handleOnFocus}
         type={type}
@@ -82,7 +83,7 @@ const FormField = ({
           cursor="pointer"
           position="absolute"
           bottom="10px"
-          right="75px"
+          right="50px"
         >
           {type === 'password' ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
         </Box>
