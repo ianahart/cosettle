@@ -14,6 +14,7 @@ import com.hart.cosettle.config.JwtService;
 import com.hart.cosettle.profile.ProfileService;
 import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.refreshtoken.RefreshTokenService;
+import com.hart.cosettle.theme.ThemeService;
 import com.hart.cosettle.token.Token;
 import com.hart.cosettle.token.TokenRepository;
 import com.hart.cosettle.token.TokenService;
@@ -42,6 +43,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final RefreshTokenService refreshTokenService;
     private final TokenService tokenService;
+    private final ThemeService themeService;
 
     @Autowired
     public AuthenticationService(
@@ -52,7 +54,8 @@ public class AuthenticationService {
             JwtService jwtService,
             TokenRepository tokenRepository,
             RefreshTokenService refreshTokenService,
-            TokenService tokenService) {
+            TokenService tokenService,
+            ThemeService themeService) {
         this.passwordEncoder = passwordEncoder;
         this.profileService = profileService;
         this.userRepository = userRepository;
@@ -61,6 +64,7 @@ public class AuthenticationService {
         this.tokenRepository = tokenRepository;
         this.refreshTokenService = refreshTokenService;
         this.tokenService = tokenService;
+        this.themeService = themeService;
     }
 
     public RegisterResponse register(RegisterRequest request) {
@@ -71,7 +75,8 @@ public class AuthenticationService {
                 this.passwordEncoder.encode(request.getPassword()),
                 false,
                 request.getRole().equals("USER") ? Role.USER : Role.ADMIN,
-                this.profileService.createProfile());
+                this.profileService.createProfile(),
+                this.themeService.createTheme());
 
         Optional<User> exists = this.userRepository.findByEmail(request.getEmail());
 
@@ -81,6 +86,12 @@ public class AuthenticationService {
         if (exists.isPresent()) {
             throw new BadRequestException("A user with that email already exists.");
         }
+
+        if (!MyUtils.validatePassword(request.getPassword())) {
+            throw new BadRequestException(
+                    "Password must contain 1 letter, 1 number, 1 special character, and 1 uppercase letter");
+        }
+
         this.userRepository.save(user);
 
         return new RegisterResponse("User created.");
@@ -101,7 +112,9 @@ public class AuthenticationService {
                 user.getRole(),
                 user.getAbbreviation(),
                 user.getLoggedIn(),
-                user.getProfile().getId());
+                user.getProfile().getId(),
+                user.getProfile().getAvatarUrl(),
+                user.getTheme().getTheme());
 
     }
 

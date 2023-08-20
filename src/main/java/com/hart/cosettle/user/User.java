@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
+import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -67,6 +68,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "theme_id", referencedColumnName = "id")
+    private Theme theme;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Token> tokens;
 
@@ -90,7 +95,8 @@ public class User implements UserDetails {
             Timestamp updatedAt,
             String firstName,
             String lastName,
-            Role role
+            Role role,
+            Theme theme
 
     ) {
         this.id = id;
@@ -100,10 +106,11 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.theme = theme;
     }
 
     public User(String firstName, String lastName, String email, String password, boolean loggedIn, Role role,
-            Profile profile) {
+            Profile profile, Theme theme) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -111,10 +118,15 @@ public class User implements UserDetails {
         this.loggedIn = loggedIn;
         this.role = role;
         this.profile = profile;
+        this.theme = theme;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Theme getTheme() {
+        return theme;
     }
 
     public String getEmail() {
@@ -176,6 +188,10 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 
     public void setId(Long id) {

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.hart.cosettle.advice.NotFoundException;
-import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
 import com.hart.cosettle.user.dto.UserDto;
@@ -93,7 +92,9 @@ public class UserService {
                 user.getRole(),
                 user.getAbbreviation(),
                 user.getLoggedIn(),
-                user.getProfile().getId());
+                user.getProfile().getId(),
+                user.getProfile().getAvatarUrl(),
+                user.getTheme().getTheme());
         return userDto;
 
     }
