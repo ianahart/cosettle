@@ -14,6 +14,6 @@ public class ThemeService {
     }
 
     public Theme createTheme() {
-        return this.themeRepository.save(new Theme());
+        return this.themeRepository.save(new Theme("dark"));
     }
 }

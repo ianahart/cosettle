@@ -43,6 +43,10 @@ public class Theme {
 
     }
 
+    public Theme(String theme) {
+         this.theme = theme;
+    }
+
     public Theme(
             Long id,
             Timestamp createdAt,
