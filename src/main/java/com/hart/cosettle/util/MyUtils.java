@@ -15,6 +15,30 @@ public final class MyUtils {
 
     }
 
+    public static boolean validatePassword(String str) {
+        boolean isUpperCase = false;
+        boolean isLowerCase = false;
+        boolean isDigit = false;
+        boolean isSpecialChar = false;
+
+        for (char ch : str.toCharArray()) {
+            if (Character.isLetter(ch) && Character.isUpperCase(ch)) {
+                isUpperCase = true;
+            }
+            if (Character.isLetter(ch) && Character.isLowerCase(ch)) {
+                isLowerCase = true;
+            }
+            if (Character.isDigit(ch)) {
+                isDigit = true;
+            }
+            if (!Character.isWhitespace(ch) && !Character.isDigit(ch) && !Character.isLetter(ch)) {
+                isSpecialChar = true;
+            }
+        }
+        List<Boolean> cases = List.of(isUpperCase, isLowerCase, isDigit, isSpecialChar);
+        return cases.stream().allMatch(c -> c);
+    }
+
     public static int paginate(int page, String direction) {
         int currentPage = page;
 
