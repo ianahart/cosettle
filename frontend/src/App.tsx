@@ -14,10 +14,11 @@ import MainNavbar from './components/MainNavbar';
 import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import { Client } from './util/client';
 import { retreiveTokens } from './util';
+import WithAxios from './util/WithAxios';
 
 function App() {
   const { updateUser, stowTokens, user } = useContext(UserContext) as IUserContext;
-    const shouldRun = useRef(true);
+  const shouldRun = useRef(true);
   const storeUser = useCallback(async () => {
     Client.syncUser(retreiveTokens()?.token)
       .then((res) => {
@@ -31,7 +32,7 @@ function App() {
 
   useEffect(() => {
     if (shouldRun.current && retreiveTokens()?.token) {
-            shouldRun.current = false;
+      shouldRun.current = false;
       storeUser();
     }
   }, [shouldRun.current, storeUser]);
@@ -41,35 +42,37 @@ function App() {
       <Router>
         {!user.loggedIn && <MainNavbar />}
         <Box minH="100vh">
-          <Routes>
-            <Route index element={<HomeRoute />} />
-            <Route
-              path="/register"
-              element={
-                <RequireGuest>
-                  <RegisterRoute />
-                </RequireGuest>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <RequireGuest>
-                  <LoginRoute />
-                </RequireGuest>
-              }
-            />
-            <Route
-              path="/forgot-password"
-              element={
-                <RequireGuest>
-                  <ForgotPasswordRoute />
-                </RequireGuest>
-              }
-            />
+          <WithAxios>
+            <Routes>
+              <Route index element={<HomeRoute />} />
+              <Route
+                path="/register"
+                element={
+                  <RequireGuest>
+                    <RegisterRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <RequireGuest>
+                    <LoginRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path="/forgot-password"
+                element={
+                  <RequireGuest>
+                    <ForgotPasswordRoute />
+                  </RequireGuest>
+                }
+              />
 
-            <Route path="/explorer" element={<ExplorerRoute />} />
-          </Routes>
+              <Route path="/explorer" element={<ExplorerRoute />} />
+            </Routes>
+          </WithAxios>
         </Box>
       </Router>
       <Footer />

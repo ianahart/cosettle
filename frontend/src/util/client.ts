@@ -25,4 +25,7 @@ export const Client = {
       headers: { Authorization: 'Bearer ' + token },
     });
   },
+  heartbeat: () => {
+    return http.get('/heartbeat');
+  },
 };
