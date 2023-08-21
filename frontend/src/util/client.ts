@@ -28,4 +28,7 @@ export const Client = {
   heartbeat: () => {
     return http.get('/heartbeat');
   },
+  logout: (refreshToken: string) => {
+    return http.post('/auth/logout', { refreshToken });
+  },
 };

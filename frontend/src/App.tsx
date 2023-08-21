@@ -15,6 +15,11 @@ import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import { Client } from './util/client';
 import { retreiveTokens } from './util';
 import WithAxios from './util/WithAxios';
+import AuthNavbar from './components/AuthNavbar';
+import GroupsRoute from './routes/GroupsRoute';
+import RequireAuth from './components/Guard/RequireAuth';
+import MessagesRoute from './routes/MessagesRoute';
+import SettingsRoute from './routes/SettingsRoute';
 
 function App() {
   const { updateUser, stowTokens, user } = useContext(UserContext) as IUserContext;
@@ -38,9 +43,10 @@ function App() {
   }, [shouldRun.current, storeUser]);
 
   return (
-    <Box className="App">
+    <Box bg="black" className="App">
       <Router>
         {!user.loggedIn && <MainNavbar />}
+        {user.loggedIn && <AuthNavbar />}
         <Box minH="100vh">
           <WithAxios>
             <Routes>
@@ -69,7 +75,30 @@ function App() {
                   </RequireGuest>
                 }
               />
-
+              <Route
+                path="/:username/groups"
+                element={
+                  <RequireAuth>
+                    <GroupsRoute />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/:username/messages"
+                element={
+                  <RequireAuth>
+                    <MessagesRoute />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/:username/settings"
+                element={
+                  <RequireAuth>
+                    <SettingsRoute />
+                  </RequireAuth>
+                }
+              />
               <Route path="/explorer" element={<ExplorerRoute />} />
             </Routes>
           </WithAxios>

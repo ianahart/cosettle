@@ -25,7 +25,7 @@ const HomeRoute = () => {
   return (
     <Box>
       Home
-      <Button>Heartbeat</Button>
+      <Button onClick={makeHeartBeat}>Heartbeat</Button>
     </Box>
   );
 };
