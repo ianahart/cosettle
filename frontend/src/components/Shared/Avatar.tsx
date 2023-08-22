@@ -17,9 +17,9 @@ const Avatar = ({ backgroundColor, height, width }: IAvatarProps) => {
       alignItems="center"
       height={height}
       width={width}
-      color="light.primary"
+      color={user.theme === 'dark' ? 'light.primary' : 'text.primary'}
       borderRadius="50%"
-      bg={!user.avatarUrl ? backgroundColor : 'unset'}
+      bg={user.theme === 'dark' ? 'primary.dark' : 'light.primary'}
       backgroundImage={user.avatarUrl ? `url(${user.avatarUrl})` : 'none'}
       backgroundPosition="center"
       backgroundSize="cover"

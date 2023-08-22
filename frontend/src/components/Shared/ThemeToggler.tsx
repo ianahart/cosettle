@@ -4,7 +4,7 @@ import { BsMoonStars } from 'react-icons/bs';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
-import {Client} from '../../util/client';
+import { Client } from '../../util/client';
 
 const ThemeToggler = () => {
   const { user, updateUser } = useContext(UserContext) as IUserContext;
@@ -12,16 +12,17 @@ const ThemeToggler = () => {
     toggleTheme(e.target.checked);
   };
 
-    const toggleTheme = (isChecked: boolean) => {
-      const theme = isChecked ? 'dark' : 'light';
-        Client.updateTheme(theme, user.themeId).then((res) => {
-            console.log(res)
-                updateUser({ ...user, theme });
-
-        }).catch((err) => {
-                throw new Error(err.response.data.message);
-            })
-    }
+  const toggleTheme = (isChecked: boolean) => {
+    const theme = isChecked ? 'dark' : 'light';
+    Client.updateTheme(theme, user.themeId)
+      .then((res) => {
+        console.log(res);
+        updateUser({ ...user, theme });
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
 
   return (
     <Flex alignItems="center">
@@ -31,7 +32,7 @@ const ThemeToggler = () => {
         isChecked={user.theme === 'dark' ? true : false}
         colorScheme="purple"
       />
-      <Box ml="0.5rem" fontSize="1.5rem" color="primary.dark">
+            <Box    ml="0.5rem" fontSize="1.5rem" color={user.theme === 'dark' ? 'primary.dark' : 'light.primary'}>
         {user.theme === 'light' ? <CiLight /> : <BsMoonStars />}
       </Box>
     </Flex>

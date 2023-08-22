@@ -43,7 +43,7 @@ function App() {
   }, [shouldRun.current, storeUser]);
 
   return (
-    <Box bg="black" className="App">
+    <Box bg={user.theme === 'dark' ? 'black' : 'white'} className="App">
       <Router>
         {!user.loggedIn && <MainNavbar />}
         {user.loggedIn && <AuthNavbar />}

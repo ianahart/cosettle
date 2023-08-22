@@ -1,5 +1,7 @@
 import { Box } from '@chakra-ui/react';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useContext } from 'react';
+import { UserContext } from '../../context/user';
+import { IUserContext } from '../../interfaces';
 
 interface IClickAwayMenuProps {
   handleMenuOpen: (open: boolean, name?: string) => void;
@@ -28,6 +30,7 @@ const ClickAwayMenu = ({
   width = '220px',
   menuRef,
 }: IClickAwayMenuProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const clickAway = useCallback(
     (e: MouseEvent) => {
       const target = e.target as Element;
@@ -59,7 +62,7 @@ const ClickAwayMenu = ({
       minH={minH}
       width={width}
       boxShadow="rgba(0, 0, 0, 0.16) 0px 1px 4px"
-      bg="cover.primary"
+      bg={user.theme === 'dark' ? 'cover.primary' : 'light.primary'}
     >
       {children}
     </Box>
