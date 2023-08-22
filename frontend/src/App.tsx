@@ -13,13 +13,14 @@ import {IUserContext} from './interfaces';
 import MainNavbar from './components/MainNavbar';
 import ForgotPasswordRoute from './routes/ForgotPasswordRoute';
 import {Client} from './util/client';
-import {retreiveNonAuthTheme, retreiveTokens} from './util';
+import {retreiveTokens} from './util';
 import WithAxios from './util/WithAxios';
 import AuthNavbar from './components/AuthNavbar';
 import GroupsRoute from './routes/GroupsRoute';
 import RequireAuth from './components/Guard/RequireAuth';
 import MessagesRoute from './routes/MessagesRoute';
 import SettingsRoute from './routes/SettingsRoute';
+import CreateSpaceRoute from './routes/CreateSpaceRoute';
 
 function App() {
     const {updateUser, stowTokens, user, nonAuthTheme} = useContext(UserContext) as IUserContext;
@@ -108,6 +109,14 @@ function App() {
                                 element={
                                     <RequireAuth>
                                         <SettingsRoute />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/spaces/create"
+                                element={
+                                    <RequireAuth>
+                                        <CreateSpaceRoute />
                                     </RequireAuth>
                                 }
                             />

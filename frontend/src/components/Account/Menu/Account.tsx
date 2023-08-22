@@ -1,5 +1,5 @@
 import {Box, Flex} from '@chakra-ui/react';
-import {Navigate, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import HeadingStack from '../HeadingStack';
 import MenuLink from './MenuLink';
 import {FiUsers, FiSettings, FiLogOut} from 'react-icons/fi';
