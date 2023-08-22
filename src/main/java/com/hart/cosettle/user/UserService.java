@@ -94,7 +94,8 @@ public class UserService {
                 user.getLoggedIn(),
                 user.getProfile().getId(),
                 user.getProfile().getAvatarUrl(),
-                user.getTheme().getTheme());
+                user.getTheme().getTheme(),
+                user.getTheme().getId());
         return userDto;
 
     }

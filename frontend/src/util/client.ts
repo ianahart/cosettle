@@ -6,6 +6,9 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateTheme: (theme: string, themeId: number) => {
+    return http.patch(`/themes/${themeId}`, { theme });
+  },
   login: (email: string, password: string) => {
     return http.post('/auth/login', { email, password });
   },

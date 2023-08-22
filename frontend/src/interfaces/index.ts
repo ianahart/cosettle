@@ -27,6 +27,7 @@ export interface IUser {
   profileId: number;
   avatarUrl: string;
   theme: string;
+  themeId: number;
 }
 
 export interface IUserContext {

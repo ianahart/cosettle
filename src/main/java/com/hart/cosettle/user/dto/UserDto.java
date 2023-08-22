@@ -13,9 +13,11 @@ public class UserDto {
     private Long profileId;
     private String avatarUrl;
     private String theme;
+    private Long themeId;
 
     public UserDto(Long id, String email, String firstName, String lastName, Role role, String abbreviation,
-            Boolean loggedIn, Long profileId, String avatarUrl, String theme) {
+            Boolean loggedIn, Long profileId, String avatarUrl, String theme,
+            Long themeId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -26,10 +28,15 @@ public class UserDto {
         this.profileId = profileId;
         this.avatarUrl = avatarUrl;
         this.theme = theme;
+        this.themeId = themeId;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getThemeId() {
+        return themeId;
     }
 
     public String getAvatarUrl() {
@@ -106,6 +113,10 @@ public class UserDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setThemeId(Long themeId) {
+        this.themeId = themeId;
     }
 
 }

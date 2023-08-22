@@ -27,4 +27,5 @@ export const userState = {
   profileId: 0,
   avatarUrl: '',
   theme: 'dark',
+  themeId: 0,
 };

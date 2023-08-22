@@ -1,6 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import Logo from '../Shared/Logo';
 import AccountMenu from '../Account';
+import ThemeToggler from '../Shared/ThemeToggler';
 
 const AuthNavbar = () => {
   return (
@@ -9,7 +10,10 @@ const AuthNavbar = () => {
         <Box>
           <Logo />
         </Box>
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="center">
+          <Box mr="2rem">
+            <ThemeToggler />
+          </Box>
           <AccountMenu />
         </Flex>
       </Flex>
