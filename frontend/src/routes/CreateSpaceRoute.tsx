@@ -76,17 +76,51 @@ const CreateSpaceRoute = () => {
     return bytes > 2 * 1024 * 1024;
   };
 
+  const checkForErrors = () => {
+    let errors = false;
+    const { availability, amenities, description, contact } = form.steps;
+    const entireForm = Object.assign(
+      {},
+      { ...availability, ...amenities, ...description, ...contact }
+    );
+
+    for (let field in entireForm) {
+      const { value, error } = entireForm[field as keyof typeof entireForm];
+      const emptyField = typeof value === 'string' && value.trim().length === 0;
+      if (emptyField || error.length > 0) {
+        errors = true;
+      }
+    }
+    return errors;
+  };
+
+  const clearErrors = () => {
+    for (const step of Object.keys(form.steps)) {
+      for (const key of Object.keys(form.steps[step])) {
+        console.log(key);
+        handleUpdateField(key, '', 'error', step);
+      }
+    }
+  };
+
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    clearErrors();
     setUploadError('');
     if (photos.length === 0) {
-      setUploadError('Please provide at least 1 phtoo');
+      setUploadError('Please provide at least 1 photo');
       return;
     }
     if (CheckFileUploadLimit() || photos.length > 3) {
       setUploadError('Max upload file size is 2 MiB and a maximum of 3 photos');
       return;
     }
+
+    if (checkForErrors()) {
+      return;
+    }
+
+    console.log('Form Submitted');
   };
 
   const renderFormComponent = () => {

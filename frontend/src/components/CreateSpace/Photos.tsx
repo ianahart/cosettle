@@ -2,6 +2,7 @@ import { Box, Input, Text, Flex } from '@chakra-ui/react';
 import Header from './Header';
 import { BsFillCameraFill } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
+import { nanoid } from 'nanoid';
 
 interface IPhotosProps {
   addPhotoToList: (file: File) => void;
@@ -78,7 +79,7 @@ const Photos = ({
         <Box>
           {photos.map((file: File) => {
             return (
-              <Flex justify="space-between">
+              <Flex key={nanoid()} justify="space-between">
                 <Text fontSize="0.85rem">{file.name}</Text>
                 <Text fontSize="0.8rem">{formatFileSize(file.size)}</Text>
                 <Box cursor="pointer" onClick={() => cancelPhotoToUpload(file.name)}>
