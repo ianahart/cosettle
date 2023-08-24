@@ -4,12 +4,11 @@ import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
 
 interface IAvatarProps {
-  backgroundColor: string;
   height: string;
   width: string;
 }
 
-const Avatar = ({ backgroundColor, height, width }: IAvatarProps) => {
+const Avatar = ({ height, width }: IAvatarProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   return (
     <Flex

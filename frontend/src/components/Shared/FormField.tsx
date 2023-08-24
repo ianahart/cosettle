@@ -11,6 +11,7 @@ interface IFormFieldProps {
   width: string;
   label: string;
   errorField: string;
+  isDark?: boolean;
 }
 
 const FormField = ({
@@ -23,6 +24,7 @@ const FormField = ({
   width,
   label,
   errorField,
+  isDark = true,
 }: IFormFieldProps) => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,7 +51,11 @@ const FormField = ({
   };
 
   return (
-    <FormControl color="light.primary" my="1.5rem" textAlign="center">
+    <FormControl
+      color={isDark ? 'light.primary' : 'text.primary'}
+      my="1.5rem"
+      textAlign="center"
+    >
       <FormLabel display="inline-block" width={width} htmlFor={id}>
         {label}
       </FormLabel>
@@ -57,7 +63,7 @@ const FormField = ({
         <Input
           width={width}
           border="1px solid"
-          borderColor="light.primary"
+          borderColor={isDark ? 'light.primary' : 'text.secondary'}
           fontSize="0.9rem"
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}
