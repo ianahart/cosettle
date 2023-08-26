@@ -10,6 +10,7 @@ import Contact from '../components/CreateSpace/Contact';
 import Photos from '../components/CreateSpace/Photos';
 import { Client } from '../util/client';
 import BasicSpinner from '../components/Shared/BasicSpinner';
+import Map from '../components/CreateSpace/Map';
 
 type TStep = Omit<ICreateSpaceForm, 'selectedIndex'>;
 
@@ -252,7 +253,11 @@ const CreateSpaceRoute = () => {
   };
 
   return (
-    <Flex justify="center" mt="10rem">
+    <Flex alignItems="center" flexDir="column" justify="center" mt="10rem">
+      <Map
+        keys={[...Object.keys(form.steps), 'Photos']}
+        selectedIndex={form.selectedIndex}
+      />
       <Box
         color="text.primary"
         minH="500px"
