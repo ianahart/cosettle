@@ -119,7 +119,6 @@ const CreateSpaceRoute = () => {
     const entireForm = returnEntireForm();
     for (let prop in data) {
       if (prop === 'message') {
-        console.log(data[prop]);
         setUploadError(data[prop]);
         return;
       }
