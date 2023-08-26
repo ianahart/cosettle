@@ -2,6 +2,8 @@ package com.hart.cosettle.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.hart.cosettle.advice.NotFoundException;
@@ -98,5 +100,17 @@ public class UserService {
                 user.getTheme().getId());
         return userDto;
 
+    }
+
+    public User getCurrentlyLoggedInUser() {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        String username = ((UserDetails) principal).getUsername();
+        User user = this.userRepository.findByEmail(username)
+                .orElseThrow(() -> new NotFoundException("Current user was not found"));
+        return user;
     }
 }

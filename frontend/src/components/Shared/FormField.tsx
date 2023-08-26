@@ -44,7 +44,7 @@ const FormField = ({
 
   const handleOnBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const error = `${errorField} must be between 1 and 250 characters.`;
+    const error = `${errorField} must be present`;
     if (value.trim().length === 0 || value.length > 250) {
       updateField(name, error, 'error');
     }

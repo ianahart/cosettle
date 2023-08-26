@@ -46,32 +46,32 @@ export interface IUserContext {
 }
 
 export interface IDescriptionForm {
-  size: { name: string; value: string; error: string; type: string };
-  capacity: { name: string; value: string; error: string; type: string };
-  location: { name: string; value: string; error: string; type: string };
-  description: { name: string; value: string; error: string; type: string };
-  flooring: { name: string; value: string; error: string; type: string };
-  wifi: { name: string; value: string; error: string; type: string };
+  size: { name: string; value: string; error: string; type: string; step: string };
+  capacity: { name: string; value: string; error: string; type: string; step: string };
+  location: { name: string; value: string; error: string; type: string; step: string };
+  description: { name: string; value: string; error: string; type: string; step: string };
+  flooring: { name: string; value: string; error: string; type: string; step: string };
+  wifi: { name: string; value: string; error: string; type: string; step: string };
 }
 
 export interface IAvailabilityForm {
-  price: { name: string; value: string; error: string; type: string };
-  days: { name: string; value: IDay[]; error: string; type: string };
-  openTime: { name: string; value: string; error: string; type: string };
-  closeTime: { name: string; value: string; error: string; type: string };
+  price: { name: string; value: string; error: string; type: string; step: string };
+  days: { name: string; value: IDay[]; error: string; type: string; step: string };
+  openTime: { name: string; value: string; error: string; type: string; step: string };
+  closeTime: { name: string; value: string; error: string; type: string; step: string };
 }
 
 export interface IAmenitiesForm {
-  bathrooms: { name: string; value: boolean; error: string; type: string };
-  utilities: { name: string; value: boolean; error: string; type: string };
-  food: { name: string; value: boolean; error: string; type: string };
+  bathrooms: { name: string; value: boolean; error: string; type: string; step: string };
+  utilities: { name: string; value: boolean; error: string; type: string; step: string };
+  food: { name: string; value: boolean; error: string; type: string; step: string };
 }
 
 export interface IContactForm {
-  firstName: { name: string; value: string; error: string; type: string };
-  lastName: { name: string; value: string; error: string; type: string };
-  email: { name: string; value: string; error: string; type: string };
-  phoneNumber: { name: string; value: string; error: string; type: string };
+  firstName: { name: string; value: string; error: string; type: string; step: string };
+  lastName: { name: string; value: string; error: string; type: string; step: string };
+  email: { name: string; value: string; error: string; type: string; step: string };
+  phoneNumber: { name: string; value: string; error: string; type: string; step: string };
 }
 
 export interface ICreateSpaceForm {

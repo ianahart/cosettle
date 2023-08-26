@@ -2,7 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from './Header';
 import { IAvailabilityForm, IDay } from '../../interfaces';
 import FormField from '../Shared/FormField';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { daysState } from '../../state/initialState';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import TimePicker from 'react-time-picker';
@@ -32,6 +32,19 @@ const Availability = ({
   const [days, setDays] = useState<IDay[]>(daysState);
   const [openTime, setOpenTime] = useState('9:00');
   const [closeTime, setCloseTime] = useState('17:00');
+  const shouldRun = useRef(true);
+
+  const syncDays = () => {
+    const existingIds = form.days.value.map((day) => day.id);
+    setDays((prevState) => prevState.filter((day) => !existingIds.includes(day.id)));
+  };
+
+  useEffect(() => {
+    if (shouldRun.current) {
+      shouldRun.current = false;
+      syncDays();
+    }
+  }, [shouldRun.current, syncDays]);
 
   const updateField = (name: string, value: string, attribute: string) => {
     handleUpdateField(name, value, attribute, step);

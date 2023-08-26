@@ -6,6 +6,15 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createPhoto: (spaceId: number, photos: File[]) => {
+    const formData = new FormData();
+    formData.append('spaceId', spaceId.toString());
+    photos.forEach((photo) => formData.append('photos', photo));
+    return http.post('/space-photos', formData);
+  },
+  createSpace: (formData: any) => {
+    return http.post('/spaces', formData);
+  },
   updateTheme: (theme: string, themeId: number) => {
     return http.patch(`/themes/${themeId}`, { theme });
   },

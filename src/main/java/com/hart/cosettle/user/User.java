@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
+import com.hart.cosettle.space.Space;
 import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
 
@@ -81,6 +82,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PasswordReset> passwordResets;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Space> spaces;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -127,6 +131,10 @@ public class User implements UserDetails {
 
     public Theme getTheme() {
         return theme;
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
     }
 
     public String getEmail() {
@@ -188,6 +196,10 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setSpaces(List<Space> spaces) {
+        this.spaces = spaces;
     }
 
     public void setTheme(Theme theme) {
