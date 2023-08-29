@@ -22,3 +22,13 @@ body {
   border-radius: 8px;
   border-color: #444447 !important;
 }
+
+.outlet-container {
+  width: 800px;
+}
+
+@media (max-width: 1076px) {
+  .outlet-container {
+    width: 95%;
+  }
+}
