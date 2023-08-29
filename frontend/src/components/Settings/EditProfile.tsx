@@ -6,7 +6,7 @@ const EditProfile = () => {
       <Box as="header">
         <Header
           heading="Edit Profile"
-          subText="Control what information you want to display to the public"
+          subText="Control what information you want to share with the community"
         />
       </Box>
     </Box>

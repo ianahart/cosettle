@@ -7,7 +7,7 @@ const Visibility = () => {
       <Box as="header">
         <Header
           heading="Visiblity"
-          subText="Control what data is visible by different people"
+          subText="Control what data is visible to other people and the public"
         />
       </Box>
     </Box>
