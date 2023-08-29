@@ -15,7 +15,7 @@ const Logo = () => {
         src={user.theme === 'dark' || nonAuthTheme === 'dark' ? lightLogo : darkLogo}
         alt="logo of wifi bars"
       />
-      <Heading color="text.primary" as="h1" fontSize="1.1rem">
+            <Heading color={user.theme === 'dark' || nonAuthTheme === 'dark' ? 'text.primary': 'light.primary'} as="h1" fontSize="1.1rem">
         CoSettle
       </Heading>
     </Flex>

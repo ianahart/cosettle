@@ -55,15 +55,7 @@ const ThemeToggler = () => {
         isChecked={setTheme()}
         colorScheme="purple"
       />
-      <Box
-        ml="0.5rem"
-        fontSize="1.5rem"
-        color={
-          user.theme === 'dark' || nonAuthTheme === 'dark'
-            ? 'light.primary'
-            : 'primary.dark'
-        }
-      >
+      <Box ml="0.5rem" fontSize="1.5rem" color="light.primary">
         {showIcon() === 'light' ? <CiLight /> : <BsMoonStars />}
       </Box>
     </Flex>

@@ -1,5 +1,8 @@
 import { ListItem } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { UserContext } from '../../context/user';
+import { IUserContext } from '../../interfaces';
 
 interface IMainNavbarLinkProps {
   path: string;
@@ -8,10 +11,11 @@ interface IMainNavbarLinkProps {
 }
 
 const MainNavbarLink = ({ path, text, isMobile }: IMainNavbarLinkProps) => {
+  const { nonAuthTheme } = useContext(UserContext) as IUserContext;
   return (
     <ListItem
       _hover={{ opacity: 0.8 }}
-      color="text.primary"
+      color={nonAuthTheme === 'dark' ? 'text.primary' : 'light.primary'}
       fontSize="1rem"
       mx={isMobile ? '0' : '1rem'}
       my={isMobile ? '0.5rem' : '0'}
