@@ -35,7 +35,7 @@ public class CreateSpaceRequest {
     @Size(min = 1, message = "Email must not be empty")
     @Email
     private String email;
-    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$")
+    @Pattern(regexp = "^(\\d{3}[- .]?){2}\\d{4}$", message = "Please provide a valid phone number")
     private String phoneNumber;
 
     public CreateSpaceRequest() {
