@@ -6,6 +6,11 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IResetPasswordForm {
+  password: { name: string; value: string; error: string; type: string };
+  confirmPassword: { name: string; value: string; error: string; type: string };
+}
+
 export interface IForgotPasswordForm {
   email: { name: string; value: string; error: string; type: string };
 }

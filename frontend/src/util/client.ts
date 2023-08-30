@@ -6,6 +6,14 @@ export const http = axios.create({
 });
 
 export const Client = {
+  resetPasswordFromEmail: (
+    id: number,
+    token: string,
+    newPassword: string,
+    confirmPassword: string
+  ) => {
+    return http.post('/auth/password-reset', { id, token, newPassword, confirmPassword });
+  },
   sendForgotPasswordEmail: (email: string) => {
     return http.post('/auth/forgot-password', { email });
   },
