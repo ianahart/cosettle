@@ -9,7 +9,7 @@ interface Props {
 
 const RequireGuest: React.FC<Props> = ({ children }) => {
   const location = useLocation();
-  const guestRoutes = ['/', '/login', '/register', '/forgot-password', '/password-reset'];
+  const guestRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
   const storage = retreiveTokens();
   if (storage === undefined && guestRoutes.includes(location.pathname)) {
     return children;

@@ -26,6 +26,7 @@ import EditProfile from './components/Settings/EditProfile';
 import Password from './components/Settings/Password';
 import Notifications from './components/Settings/Notifications';
 import Visibility from './components/Settings/Visibility';
+import PasswordResetRoute from './routes/PasswordResetRoute';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -90,6 +91,14 @@ function App() {
                 element={
                   <RequireGuest>
                     <ForgotPasswordRoute />
+                  </RequireGuest>
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <RequireGuest>
+                    <PasswordResetRoute />
                   </RequireGuest>
                 }
               />

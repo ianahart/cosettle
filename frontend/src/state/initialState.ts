@@ -149,3 +149,8 @@ export const profileForm = {
   email: { name: 'email', value: '', error: '', type: 'text' },
   bio: { name: 'bio', value: '', error: '', type: 'text' },
 };
+
+export const resetPasswordFormState = {
+  password: { name: 'password', value: '', error: '', type: 'password' },
+  confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
+};
