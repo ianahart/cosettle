@@ -37,6 +37,8 @@ public class Profile {
     private String avatarFilename;
     @Column(name = "avatar_url", length = 400)
     private String avatarUrl;
+    @Column(name = "bio", length = 400)
+    private String bio;
 
     @JsonIgnore
     @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
@@ -51,16 +53,22 @@ public class Profile {
             Timestamp createdAt,
             Timestamp updatedAt,
             String avatarFilename,
-            String avatarUrl) {
+            String avatarUrl,
+            String bio) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.avatarFilename = avatarFilename;
         this.avatarUrl = avatarUrl;
+        this.bio = bio;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getBio() {
+        return bio;
     }
 
     public Timestamp getCreatedAt() {
@@ -93,6 +101,10 @@ public class Profile {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public void setCreatedAt(Timestamp createdAt) {
