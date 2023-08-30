@@ -12,6 +12,7 @@ interface IFormFieldProps {
   label: string;
   errorField: string;
   isDark?: boolean;
+  borderColor: string;
 }
 
 const FormField = ({
@@ -25,6 +26,7 @@ const FormField = ({
   label,
   errorField,
   isDark = true,
+  borderColor,
 }: IFormFieldProps) => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -63,7 +65,7 @@ const FormField = ({
         <Input
           width={width}
           border="1px solid"
-          borderColor={isDark ? 'light.primary' : 'text.secondary'}
+          borderColor={borderColor}
           fontSize="0.9rem"
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}

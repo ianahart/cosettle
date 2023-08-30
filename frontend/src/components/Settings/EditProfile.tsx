@@ -141,6 +141,9 @@ const EditProfile = () => {
               width="90%"
               errorField="First name"
               isDark={false}
+              borderColor={`${
+                user.theme === 'dark' ? 'text.secondary' : 'border.primary'
+              }`}
             />
             <FormField
               updateField={updateField}
@@ -152,6 +155,9 @@ const EditProfile = () => {
               id="lastName"
               width="90%"
               errorField="Last name"
+              borderColor={`${
+                user.theme === 'dark' ? 'text.secondary' : 'border.primary'
+              }`}
               isDark={false}
             />
           </Flex>
@@ -171,6 +177,7 @@ const EditProfile = () => {
             width="90%"
             errorField="Email"
             isDark={false}
+            borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
           />
           <Flex flexDir="column">
             <FormLabel m="0 auto" htmlFor="bio" width="90%" color="text.primary">
@@ -183,7 +190,9 @@ const EditProfile = () => {
               id="bio"
               width="90%"
               m="1rem auto 2rem auto"
-              borderColor="text.secondary"
+              borderColor={`${
+                user.theme === 'dark' ? 'text.secondary' : 'border.primary'
+              }`}
             />
           </Flex>
           <Flex justify="center">

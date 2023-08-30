@@ -25,6 +25,6 @@ export const colors = {
     primary: 'rgba(188, 188, 188, 0.6)',
   },
   border: {
-    primary: '#605e5e',
+    primary: '#d9dbde',
   },
 };

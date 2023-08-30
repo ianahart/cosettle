@@ -100,6 +100,7 @@ const Form = () => {
               id="firstName"
               width="90%"
               errorField="First name"
+              borderColor="light.primary"
             />
             <FormField
               updateField={updateField}
@@ -111,6 +112,7 @@ const Form = () => {
               id="lastName"
               width="90%"
               errorField="Last name"
+              borderColor="light.primary"
             />
           </Flex>
           <FormField
@@ -123,6 +125,7 @@ const Form = () => {
             id="email"
             width="90%"
             errorField="Email"
+            borderColor="light.primary"
           />
           <FormField
             updateField={updateField}
@@ -134,6 +137,7 @@ const Form = () => {
             id="password"
             width="90%"
             errorField="Password"
+            borderColor="light.primary"
           />
           <FormField
             updateField={updateField}
@@ -145,6 +149,7 @@ const Form = () => {
             id="confirmPassword"
             width="90%"
             errorField="Confirm password"
+            borderColor="light.primary"
           />
           <Flex justifyContent="center" my="1rem">
             <Button type="submit" width="90%" colorScheme="purple">

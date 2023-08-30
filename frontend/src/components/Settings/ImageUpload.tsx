@@ -1,5 +1,5 @@
 import { Box, Button, Text, Flex, Input } from '@chakra-ui/react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Client } from '../../util/client';
 import { UserContext } from '../../context/user';

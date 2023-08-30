@@ -1,7 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import Header from './Header';
-import { IContactForm } from '../../interfaces';
+import { IContactForm, IUserContext } from '../../interfaces';
 import FormField from '../Shared/FormField';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user';
 
 interface IContactProps {
   form: IContactForm;
@@ -15,6 +17,7 @@ interface IContactProps {
 }
 
 const Contact = ({ form, step, handleUpdateField }: IContactProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const updateField = (name: string, value: string, attribute: string) => {
     handleUpdateField(name, value, attribute, step);
   };
@@ -33,6 +36,7 @@ const Contact = ({ form, step, handleUpdateField }: IContactProps) => {
         width="90%"
         errorField="First name"
         isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
       <FormField
         updateField={updateField}
@@ -45,6 +49,7 @@ const Contact = ({ form, step, handleUpdateField }: IContactProps) => {
         width="90%"
         errorField="Last name"
         isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
       <FormField
         updateField={updateField}
@@ -57,6 +62,7 @@ const Contact = ({ form, step, handleUpdateField }: IContactProps) => {
         width="90%"
         errorField="Email"
         isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
       <FormField
         updateField={updateField}
@@ -69,6 +75,7 @@ const Contact = ({ form, step, handleUpdateField }: IContactProps) => {
         width="90%"
         errorField="Phone number"
         isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
     </Box>
   );

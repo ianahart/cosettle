@@ -1,7 +1,9 @@
 import { Box, Flex, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
 import Header from './Header';
-import { IDescriptionForm } from '../../interfaces';
+import { IDescriptionForm, IUserContext } from '../../interfaces';
 import FormField from '../Shared/FormField';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user';
 
 interface IDescriptionProps {
   form: IDescriptionForm;
@@ -15,6 +17,7 @@ interface IDescriptionProps {
 }
 
 const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const updateField = (name: string, value: string, attribute: string) => {
     handleUpdateField(name, value, attribute, step);
   };
@@ -37,6 +40,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
         width="90%"
         errorField="Location"
         isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
       <Flex>
         <FormField
@@ -50,6 +54,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           width="90%"
           errorField="Size"
           isDark={false}
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
         />
         <FormField
           updateField={updateField}
@@ -62,6 +67,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           width="90%"
           errorField="Location"
           isDark={false}
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
         />
       </Flex>
       <Flex>
@@ -76,6 +82,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           width="90%"
           errorField="Capacity"
           isDark={false}
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
         />
         <FormField
           updateField={updateField}
@@ -88,6 +95,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           width="90%"
           errorField="Flooring"
           isDark={false}
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
         />
       </Flex>
       <FormControl width="90%" margin="0 auto">
@@ -98,7 +106,8 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           value={form.description.value}
           name={form.description.name}
           onChange={handleOnTextareaChange}
-          borderColor="text.secondary"
+                                borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
+
           id={form.description.name}
         />
       </FormControl>

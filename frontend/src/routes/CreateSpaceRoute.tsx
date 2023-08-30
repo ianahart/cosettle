@@ -1,8 +1,8 @@
 import { Box, Button, ButtonGroup, Flex, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createSpaceState } from '../state/initialState';
-import { ICreateSpaceForm, IDay } from '../interfaces';
+import { ICreateSpaceForm, IDay, IUserContext } from '../interfaces';
 import Description from '../components/CreateSpace/Description';
 import Availability from '../components/CreateSpace/Availability';
 import Amenities from '../components/CreateSpace/Amenities';
@@ -11,10 +11,12 @@ import Photos from '../components/CreateSpace/Photos';
 import { Client } from '../util/client';
 import BasicSpinner from '../components/Shared/BasicSpinner';
 import Map from '../components/CreateSpace/Map';
+import { UserContext } from '../context/user';
 
 type TStep = Omit<ICreateSpaceForm, 'selectedIndex'>;
 
 const CreateSpaceRoute = () => {
+  const { user } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
   const [form, setForm] = useState<ICreateSpaceForm>(createSpaceState);
   const [photos, setPhotos] = useState<File[]>([]);
@@ -262,7 +264,7 @@ const CreateSpaceRoute = () => {
         minH="500px"
         borderRadius={8}
         border="1px solid"
-        borderColor="text.secondary"
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
         width={['95%', '95%', '600px']}
       >
         <form onSubmit={handleOnSubmit}>

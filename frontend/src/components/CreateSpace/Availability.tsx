@@ -1,13 +1,14 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from './Header';
-import { IAvailabilityForm, IDay } from '../../interfaces';
+import { IAvailabilityForm, IDay, IUserContext } from '../../interfaces';
 import FormField from '../Shared/FormField';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { daysState } from '../../state/initialState';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { UserContext } from '../../context/user';
 
 interface IAvailabilityProps {
   handleRemoveDay: (id: string, step: string) => void;
@@ -29,6 +30,7 @@ const Availability = ({
   step,
   handleUpdateField,
 }: IAvailabilityProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const [days, setDays] = useState<IDay[]>(daysState);
   const [openTime, setOpenTime] = useState('9:00');
   const [closeTime, setCloseTime] = useState('17:00');
@@ -84,6 +86,8 @@ const Availability = ({
         width="90%"
         errorField="Price"
         isDark={false}
+                            borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
+
       />
       <Box width="90%" margin="0 auto">
         <Text>Days</Text>

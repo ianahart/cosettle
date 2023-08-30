@@ -16,7 +16,7 @@ const SettingsLink = ({ to, text, icon }: ISettingsLinkProps) => {
   return (
     <Box
       my="1.5rem"
-      _hover={{ bg: 'cover.primary' }}
+      _hover={{ bg: user.theme === 'dark' ? 'cover.primary' : '' }}
       py="0.25rem"
       px="0.25rem"
       borderRadius={8}

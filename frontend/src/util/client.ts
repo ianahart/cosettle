@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IProfileForm, IRegisterForm } from '../interfaces';
+import { IRegisterForm } from '../interfaces';
 
 export const http = axios.create({
   baseURL: 'http://localhost:5173/api/v1',

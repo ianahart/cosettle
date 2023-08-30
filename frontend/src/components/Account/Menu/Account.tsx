@@ -44,7 +44,7 @@ const Account = () => {
         icon={<AiOutlineMessage />}
       />
       <MenuLink
-        to={`${slugify(firstName, lastName)}/settings/details`}
+        to={`${slugify(firstName, lastName)}/settings`}
         text="Settings"
         icon={<FiSettings />}
       />
