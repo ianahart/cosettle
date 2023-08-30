@@ -139,6 +139,10 @@ export const daysState = [
   { id: nanoid(), name: 'Saturday' },
 ];
 
+export const forgotPasswordFormState = {
+  email: { name: 'email', value: '', error: '', type: 'text' },
+};
+
 export const profileForm = {
   firstName: { name: 'firstName', value: '', error: '', type: 'text' },
   lastName: { name: 'lastName', value: '', error: '', type: 'text' },

@@ -86,8 +86,7 @@ const Availability = ({
         width="90%"
         errorField="Price"
         isDark={false}
-                            borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
-
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
       <Box width="90%" margin="0 auto">
         <Text>Days</Text>

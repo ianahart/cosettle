@@ -106,8 +106,7 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
           value={form.description.value}
           name={form.description.name}
           onChange={handleOnTextareaChange}
-                                borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
-
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
           id={form.description.name}
         />
       </FormControl>

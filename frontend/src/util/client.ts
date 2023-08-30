@@ -6,13 +6,15 @@ export const http = axios.create({
 });
 
 export const Client = {
+  sendForgotPasswordEmail: (email: string) => {
+    return http.post('/auth/forgot-password', { email });
+  },
   uploadProfilePhoto: (file: File | null, profileId: number, action: string) => {
     const formData = new FormData();
     formData.append('action', action);
     formData.append('file', file ?? '');
     return http.patch(`/profiles/${profileId}/upload`, formData);
   },
-
   updateProfile: (form: any, userId: number, profileId: number) => {
     return http.patch(`/profiles/${profileId}`, { ...form, userId });
   },
