@@ -10,6 +10,8 @@ import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
 import com.hart.cosettle.user.dto.UserDto;
+import com.hart.cosettle.user.request.ChangePasswordUserRequest;
+import com.hart.cosettle.util.MyUtils;
 
 import java.security.Key;
 
@@ -112,5 +114,29 @@ public class UserService {
         User user = this.userRepository.findByEmail(username)
                 .orElseThrow(() -> new NotFoundException("Current user was not found"));
         return user;
+    }
+
+    public void changePassword(ChangePasswordUserRequest request) {
+        User user = getUserById(request.getUserId());
+
+        if (!this.passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new BadRequestException("Your current password is incorrect");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new BadRequestException("Passwords do not match");
+        }
+
+        if (!MyUtils.validatePassword(request.getNewPassword())) {
+
+            throw new BadRequestException(
+                    "Password must contain 1 lowercase, 1 uppercase, 1 digit, and 1 special character");
+        }
+
+        user.setPassword(this.passwordEncoder.encode(request.getNewPassword()));
+
+        this.userRepository.save(user);
+        ;
+
     }
 }

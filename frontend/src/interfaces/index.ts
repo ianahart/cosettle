@@ -6,6 +6,12 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IChangePasswordForm {
+  password: { name: string; value: string; error: string; type: string };
+  newPassword: { name: string; value: string; error: string; type: string };
+  confirmPassword: { name: string; value: string; error: string; type: string };
+}
+
 export interface IResetPasswordForm {
   password: { name: string; value: string; error: string; type: string };
   confirmPassword: { name: string; value: string; error: string; type: string };
@@ -109,4 +115,11 @@ export interface ICreateSpaceForm {
     amenities: IAmenitiesForm;
     contact: IContactForm;
   };
+}
+
+export interface IPasswordStrengthMeter {
+  name: string;
+  id: string;
+  marked: boolean;
+  word: string;
 }

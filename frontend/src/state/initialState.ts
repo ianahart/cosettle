@@ -164,3 +164,21 @@ export const resetPasswordFormState = {
   password: { name: 'password', value: '', error: '', type: 'password' },
   confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
 };
+
+export const changePasswordFormState = {
+  password: { name: 'password', value: '', error: '', type: 'password' },
+  newPassword: { name: 'newPassword', value: '', error: '', type: 'password' },
+  confirmPassword: { name: 'confirmPassword', value: '', error: '', type: 'password' },
+};
+
+export const passwordMeterState = [
+  { name: 'lowercase', id: nanoid(), marked: false, word: 'Poor' },
+  { name: 'uppercase', id: nanoid(), marked: false, word: 'Ok' },
+  { name: 'digit', id: nanoid(), marked: false, word: 'Good' },
+  {
+    name: 'specialChar',
+    id: nanoid(),
+    marked: false,
+    word: 'Excellent',
+  },
+];

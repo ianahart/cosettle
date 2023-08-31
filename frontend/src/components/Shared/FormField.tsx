@@ -37,6 +37,7 @@ const FormField = ({
     const password = type === 'password' ? 'text' : 'password';
     updateField('password', password, 'type');
     updateField('confirmPassword', password, 'type');
+    updateField('newPassword', password, 'type');
   };
 
   const handleOnFocus = (e: React.ChangeEvent<HTMLInputElement>) => {

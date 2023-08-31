@@ -6,6 +6,20 @@ export const http = axios.create({
 });
 
 export const Client = {
+  changePassword: (
+    oldPassword: string,
+    newPassword: string,
+    confirmPassword: string,
+    userId: number
+  ) => {
+    return http.patch(`/users/${userId}/change-password`, {
+      oldPassword,
+      newPassword,
+      confirmPassword,
+      userId,
+    });
+  },
+
   resetPasswordFromEmail: (
     id: number,
     token: string,
