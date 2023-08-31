@@ -16,6 +16,7 @@ import com.hart.cosettle.profile.request.UploadProfilePhotoRequest;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserRepository;
 import com.hart.cosettle.user.UserService;
+import com.hart.cosettle.util.MyUtils;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +51,8 @@ public class ProfileService {
         Profile profile = getProfileById(profileId);
 
         return new ProfileDto(
+                profile.getUser().getId(),
+                profile.getId(),
                 profile.getUser().getFirstName(),
                 profile.getUser().getLastName(),
                 profile.getUser().getEmail(),
@@ -85,8 +88,8 @@ public class ProfileService {
         currentUser.setEmail(request.getEmail());
 
         profile.setBio(request.getBio().length() > 0 ? request.getBio() : null);
-        currentUser.setFirstName(request.getFirstName());
-        currentUser.setLastName(request.getLastName());
+        currentUser.setFirstName(MyUtils.capitalize(request.getFirstName()));
+        currentUser.setLastName(MyUtils.capitalize(request.getLastName()));
 
         User updatedUser = this.userRepository.save(currentUser);
         this.profileRepository.save(profile);

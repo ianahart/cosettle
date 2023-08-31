@@ -17,6 +17,16 @@ export const tokenState = {
   token: '',
 };
 
+export const profileState = {
+  userId: 0,
+  profileId: 0,
+  avatarUrl: '',
+  bio: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+};
+
 export const userState = {
   abbreviation: '',
   email: '',

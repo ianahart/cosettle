@@ -1,6 +1,8 @@
 package com.hart.cosettle.profile.dto;
 
 public class ProfileDto {
+    private Long userId;
+    private Long profileId;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,16 +14,28 @@ public class ProfileDto {
     }
 
     public ProfileDto(
+            Long userId,
+            Long profileId,
             String firstName,
             String lastName,
             String email,
             String bio,
             String avatarUrl) {
+        this.userId = userId;
+        this.profileId = profileId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.bio = bio;
         this.avatarUrl = avatarUrl;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getProfileId() {
+        return profileId;
     }
 
     public String getBio() {
@@ -62,6 +76,14 @@ public class ProfileDto {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
     }
 
 }

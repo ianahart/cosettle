@@ -90,6 +90,16 @@ export interface IContactForm {
   phoneNumber: { name: string; value: string; error: string; type: string; step: string };
 }
 
+export interface IProfile {
+  avatarUrl: string;
+  bio: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profileId: number;
+  userId: number;
+}
+
 export interface ICreateSpaceForm {
   selectedIndex: number;
   steps: {
