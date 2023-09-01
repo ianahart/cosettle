@@ -2,6 +2,10 @@ package com.hart.cosettle.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
+import com.hart.cosettle.user.dto.SearchUserDto;
 import com.hart.cosettle.user.dto.UserDto;
+import com.hart.cosettle.user.dto.UserPaginationDto;
 import com.hart.cosettle.user.request.ChangePasswordUserRequest;
 import com.hart.cosettle.util.MyUtils;
 
@@ -42,6 +48,19 @@ public class UserService {
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
 
+    }
+
+    public UserPaginationDto searchUsers(Long userId, String direction, int page, int pageSize, String term) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<SearchUserDto> results = this.userRepository.searchUsers(userId, term, paging);
+
+        return new UserPaginationDto(
+                results.getContent(),
+                currentPage,
+                pageSize,
+                results.getTotalPages(),
+                direction);
     }
 
     public User getUserByEmail(String email) {

@@ -27,6 +27,8 @@ import Password from './components/Settings/Password';
 import Notifications from './components/Settings/Notifications';
 import Visibility from './components/Settings/Visibility';
 import PasswordResetRoute from './routes/PasswordResetRoute';
+import FriendsRoute from './routes/FriendsRoute';
+import ProfileRoute from './routes/ProfileRoute';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -103,6 +105,15 @@ function App() {
                 }
               />
               <Route
+                path="/:username/friends"
+                element={
+                  <RequireAuth>
+                    <FriendsRoute />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
                 path="/:username/groups"
                 element={
                   <RequireAuth>
@@ -115,6 +126,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <MessagesRoute />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="profiles/:profileId"
+                element={
+                  <RequireAuth>
+                    <ProfileRoute />
                   </RequireAuth>
                 }
               />

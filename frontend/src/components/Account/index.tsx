@@ -1,10 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import ClickAwayMenu from '../Shared/ClickAwayMenu';
 import { Box } from '@chakra-ui/react';
 import Avatar from '../Shared/Avatar';
 import Account from './Menu/Account';
 import Spaces from './Menu/Spaces';
+import { UserContext } from '../../context/user';
+import { IUserContext } from '../../interfaces';
 const AccountMenu = () => {
+  const { user } = useContext(UserContext) as IUserContext;
   const triggerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -17,7 +20,13 @@ const AccountMenu = () => {
   return (
     <Box position="relative">
       <Box onClick={() => handleMenuOpen(true)} cursor="pointer" ref={triggerRef}>
-        <Avatar width="45px" height="45px" />
+        <Avatar
+          firstName={user.firstName}
+          lastName={user.lastName}
+          width="45px"
+          height="45px"
+          url={user.avatarUrl}
+        />
       </Box>
       {menuOpen && (
         <ClickAwayMenu
