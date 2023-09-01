@@ -2,13 +2,17 @@ import { Flex } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';
+import { abbreviate } from '../../util';
 
 interface IAvatarProps {
   height: string;
   width: string;
+  url: string;
+  firstName: string;
+  lastName: string;
 }
 
-const Avatar = ({ height, width }: IAvatarProps) => {
+const Avatar = ({ height, width, url, firstName, lastName }: IAvatarProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   return (
     <Flex
@@ -19,11 +23,11 @@ const Avatar = ({ height, width }: IAvatarProps) => {
       color={user.theme === 'dark' ? 'light.primary' : 'text.primary'}
       borderRadius="50%"
       bg={user.theme === 'dark' ? 'primary.dark' : 'light.primary'}
-      backgroundImage={user.avatarUrl ? `url(${user.avatarUrl})` : 'none'}
+      backgroundImage={url ? `url(${url})` : 'none'}
       backgroundPosition="center"
       backgroundSize="cover"
     >
-      {!user.avatarUrl ? user.abbreviation : ''}
+      {!url ? abbreviate(firstName, lastName) : ''}
     </Flex>
   );
 };

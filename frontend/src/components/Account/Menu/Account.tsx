@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeadingStack from '../HeadingStack';
 import MenuLink from './MenuLink';
 import { FiUsers, FiSettings, FiLogOut } from 'react-icons/fi';
-import { AiOutlineMessage } from 'react-icons/ai';
+import { AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { useContext } from 'react';
 import { UserContext } from '../../../context/user';
 import { IUserContext } from '../../../interfaces';
@@ -16,6 +16,7 @@ const Account = () => {
     UserContext
   ) as IUserContext;
   const { firstName, lastName } = user;
+  const slug = slugify(firstName, lastName);
 
   const handleLogout = () => {
     Client.logout(tokens.refreshToken)
@@ -33,21 +34,10 @@ const Account = () => {
   return (
     <Box>
       <HeadingStack heading="Account" />
-      <MenuLink
-        to={`${slugify(firstName, lastName)}/groups`}
-        text="Groups"
-        icon={<FiUsers />}
-      />
-      <MenuLink
-        to={`${slugify(firstName, lastName)}/messages`}
-        text="Messages"
-        icon={<AiOutlineMessage />}
-      />
-      <MenuLink
-        to={`${slugify(firstName, lastName)}/settings`}
-        text="Settings"
-        icon={<FiSettings />}
-      />
+      <MenuLink to={`${slug}/friends`} text="Friends" icon={<AiOutlineHeart />} />
+      <MenuLink to={`${slug}/groups`} text="Groups" icon={<FiUsers />} />
+      <MenuLink to={`${slug}/messages`} text="Messages" icon={<AiOutlineMessage />} />
+      <MenuLink to={`${slug}/settings`} text="Settings" icon={<FiSettings />} />
       <Flex alignItems="center" my="0.5rem">
         <Box mr="0.25rem">
           <FiLogOut />

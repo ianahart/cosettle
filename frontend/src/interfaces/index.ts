@@ -123,3 +123,19 @@ export interface IPasswordStrengthMeter {
   marked: boolean;
   word: string;
 }
+
+export interface IPagination {
+  pageSize: number;
+  direction: string;
+  page: number;
+  totalPages: number;
+}
+
+export interface ISearchUser {
+  avatarUrl: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profileId: number;
+  userId: number;
+}

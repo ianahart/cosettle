@@ -6,6 +6,18 @@ export const http = axios.create({
 });
 
 export const Client = {
+  searchUsers: (
+    userId: number,
+    direction: string,
+    page: number,
+    pageSize: number,
+    term: string
+  ) => {
+    return http.get(
+      `/users/search?userId=${userId}&direction=${direction}&page=${page}&pageSize=${pageSize}&term=${term}`
+    );
+  },
+
   changePassword: (
     oldPassword: string,
     newPassword: string,
