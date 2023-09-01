@@ -55,8 +55,9 @@ public class UserController {
             @RequestParam("direction") String direction,
             @RequestParam("page") int page,
             @RequestParam("pageSize") int pageSize,
-             @RequestParam("term") String term) {
+            @RequestParam("term") String term) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(new SearchUserResponse("success",         this.userService.searchUsers(userId, direction, page, pageSize, term)));
+        return ResponseEntity.status(HttpStatus.OK).body(new SearchUserResponse("success",
+                this.userService.searchUsers(userId, direction, page, pageSize, term)));
     }
 }
