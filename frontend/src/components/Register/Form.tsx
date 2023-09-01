@@ -23,6 +23,7 @@ const Form = () => {
   const checkForErrors = () => {
     let errors = false;
     for (const [_, val] of Object.entries(form)) {
+      console.log(form);
       const { value, error } = val;
       if (value.trim().length === 0 || error.length > 0) {
         errors = true;
@@ -55,7 +56,6 @@ const Form = () => {
     e.preventDefault();
     clearErrors();
     setError('');
-    checkForErrors();
     if (checkForErrors()) {
       return;
     }
