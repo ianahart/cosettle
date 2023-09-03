@@ -1,6 +1,7 @@
 package com.hart.cosettle.friend;
 
 import com.hart.cosettle.friend.dto.FriendRequestDto;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, Long> {
+
+    @Query(value = """
+            SELECT f FROM Friend f
+
+             """)
+    List<Friend> checkForExistingFriendShip(@Param("userId") Long userId, @Param("friendId") Long friendId);
 
     @Query(value = """
                         SELECT new com.hart.cosettle.friend.dto.FriendRequestDto(
