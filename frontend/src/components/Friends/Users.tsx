@@ -1,13 +1,62 @@
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
-import { ISearchUser } from '../../interfaces';
+import { ISearchUser, IUserContext } from '../../interfaces';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '../Shared/Avatar';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { over } from 'stompjs';
+import SockJS from 'sockjs-client';
+import { useContext, useEffect, useRef } from 'react';
+import { UserContext } from '../../context/user';
 
 interface IUsersProps {
   users: ISearchUser[];
 }
+
+let stompClient: any = null;
 const Users = ({ users }: IUsersProps) => {
+  const { user: currentUser } = useContext(UserContext) as IUserContext;
+  const shouldRun = useRef(true);
+
+  const connect = () => {
+    let Sock = new SockJS('http://localhost:8080/ws');
+    stompClient = over(Sock);
+    stompClient.connect({}, onConnected, onError);
+  };
+
+  useEffect(() => {
+    if (shouldRun.current && currentUser.id !== 0) {
+      shouldRun.current = false;
+      connect();
+    }
+  }, [shouldRun.current, connect]);
+
+  useEffect(() => {
+    return () => {
+      if (stompClient !== null) {
+        stompClient.disconnect();
+      }
+    };
+  }, []);
+
+  const onConnected = () => {
+    stompClient.subscribe(`/user/${currentUser.id}/friend-request`, onFriendRequest);
+  };
+  const onError = () => {};
+
+  const onFriendRequest = (payload: any) => {
+    console.log(JSON.parse(payload.body));
+  };
+
+  const sendFriendRequest = (friendId: number, userId: number) => {
+    if (stompClient) {
+      stompClient.send(
+        '/api/v1/friend-request',
+        {},
+        JSON.stringify({ friendId, userId })
+      );
+    }
+  };
+
   const navigate = useNavigate();
   const goToProfile = (profileId: number) => {
     navigate(`/profiles/${profileId}`);
@@ -38,18 +87,21 @@ const Users = ({ users }: IUsersProps) => {
                 </Box>
               </Flex>
             </Box>
-            <Button
-              bg="transparent"
-              border="1px solid"
-              borderColor="text.primary"
-              color="text.primary"
-              _hover={{ bg: 'transparent' }}
-            >
-              <Box>
-                <AiOutlinePlus />
-              </Box>
-              Add as friend
-            </Button>
+            {user.userId !== currentUser.id && (
+              <Button
+                onClick={() => sendFriendRequest(user.userId, currentUser.id)}
+                bg="transparent"
+                border="1px solid"
+                borderColor="text.primary"
+                color="text.primary"
+                _hover={{ bg: 'transparent' }}
+              >
+                <Box>
+                  <AiOutlinePlus />
+                </Box>
+                Add as friend
+              </Button>
+            )}
           </Flex>
         );
       })}

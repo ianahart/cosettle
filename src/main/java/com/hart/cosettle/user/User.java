@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
@@ -88,6 +89,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "friend", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Friend> friends;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Friend> users;
+
     public User() {
 
     }
@@ -131,6 +138,14 @@ public class User implements UserDetails {
 
     public Theme getTheme() {
         return theme;
+    }
+
+    public List<Friend> getUsers() {
+        return users;
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
     }
 
     public List<Space> getSpaces() {
@@ -248,6 +263,14 @@ public class User implements UserDetails {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public void setUsers(List<Friend> users) {
+        this.users = users;
     }
 
     @Override

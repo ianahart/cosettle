@@ -22,8 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             u.lastName AS lastName, u.email AS email, p.avatarUrl AS avatarUrl
             ) FROM User u
             INNER JOIN u.profile p
-            WHERE u.id <> :userId
-            AND LOWER(u.firstName) LIKE %:term% OR LOWER(u.lastName) LIKE %:term%
+            WHERE LOWER(u.firstName) LIKE %:term% OR LOWER(u.lastName) LIKE %:term%
+            AND u.id NOT IN (:userId)
             ORDER BY u.id
                 """)
     Page<SearchUserDto> searchUsers(@Param("userId") Long userId, @Param("term") String term, Pageable paging);
