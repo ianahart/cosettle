@@ -10,10 +10,11 @@ import { UserContext } from '../../context/user';
 
 interface IUsersProps {
   users: ISearchUser[];
+  addFriendRequest: (payload: any) => void;
 }
 
 let stompClient: any = null;
-const Users = ({ users }: IUsersProps) => {
+const Users = ({ users, addFriendRequest }: IUsersProps) => {
   const { user: currentUser } = useContext(UserContext) as IUserContext;
   const shouldRun = useRef(true);
 
@@ -44,7 +45,7 @@ const Users = ({ users }: IUsersProps) => {
   const onError = () => {};
 
   const onFriendRequest = (payload: any) => {
-    console.log(JSON.parse(payload.body));
+    addFriendRequest(JSON.parse(payload.body));
   };
 
   const sendFriendRequest = (friendId: number, userId: number) => {

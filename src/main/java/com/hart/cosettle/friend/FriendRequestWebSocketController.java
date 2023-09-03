@@ -23,6 +23,6 @@ public class FriendRequestWebSocketController {
         this.friendService.createFriendRequest(friendRequest);
         this.simpMessagingTemplate.convertAndSendToUser(
                 String.valueOf(friendRequest.getFriendId()), "friend-request",
-                        this.friendService.getFriendRequest(friendRequest));
+                this.friendService.getFriendRequest(friendRequest));
     }
 }

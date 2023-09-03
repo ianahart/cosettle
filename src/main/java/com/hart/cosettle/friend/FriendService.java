@@ -1,11 +1,19 @@
 package com.hart.cosettle.friend;
 
+import java.util.List;
+
 import com.hart.cosettle.friend.dto.FriendRequestDto;
+import com.hart.cosettle.friend.dto.FriendRequestPaginationDto;
 import com.hart.cosettle.friend.request.FriendRequestRequest;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
+import com.hart.cosettle.util.MyUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +26,26 @@ public class FriendService {
     public FriendService(UserService userService, FriendRepository friendRepository) {
         this.userService = userService;
         this.friendRepository = friendRepository;
+    }
+
+    public FriendRequestPaginationDto getFriendRequests(Long userId, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<FriendRequestDto> results = this.friendRepository.getFriendRequests(userId, paging);
+
+        return new FriendRequestPaginationDto(
+                results.getContent(),
+                currentPage,
+                pageSize,
+                results.getTotalPages(),
+                direction);
+
+    }
+
+    public void deleteFriendRequest(Long id) {
+        if (id != null) {
+            this.friendRepository.deleteById(id);
+        }
     }
 
     public FriendRequestDto getFriendRequest(FriendRequestRequest friendRequest) {

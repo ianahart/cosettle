@@ -5,7 +5,11 @@ import { Client } from '../../util/client';
 import { UserContext } from '../../context/user';
 import Users from './Users';
 
-const SearchUsers = () => {
+interface ISearchUserProps {
+  addFriendRequest: (friendRequest: any) => void;
+}
+
+const SearchUsers = ({ addFriendRequest }: ISearchUserProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const [pagination, setPagination] = useState<IPagination>({
     pageSize: 10,
@@ -34,7 +38,6 @@ const SearchUsers = () => {
         setUsers(users);
       })
       .catch((err) => {
-        console.log(err);
         throw new Error(err.response.data.message);
       });
   };
@@ -90,7 +93,7 @@ const SearchUsers = () => {
           </Text>
         </Flex>
       )}
-      <Users users={users} />
+      <Users users={users} addFriendRequest={addFriendRequest} />
       <Flex my="2rem" justify="center">
         <ButtonGroup>
           {pagination.page > 0 && (
