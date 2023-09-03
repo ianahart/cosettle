@@ -1,10 +1,9 @@
 package com.hart.cosettle.friend;
 
-import java.util.List;
-
 import com.hart.cosettle.friend.dto.FriendRequestDto;
 import com.hart.cosettle.friend.dto.FriendRequestPaginationDto;
 import com.hart.cosettle.friend.request.FriendRequestRequest;
+import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
 import com.hart.cosettle.util.MyUtils;
@@ -26,6 +25,25 @@ public class FriendService {
     public FriendService(UserService userService, FriendRepository friendRepository) {
         this.userService = userService;
         this.friendRepository = friendRepository;
+    }
+
+    private void mirrorFriendShip(Long userId, Long friendId) {
+        User user = this.userService.getUserById(userId);
+        User friend = this.userService.getUserById(friendId);
+
+        this.friendRepository.save(new Friend(user, friend, true, true));
+    }
+
+    public Friend getFriendById(Long id) {
+        return this.friendRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Friend not found"));
+    }
+
+    public void acceptFriendRequest(Long id, Long userId, Long friendId) {
+        Friend friend = this.getFriendById(id);
+        friend.setAccepted(true);
+        this.friendRepository.save(friend);
+        mirrorFriendShip(userId, friendId);
     }
 
     public FriendRequestPaginationDto getFriendRequests(Long userId, int page, int pageSize, String direction) {

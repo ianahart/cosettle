@@ -9,6 +9,7 @@ interface IFriendsListProps {
   getFriendRequests: (paginate: boolean) => void;
   pagination: IPagination;
   handleIgnoreFriendRequest: (id: number) => void;
+  handleAcceptFriendRequest: (id: number, userId: number, friendId: number) => void;
 }
 
 const FriendsList = ({
@@ -16,11 +17,16 @@ const FriendsList = ({
   getFriendRequests,
   pagination,
   handleIgnoreFriendRequest,
+  handleAcceptFriendRequest,
 }: IFriendsListProps) => {
   const { user } = useContext(UserContext) as IUserContext;
 
   const ignoreFriendRequest = (id: number) => {
     handleIgnoreFriendRequest(id);
+  };
+
+  const acceptFriendRequest = (id: number, userId: number, friendId: number) => {
+    handleAcceptFriendRequest(id, userId, friendId);
   };
 
   return (
@@ -76,7 +82,11 @@ const FriendsList = ({
                 </Text>
               </Flex>
               <ButtonGroup m="1rem 0">
-                <Button colorScheme="purple" size="sm">
+                <Button
+                  onClick={() => acceptFriendRequest(fr.id, user.id, fr.senderId)}
+                  colorScheme="purple"
+                  size="sm"
+                >
                   Accept
                 </Button>
                 <Button onClick={() => ignoreFriendRequest(fr.id)} size="sm">

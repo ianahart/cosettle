@@ -35,6 +35,17 @@ const FriendsRoute = () => {
       });
   };
 
+  const handleAcceptFriendRequest = (id: number, userId: number, friendId: number) => {
+    setFriendRequests((prevState) => prevState.filter((fr) => fr.id !== id));
+    Client.acceptFriendRequest(id, userId, friendId)
+      .then(() => {
+        getFriendRequests(false);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const handleIgnoreFriendRequest = (id: number) => {
     setFriendRequests((prevState) => prevState.filter((fr) => fr.id !== id));
     Client.removeFriendRequest(id)
@@ -47,7 +58,6 @@ const FriendsRoute = () => {
   };
 
   const addFriendRequest = (friendRequest: any) => {
-    console.log(friendRequest);
     setFriendRequests((prevState) => [friendRequest, ...prevState]);
     setPagination((prevState) => ({
       ...prevState,
@@ -70,6 +80,7 @@ const FriendsRoute = () => {
           getFriendRequests={getFriendRequests}
           pagination={pagination}
           handleIgnoreFriendRequest={handleIgnoreFriendRequest}
+          handleAcceptFriendRequest={handleAcceptFriendRequest}
         />
         <Flex
           justifyContent="center"

@@ -1,5 +1,7 @@
 package com.hart.cosettle.friend;
 
+import com.hart.cosettle.friend.request.AcceptFriendRequestRequest;
+import com.hart.cosettle.friend.response.AcceptFriendRequestResponse;
 import com.hart.cosettle.friend.response.DeleteFriendRequestResponse;
 import com.hart.cosettle.friend.response.GetFriendRequestsResponse;
 
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +26,13 @@ public class FriendController {
     @Autowired
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
+    }
+
+    @PostMapping("/requests")
+    public ResponseEntity<AcceptFriendRequestResponse> acceptFriendRequest(
+            @RequestBody AcceptFriendRequestRequest request) {
+        this.friendService.acceptFriendRequest(request.getId(), request.getUserId(), request.getFriendId());
+        return ResponseEntity.status(HttpStatus.OK).body(new AcceptFriendRequestResponse("success"));
     }
 
     @DeleteMapping("/{id}")

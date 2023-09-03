@@ -22,6 +22,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
                 INNER JOIN f.user.profile p
                 WHERE fu.id = :userId
                 AND f.requested = true
+                AND f.accepted = false
             """)
     Page<FriendRequestDto> getFriendRequests(@Param("userId") Long userId, Pageable paging);
 
