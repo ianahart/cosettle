@@ -131,6 +131,14 @@ export interface IPagination {
   totalPages: number;
 }
 
+export interface IFriendRequest {
+  avatarUrl: string;
+  firstName: string;
+  lastName: string;
+  id: number;
+  senderId: number;
+}
+
 export interface ISearchUser {
   avatarUrl: string;
   email: string;

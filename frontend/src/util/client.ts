@@ -6,6 +6,23 @@ export const http = axios.create({
 });
 
 export const Client = {
+  acceptFriendRequest: (id: number, userId: number, friendId: number) => {
+    return http.post('/friends/requests', { id, userId, friendId });
+  },
+
+  removeFriendRequest: (id: number) => {
+    return http.delete(`/friends/${id}`);
+  },
+  getFriendRequests: (
+    userId: number,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/friends/requests?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
   searchUsers: (
     userId: number,
     direction: string,
