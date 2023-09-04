@@ -6,6 +6,7 @@ import com.hart.cosettle.friend.dto.FriendRequestDto;
 import com.hart.cosettle.friend.dto.FriendRequestPaginationDto;
 import com.hart.cosettle.friend.request.FriendRequestRequest;
 import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.advice.ForbiddenException;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
 import com.hart.cosettle.util.MyUtils;
@@ -27,6 +28,25 @@ public class FriendService {
     public FriendService(UserService userService, FriendRepository friendRepository) {
         this.userService = userService;
         this.friendRepository = friendRepository;
+    }
+
+    public void removeFriend(Long userId, Long friendId) {
+        if (this.userService.getCurrentlyLoggedInUser().getId() != userId) {
+            throw new ForbiddenException("Cannot remove another person's friend");
+        }
+
+        Friend friendShipOne = this.friendRepository.getFriendShip(userId, friendId);
+        Friend friendShipTwo = this.friendRepository.getFriendShip(friendId, userId);
+
+        if (friendShipOne != null) {
+        this.friendRepository.deleteById(friendShipOne.getId());
+
+        }
+
+        if (friendShipTwo != null) {
+        this.friendRepository.deleteById(friendShipTwo.getId());
+
+        }
     }
 
     private void mirrorFriendShip(Long userId, Long friendId) {

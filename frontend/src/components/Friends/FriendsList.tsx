@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Button, ButtonGroup } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
-import { IFriendRequest, IPagination, IUserContext } from '../../interfaces';
+import { IFriendRequest, IUserContext } from '../../interfaces';
 import Avatar from '../Shared/Avatar';
 import Header from './Header';
 import Friends from './Friends';
@@ -13,6 +13,8 @@ interface IFriendsListProps {
   totalPages: number;
   handleIgnoreFriendRequest: (id: number) => void;
   handleAcceptFriendRequest: (id: number, userId: number, friendId: number) => void;
+  friendRequestAccepted: boolean;
+  handleSetFriendRequestAccepted: (accepted: boolean) => void;
 }
 
 const FriendsList = ({
@@ -22,6 +24,8 @@ const FriendsList = ({
   totalPages,
   handleIgnoreFriendRequest,
   handleAcceptFriendRequest,
+  friendRequestAccepted,
+  handleSetFriendRequestAccepted,
 }: IFriendsListProps) => {
   const { user } = useContext(UserContext) as IUserContext;
 
@@ -94,7 +98,10 @@ const FriendsList = ({
       </Box>
       <Box height="400px" mt="2rem">
         <Header heading="Friends" />
-        <Friends />
+        <Friends
+          handleSetFriendRequestAccepted={handleSetFriendRequestAccepted}
+          friendRequestAccepted={friendRequestAccepted}
+        />
       </Box>
     </Box>
   );

@@ -1,12 +1,19 @@
 import { Box, Text, Flex, Button } from '@chakra-ui/react';
 import { IFriend, IPagination, IUserContext } from '../../interfaces';
-import { useRef, useState, useEffect, useContext, useCallback } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { Client } from '../../util/client';
-import Avatar from '../Shared/Avatar';
 import Friend from './Friend';
 
-const Friends = () => {
+interface IFriendsProps {
+  handleSetFriendRequestAccepted: (accepted: boolean) => void;
+  friendRequestAccepted: boolean;
+}
+
+const Friends = ({
+  handleSetFriendRequestAccepted,
+  friendRequestAccepted,
+}: IFriendsProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const shouldRun = useRef(true);
   const [message, setMessage] = useState('');
@@ -15,8 +22,11 @@ const Friends = () => {
     page: 0,
     direction: 'next',
     totalPages: 0,
-    pageSize: 1,
+    pageSize: 5,
   });
+
+  const handleRemoveFriend = (id: number) =>
+    setFriends((prevState) => prevState.filter((f) => f.id !== id));
 
   const getFriends = (paginate: boolean) => {
     const pageNum = paginate ? pagination.page : -1;
@@ -28,7 +38,11 @@ const Friends = () => {
           setMessage('You currently have no friends');
         }
         setPagination({ ...pagination, page, pageSize, direction, totalPages });
-        setFriends((prevState) => [...prevState, ...friends]);
+        if (paginate) {
+          setFriends((prevState) => [...prevState, ...friends]);
+        } else {
+          setFriends(friends);
+        }
       })
       .catch((err) => {
         throw new Error(err.response.data.message);
@@ -42,10 +56,24 @@ const Friends = () => {
     }
   }, [shouldRun.current, getFriends]);
 
+  useEffect(() => {
+    if (friendRequestAccepted) {
+      handleSetFriendRequestAccepted(false);
+      getFriends(false);
+    }
+  }, [friendRequestAccepted, handleSetFriendRequestAccepted]);
+
   return (
     <Box p="1rem">
       {friends.map((f) => {
-        return <Friend key={f.id} friend={f} />;
+        return (
+          <Friend
+            handleRemoveFriend={handleRemoveFriend}
+            getFriends={getFriends}
+            key={f.id}
+            friend={f}
+          />
+        );
       })}
       {message.length > 0 && (
         <Text textAlign="center" fontSize="0.9rem" color="text.primary">
