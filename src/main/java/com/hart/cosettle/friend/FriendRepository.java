@@ -2,6 +2,7 @@ package com.hart.cosettle.friend;
 
 import com.hart.cosettle.friend.dto.FriendDto;
 import com.hart.cosettle.friend.dto.FriendRequestDto;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +25,8 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
              WHERE u.id = :userId
              AND f.accepted = true
             """)
-    Page<FriendDto> getFriends(@Param("userId") Long userId, Pageable paging);
-
+    Page<FriendDto> getFriends(@Param("userId") Long userId, Pageable paging)
+           
     @Query(value = """
                         SELECT new com.hart.cosettle.friend.dto.FriendRequestDto(
                  f.id AS id, u.id AS senderId, u.firstName AS firstName,

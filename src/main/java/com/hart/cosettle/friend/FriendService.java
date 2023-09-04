@@ -45,7 +45,9 @@ public class FriendService {
         Friend friend = this.getFriendById(id);
         friend.setAccepted(true);
         this.friendRepository.save(friend);
-        mirrorFriendShip(userId, friendId);
+        if (!negateDuplicateFriendRequest(userId, friendId) || !negateDuplicateFriendRequest(friendId, userId)) {
+            mirrorFriendShip(userId, friendId);
+        }
     }
 
     public FriendPaginationDto getFriends(Long userId, int page, int pageSize, String direction) {
