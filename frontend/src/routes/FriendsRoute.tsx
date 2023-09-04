@@ -10,6 +10,7 @@ const FriendsRoute = () => {
   const { user } = useContext(UserContext) as IUserContext;
   const shouldRun = useRef(true);
   const [friendRequests, setFriendRequests] = useState<IFriendRequest[]>([]);
+  const [friendRequestAccepted, setFriendRequestAccepted] = useState(false);
   const [pagination, setPagination] = useState<IPagination>({
     pageSize: 1,
     page: 0,
@@ -35,11 +36,16 @@ const FriendsRoute = () => {
       });
   };
 
+  const handleSetFriendRequestAccepted = (accepted: boolean) => {
+    setFriendRequestAccepted(accepted);
+  };
+
   const handleAcceptFriendRequest = (id: number, userId: number, friendId: number) => {
     setFriendRequests((prevState) => prevState.filter((fr) => fr.id !== id));
     Client.acceptFriendRequest(id, userId, friendId)
       .then(() => {
         getFriendRequests(false);
+        handleSetFriendRequestAccepted(true);
       })
       .catch((err) => {
         throw new Error(err.response.data.message);
@@ -82,6 +88,8 @@ const FriendsRoute = () => {
           totalPages={pagination.totalPages}
           handleIgnoreFriendRequest={handleIgnoreFriendRequest}
           handleAcceptFriendRequest={handleAcceptFriendRequest}
+          handleSetFriendRequestAccepted={handleSetFriendRequestAccepted}
+          friendRequestAccepted={friendRequestAccepted}
         />
         <Flex
           justifyContent="center"

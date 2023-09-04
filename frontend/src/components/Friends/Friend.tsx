@@ -1,23 +1,26 @@
-import { Box, Text, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex, Button } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import Avatar from '../Shared/Avatar';
-import { IFriend } from '../../interfaces';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { IFriend, IUserContext } from '../../interfaces';
+import { useEffect, useState, useRef, useCallback, useContext } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import FriendDetails from './FriendDetails';
+import { UserContext } from '../../context/user';
+import { Client } from '../../util/client';
 
 interface IFriendProps {
   friend: IFriend;
+  getFriends: (paginate: boolean) => void;
+  handleRemoveFriend: (id: number) => void;
 }
 
-const Friend = ({ friend }: IFriendProps) => {
+const Friend = ({ friend, getFriends, handleRemoveFriend }: IFriendProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const [openPopOver, setOpenPopOver] = useState(false);
 
   const clickAway = useCallback(
     (e: MouseEvent) => {
-      console.log('clickAway');
       const target = e.target as Element;
       if (menuRef.current !== null && triggerRef.current !== null) {
         if (!menuRef.current.contains(target) && !triggerRef.current.contains(target)) {
@@ -34,9 +37,25 @@ const Friend = ({ friend }: IFriendProps) => {
   }, [clickAway]);
 
   const handleSetOpenPopOver = (e: React.MouseEvent<HTMLDivElement>, open: boolean) => {
-    console.log('handlePopOver');
     e.stopPropagation();
-    setOpenPopOver(false);
+    setOpenPopOver(open);
+  };
+
+  const removeFriend = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number,
+    userId: number,
+    friendId: number
+  ) => {
+    e.stopPropagation();
+    Client.removeFriend(userId, friendId)
+      .then(() => {
+        handleRemoveFriend(id);
+        getFriends(false);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
   };
 
   return (
@@ -82,7 +101,12 @@ const Friend = ({ friend }: IFriendProps) => {
                   Go to profile
                 </Button>
               </RouterLink>
-              <Button size="sm">Remove friend</Button>
+              <Button
+                size="sm"
+                onClick={(e) => removeFriend(e, friend.id, user.id, friend.userId)}
+              >
+                Remove friend
+              </Button>
             </Flex>
           </Flex>
         </Box>

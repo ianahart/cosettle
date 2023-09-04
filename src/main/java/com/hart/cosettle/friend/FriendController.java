@@ -1,10 +1,12 @@
 package com.hart.cosettle.friend;
 
 import com.hart.cosettle.friend.request.AcceptFriendRequestRequest;
+import com.hart.cosettle.friend.request.RemoveFriendRequest;
 import com.hart.cosettle.friend.response.AcceptFriendRequestResponse;
 import com.hart.cosettle.friend.response.DeleteFriendRequestResponse;
 import com.hart.cosettle.friend.response.GetFriendRequestsResponse;
 import com.hart.cosettle.friend.response.GetFriendsResponse;
+import com.hart.cosettle.friend.response.RemoveFriendResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,12 @@ public class FriendController {
     @Autowired
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
+    }
+
+    @PostMapping("/remove-friend")
+    public ResponseEntity<RemoveFriendResponse> removeFriend(@RequestBody RemoveFriendRequest request) {
+        this.friendService.removeFriend(request.getUserId(), request.getFriendId());
+        return ResponseEntity.status(HttpStatus.OK).body(new RemoveFriendResponse("success"));
     }
 
     @PostMapping("/requests")
