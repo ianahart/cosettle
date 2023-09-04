@@ -1,13 +1,16 @@
-import { Box, Heading, Flex, Text, Button, ButtonGroup } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, ButtonGroup } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { IFriendRequest, IPagination, IUserContext } from '../../interfaces';
 import Avatar from '../Shared/Avatar';
+import Header from './Header';
+import Friends from './Friends';
 
 interface IFriendsListProps {
   friendRequests: IFriendRequest[];
   getFriendRequests: (paginate: boolean) => void;
-  pagination: IPagination;
+  page: number;
+  totalPages: number;
   handleIgnoreFriendRequest: (id: number) => void;
   handleAcceptFriendRequest: (id: number, userId: number, friendId: number) => void;
 }
@@ -15,7 +18,8 @@ interface IFriendsListProps {
 const FriendsList = ({
   friendRequests,
   getFriendRequests,
-  pagination,
+  page,
+  totalPages,
   handleIgnoreFriendRequest,
   handleAcceptFriendRequest,
 }: IFriendsListProps) => {
@@ -48,23 +52,7 @@ const FriendsList = ({
       minH="100vh"
       className="sidebar"
     >
-      <Heading
-        mt="3rem"
-        color="text.primary"
-        textAlign="center"
-        width="100%"
-        fontSize="1.5rem"
-      >
-        Friend Requests
-      </Heading>
-      <Box
-        mt="0.5rem"
-        height="10px"
-        width="100%"
-        borderRadius={4}
-        bg="radial-gradient(circle, rgba(128,90,213,1) 29%, rgba(213,63,140,1) 100%)"
-      ></Box>
-
+      <Header heading="Friend Requests" />
       <Box p="1rem" mt="2rem" className="overflow-scroll" height="400px" overflowY="auto">
         {friendRequests.map((fr) => {
           return (
@@ -96,13 +84,17 @@ const FriendsList = ({
             </Box>
           );
         })}
-        {pagination.page < pagination.totalPages && (
+        {page < totalPages && (
           <Flex justify="center">
             <Button onClick={() => getFriendRequests(true)} size="sm">
               See more...
             </Button>
           </Flex>
         )}
+      </Box>
+      <Box height="400px" mt="2rem">
+        <Header heading="Friends" />
+        <Friends />
       </Box>
     </Box>
   );

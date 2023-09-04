@@ -139,6 +139,15 @@ export interface IFriendRequest {
   senderId: number;
 }
 
+export interface IFriend {
+  id: number;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  profileId: number;
+}
+
 export interface ISearchUser {
   avatarUrl: string;
   email: string;

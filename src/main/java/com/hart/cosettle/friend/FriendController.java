@@ -4,6 +4,7 @@ import com.hart.cosettle.friend.request.AcceptFriendRequestRequest;
 import com.hart.cosettle.friend.response.AcceptFriendRequestResponse;
 import com.hart.cosettle.friend.response.DeleteFriendRequestResponse;
 import com.hart.cosettle.friend.response.GetFriendRequestsResponse;
+import com.hart.cosettle.friend.response.GetFriendsResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,16 @@ public class FriendController {
     public ResponseEntity<DeleteFriendRequestResponse> deleteFriendRequest(@PathVariable("id") Long id) {
         this.friendService.deleteFriendRequest(id);
         return ResponseEntity.status(HttpStatus.OK).body(new DeleteFriendRequestResponse("success"));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<GetFriendsResponse> getFriends(
+            @RequestParam("userId") Long userId,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new GetFriendsResponse("success", this.friendService.getFriends(userId, page, pageSize, direction)));
     }
 
     @GetMapping("/requests")

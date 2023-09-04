@@ -4,6 +4,7 @@ import { IPagination, ISearchUser, IUserContext } from '../../interfaces';
 import { Client } from '../../util/client';
 import { UserContext } from '../../context/user';
 import Users from './Users';
+import Header from './Header';
 
 interface ISearchUserProps {
   addFriendRequest: (friendRequest: any) => void;
@@ -57,16 +58,7 @@ const SearchUsers = ({ addFriendRequest }: ISearchUserProps) => {
         mt="3rem"
         as="header"
       >
-        <Heading textAlign="center" width="100%" fontSize="1.5rem">
-          Find Friends
-        </Heading>
-        <Box
-          mt="0.5rem"
-          height="10px"
-          width="100%"
-          borderRadius={4}
-          bg="radial-gradient(circle, rgba(128,90,213,1) 29%, rgba(213,63,140,1) 100%)"
-        ></Box>
+        <Header heading="Find Friends" />
       </Flex>
       <Flex flexDir={['column', 'column', 'row']} my="3rem" alignItems="center">
         <Input
