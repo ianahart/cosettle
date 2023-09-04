@@ -1,5 +1,7 @@
 package com.hart.cosettle.friend;
 
+import com.hart.cosettle.friend.dto.FriendDto;
+import com.hart.cosettle.friend.dto.FriendPaginationDto;
 import com.hart.cosettle.friend.dto.FriendRequestDto;
 import com.hart.cosettle.friend.dto.FriendRequestPaginationDto;
 import com.hart.cosettle.friend.request.FriendRequestRequest;
@@ -46,6 +48,20 @@ public class FriendService {
         if (!negateDuplicateFriendRequest(userId, friendId) || !negateDuplicateFriendRequest(friendId, userId)) {
             mirrorFriendShip(userId, friendId);
         }
+    }
+
+    public FriendPaginationDto getFriends(Long userId, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<FriendDto> results = this.friendRepository.getFriends(userId, paging);
+
+        return new FriendPaginationDto(
+                results.getContent(),
+                currentPage,
+                pageSize,
+                results.getTotalPages(),
+                direction);
+
     }
 
     public FriendRequestPaginationDto getFriendRequests(Long userId, int page, int pageSize, String direction) {

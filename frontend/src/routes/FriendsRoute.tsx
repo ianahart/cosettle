@@ -78,7 +78,8 @@ const FriendsRoute = () => {
         <FriendsList
           friendRequests={friendRequests}
           getFriendRequests={getFriendRequests}
-          pagination={pagination}
+          page={pagination.page}
+          totalPages={pagination.totalPages}
           handleIgnoreFriendRequest={handleIgnoreFriendRequest}
           handleAcceptFriendRequest={handleAcceptFriendRequest}
         />
