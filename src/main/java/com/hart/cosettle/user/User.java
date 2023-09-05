@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.passwordreset.PasswordReset;
+import com.hart.cosettle.privatemessage.PrivateMessage;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.space.Space;
@@ -94,6 +95,12 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Friend> users;
+
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrivateMessage> receivers;
+
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrivateMessage> sender;
 
     public User() {
 

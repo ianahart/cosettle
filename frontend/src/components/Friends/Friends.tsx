@@ -68,6 +68,7 @@ const Friends = ({
       {friends.map((f) => {
         return (
           <Friend
+            messages={false}
             handleRemoveFriend={handleRemoveFriend}
             getFriends={getFriends}
             key={f.id}

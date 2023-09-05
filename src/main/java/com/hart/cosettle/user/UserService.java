@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
+import com.hart.cosettle.user.dto.ChatUserDto;
 import com.hart.cosettle.user.dto.SearchUserDto;
 import com.hart.cosettle.user.dto.UserDto;
 import com.hart.cosettle.user.dto.UserPaginationDto;
@@ -48,6 +49,13 @@ public class UserService {
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
 
+    }
+
+    public ChatUserDto getUser(Long userId) {
+        if (userId == null) {
+            throw new BadRequestException("User id missing in request");
+        }
+        return this.userRepository.getUser(userId);
     }
 
     public UserPaginationDto searchUsers(Long userId, String direction, int page, int pageSize, String term) {

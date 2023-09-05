@@ -3,6 +3,7 @@ package com.hart.cosettle.user;
 import com.hart.cosettle.user.dto.UserDto;
 import com.hart.cosettle.user.request.ChangePasswordUserRequest;
 import com.hart.cosettle.user.response.ChangePasswordUserResponse;
+import com.hart.cosettle.user.response.GetUserResponse;
 import com.hart.cosettle.user.response.SearchUserResponse;
 import com.hart.cosettle.advice.NotFoundException;
 
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,12 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<GetUserResponse> getUser(@PathVariable("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new GetUserResponse("success", this.userService.getUser(userId)));
     }
 
     @PatchMapping("/{userId}/change-password")

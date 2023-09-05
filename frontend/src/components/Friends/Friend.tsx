@@ -2,18 +2,27 @@ import { Box, Flex, Button } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { IFriend, IUserContext } from '../../interfaces';
 import { useEffect, useState, useRef, useCallback, useContext } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineMessage, AiOutlineMinus } from 'react-icons/ai';
 import FriendDetails from './FriendDetails';
 import { UserContext } from '../../context/user';
 import { Client } from '../../util/client';
+import { BiUserMinus } from 'react-icons/bi';
 
 interface IFriendProps {
   friend: IFriend;
+  messages: boolean;
   getFriends: (paginate: boolean) => void;
   handleRemoveFriend: (id: number) => void;
+  handleSwitchChat?: (userId: number) => void;
 }
 
-const Friend = ({ friend, getFriends, handleRemoveFriend }: IFriendProps) => {
+const Friend = ({
+  friend,
+  getFriends,
+  handleRemoveFriend,
+  messages,
+  handleSwitchChat = undefined,
+}: IFriendProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -58,6 +67,12 @@ const Friend = ({ friend, getFriends, handleRemoveFriend }: IFriendProps) => {
       });
   };
 
+  const switchChat = (userId: number) => {
+    if (handleSwitchChat !== undefined) {
+      handleSwitchChat(userId);
+    }
+  };
+
   return (
     <Box
       cursor="pointer"
@@ -97,16 +112,29 @@ const Friend = ({ friend, getFriends, handleRemoveFriend }: IFriendProps) => {
             <FriendDetails friend={friend} />
             <Flex justify="space-between" mt="2rem" alignItems="center">
               <RouterLink to={`/profiles/${friend.profileId}`}>
-                <Button size="sm" colorScheme="purple">
+                <Button mr="0.5rem" size="sm" colorScheme="purple">
                   Go to profile
                 </Button>
               </RouterLink>
-              <Button
-                size="sm"
-                onClick={(e) => removeFriend(e, friend.id, user.id, friend.userId)}
-              >
-                Remove friend
-              </Button>
+              <Flex direction="column">
+                <Button
+                  size="sm"
+                  onClick={(e) => removeFriend(e, friend.id, user.id, friend.userId)}
+                >
+                  <Box mx="0.25rem">
+                    <BiUserMinus />
+                  </Box>
+                  Remove friend
+                </Button>
+                {messages && (
+                  <Button onClick={() => switchChat(friend.userId)} my="0.5rem" size="sm">
+                    <Box mx="0.25rem">
+                      <AiOutlineMessage />
+                    </Box>
+                    Messages
+                  </Button>
+                )}
+              </Flex>
             </Flex>
           </Flex>
         </Box>

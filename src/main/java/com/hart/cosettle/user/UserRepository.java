@@ -2,6 +2,7 @@ package com.hart.cosettle.user;
 
 import java.util.Optional;
 
+import com.hart.cosettle.user.dto.ChatUserDto;
 import com.hart.cosettle.user.dto.SearchUserDto;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Query(value = """
+            SELECT new com.hart.cosettle.user.dto.ChatUserDto(
+             u.id AS id, u.firstName AS firstName, u.lastName AS lastName,
+             u.email AS email, p.avatarUrl AS avatarUrl
+            ) FROM User u
+            INNER JOIN u.profile p
+            WHERE u.id = :userId
+            """)
+
+    ChatUserDto getUser(@Param("userId") Long userId);
 
     Optional<User> findByEmail(String email);
 

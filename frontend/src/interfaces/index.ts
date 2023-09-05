@@ -12,6 +12,18 @@ export interface IChangePasswordForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IPrivateMessage {
+  createdAt: Date;
+  id: number;
+  message: string;
+  receiverAvatarUrl: string;
+  receiverFirstName: string;
+  receiverLastName: string;
+  receiverUserId: number;
+  senderAvatarUrl: string;
+  senderUserId: number;
+}
+
 export interface IResetPasswordForm {
   password: { name: string; value: string; error: string; type: string };
   confirmPassword: { name: string; value: string; error: string; type: string };
@@ -155,4 +167,12 @@ export interface ISearchUser {
   lastName: string;
   profileId: number;
   userId: number;
+}
+
+export interface IChatUser {
+  avatarUrl: string;
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
 }
