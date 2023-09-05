@@ -39,12 +39,12 @@ public class FriendService {
         Friend friendShipTwo = this.friendRepository.getFriendShip(friendId, userId);
 
         if (friendShipOne != null) {
-        this.friendRepository.deleteById(friendShipOne.getId());
+            this.friendRepository.deleteById(friendShipOne.getId());
 
         }
 
         if (friendShipTwo != null) {
-        this.friendRepository.deleteById(friendShipTwo.getId());
+            this.friendRepository.deleteById(friendShipTwo.getId());
 
         }
     }

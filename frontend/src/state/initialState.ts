@@ -182,3 +182,11 @@ export const passwordMeterState = [
     word: 'Excellent',
   },
 ];
+
+export const chatUserState = {
+  avatarUrl: '',
+  email: '',
+  firstName: '',
+  id: 0,
+  lastName: '',
+};

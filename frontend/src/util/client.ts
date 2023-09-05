@@ -6,6 +6,14 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getChatMessages: (userId: number, friendId: number) => {
+    return http.get(`/private-messages?userId=${userId}&friendId=${friendId}`);
+  },
+
+  getUser: (userId: number) => {
+    return http.get(`/users/${userId}`);
+  },
+
   removeFriend: (userId: number, friendId: number) => {
     return http.post('/friends/remove-friend', { userId, friendId });
   },
