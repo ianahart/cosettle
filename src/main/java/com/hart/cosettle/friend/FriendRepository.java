@@ -14,12 +14,12 @@ import org.springframework.stereotype.Repository;
 public interface FriendRepository extends JpaRepository<Friend, Long> {
 
     @Query(value = """
-                SELECT fu.id FROM Frie
-                INNER JOIN f.frien
-                INNER JOIN f.us
-                WHERE u.id = :us
-                AND (LOWER(fu.firstName) = :firstName AND LOWER(fu.lastName) = :lastN
-                    """)
+            SELECT fu.id FROM Friend f
+            INNER JOIN f.friend fu
+            INNER JOIN f.user u
+            WHERE u.id = :userId
+            AND (LOWER(fu.firstName) = :firstName AND LOWER(fu.lastName) = :lastName)
+                """)
     Long searchFriend(@Param("userId") Long userId, @Param("firstName") String firstName,
             @Param("lastName") String lastName);
 
