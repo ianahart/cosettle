@@ -30,6 +30,21 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
              INNER JOIN f.friend fu
              INNER JOIN f.friend.profile p
              INNER JOIN f.user u
+             WHERE f.accepted = true
+             AND (LOWER(fu.firstName) LIKE %:searchTerm% AND fu.id <> :userId AND u.id = :userId)
+             OR (LOWER(fu.lastName) LIKE %:searchTerm% AND fu.id <> :userId AND u.id = :userId)
+            """)
+    Page<FriendDto> searchFriends(@Param("userId") Long userId, @Param("searchTerm") String searchTerm,
+            Pageable paging);
+
+    @Query(value = """
+            SELECT new com.hart.cosettle.friend.dto.FriendDto(
+             f.id AS id, fu.id AS userId, fu.firstName as firstName,
+             fu.lastName AS lastName, p.avatarUrl AS avatarUrl, p.id as profileId
+            ) FROM Friend f
+             INNER JOIN f.friend fu
+             INNER JOIN f.friend.profile p
+             INNER JOIN f.user u
              WHERE u.id = :userId
              AND f.accepted = true
             """)

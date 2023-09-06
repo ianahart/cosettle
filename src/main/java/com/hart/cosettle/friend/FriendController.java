@@ -31,6 +31,18 @@ public class FriendController {
         this.friendService = friendService;
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<GetFriendsResponse> searchFriends(
+            @RequestParam("userId") Long userId,
+            @RequestParam("searchTerm") String searchTerm,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new GetFriendsResponse("success",
+                this.friendService.searchFriends(userId, searchTerm, page, pageSize, direction)));
+    }
+
     @PostMapping("/remove-friend")
     public ResponseEntity<RemoveFriendResponse> removeFriend(@RequestBody RemoveFriendRequest request) {
         this.friendService.removeFriend(request.getUserId(), request.getFriendId());

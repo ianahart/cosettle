@@ -23,19 +23,22 @@ const PrivateMessage = ({ privateMessage }: IPrivateMessageProps) => {
       <Flex
         flexDir={`${user.id === privateMessage.senderUserId ? 'row' : 'row-reverse'}`}
       >
-        <Text
-          wordBreak="break-all"
-          minH="40px"
-          minW="150px"
-          borderRadius={20}
-          bg="#303032"
-          textAlign="center"
-          p="0.25rem"
-          mr="1rem"
-          color="text.primary"
-        >
-          {privateMessage.message}
-        </Text>
+        <Box>
+          <Text
+            fontSize="0.85rem"
+            wordBreak="break-all"
+            minH="40px"
+            minW="150px"
+            borderRadius={20}
+            bg="#303032"
+            textAlign="center"
+            p="0.25rem"
+            mx="1rem"
+            color="text.primary"
+          >
+            {privateMessage.message}
+          </Text>
+        </Box>
         <Box>
           <Avatar
             url={privateMessage.senderAvatarUrl}

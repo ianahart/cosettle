@@ -84,6 +84,20 @@ public class FriendService {
 
     }
 
+    public FriendPaginationDto searchFriends(Long userId, String searchTerm, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<FriendDto> results = this.friendRepository.searchFriends(userId, searchTerm.toLowerCase(), paging);
+
+        return new FriendPaginationDto(
+                results.getContent(),
+                currentPage,
+                pageSize,
+                results.getTotalPages(),
+                direction);
+
+    }
+
     public FriendRequestPaginationDto getFriendRequests(Long userId, int page, int pageSize, String direction) {
         int currentPage = MyUtils.paginate(page, direction);
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());

@@ -1,4 +1,4 @@
-import { Text, Box, Button, ButtonGroup, Flex, Heading, Input } from '@chakra-ui/react';
+import { Text, Box, Button, ButtonGroup, Flex, Input } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { IPagination, ISearchUser, IUserContext } from '../../interfaces';
 import { Client } from '../../util/client';
@@ -66,7 +66,7 @@ const SearchUsers = ({ addFriendRequest }: ISearchUserProps) => {
           value={searchTerm}
           placeholder="Search for people..."
           width="80%"
-          borderColor="text.secondary"
+          borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
         />
         <Button
           onClick={handleOnClick}

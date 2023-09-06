@@ -139,7 +139,7 @@ const PrivateMessages = ({ currentChatUserId }: IChatMessagesProps) => {
           );
         })}
       </Flex>
-      <Box bg="#333131">
+      <Box bg="#333131" borderBottomRadius={4}>
         <Textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

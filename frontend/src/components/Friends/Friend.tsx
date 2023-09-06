@@ -2,7 +2,7 @@ import { Box, Flex, Button } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { IFriend, IUserContext } from '../../interfaces';
 import { useEffect, useState, useRef, useCallback, useContext } from 'react';
-import { AiOutlineClose, AiOutlineMessage, AiOutlineMinus } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineMessage } from 'react-icons/ai';
 import FriendDetails from './FriendDetails';
 import { UserContext } from '../../context/user';
 import { Client } from '../../util/client';

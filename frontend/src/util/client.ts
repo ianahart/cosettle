@@ -6,10 +6,21 @@ export const http = axios.create({
 });
 
 export const Client = {
+  searchFriends: (
+    userId: number,
+    searchTerm: string,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/friends/search?userId=${userId}&searchTerm=${searchTerm}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   getChatMessages: (userId: number, friendId: number) => {
     return http.get(`/private-messages?userId=${userId}&friendId=${friendId}`);
   },
-
   getUser: (userId: number) => {
     return http.get(`/users/${userId}`);
   },
