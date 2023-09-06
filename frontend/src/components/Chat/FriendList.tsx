@@ -18,6 +18,7 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
   const [friends, setFriends] = useState<IFriend[]>([]);
   const [message, setMessage] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [searchType, setSearchType] = useState('friends');
   const [searchTerm, setSearchTerm] = useState('');
   const [friendPagination, setFriendPagination] = useState<IPagination>({
     page: 0,
@@ -74,8 +75,10 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
   const handleRemoveFriend = (id: number) =>
     setFriends((prevState) => prevState.filter((f) => f.id !== id));
 
-  const handleSetShowSearch = () => setShowSearch((prevState) => !prevState);
-
+  const handleSetShowSearch = (type: string) => {
+    setShowSearch((prevState) => !prevState);
+    setSearchType(type);
+  };
   const getAllFriends = () => {
     setFriends([]);
     setShowSearch(false);
@@ -131,6 +134,30 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
       });
   };
 
+  const searchFriend = () => {
+    setMessage('');
+    Client.searchFriend(user.id, searchTerm)
+      .then((res) => {
+        if (res.data.id !== null) {
+          handleSwitchChat(res.data.id);
+        } else {
+          setMessage(`Could not find ${searchTerm}`);
+        }
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const delagateSearch = () => {
+    searchType === 'chat' ? searchFriend() : searchFriends(false);
+  };
+
+  const hideSearch = () => {
+    setShowSearch(false);
+    setSearchTerm('');
+  };
+
   return (
     <Box>
       <Box
@@ -143,11 +170,18 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
             <Box color="text.primary" mx="0.25rem">
               <BsFillChatRightTextFill />
             </Box>
-            <Text color="text.primary">New Chat</Text>
+            <Text
+              role="button"
+              cursor="pointer"
+              onClick={() => handleSetShowSearch('chat')}
+              color="text.primary"
+            >
+              New Chat
+            </Text>
           </Flex>
           <Flex align="center">
             <Box
-              onClick={handleSetShowSearch}
+              onClick={() => handleSetShowSearch('friends')}
               cursor="pointer"
               color="text.primary"
               mx="0.25rem"
@@ -172,10 +206,10 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
               />
             </Box>
             <ButtonGroup display="flex" flexDir="column">
-              <Button onClick={() => searchFriends(false)} size="sm" m="0.25rem">
+              <Button onClick={delagateSearch} size="sm" m="0.25rem">
                 Search
               </Button>
-              <Button onClick={() => setShowSearch(false)} size="sm" m="0.25rem">
+              <Button onClick={hideSearch} size="sm" m="0.25rem">
                 Hide
               </Button>
             </ButtonGroup>

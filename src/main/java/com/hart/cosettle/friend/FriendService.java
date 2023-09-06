@@ -7,6 +7,7 @@ import com.hart.cosettle.friend.dto.FriendRequestPaginationDto;
 import com.hart.cosettle.friend.request.FriendRequestRequest;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.advice.ForbiddenException;
+import com.hart.cosettle.advice.BadRequestException;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
 import com.hart.cosettle.util.MyUtils;
@@ -28,6 +29,17 @@ public class FriendService {
     public FriendService(UserService userService, FriendRepository friendRepository) {
         this.userService = userService;
         this.friendRepository = friendRepository;
+    }
+
+    public Long searchFriend(Long userId, String searchTerm) {
+        if (searchTerm.trim().length() == 0 || userId == null) {
+            throw new BadRequestException("Missing query parameters");
+        }
+
+        String firstName = searchTerm.split(" ")[0].toLowerCase();
+        String lastName = searchTerm.split(" ")[1].toLowerCase();
+
+        return this.friendRepository.searchFriend(userId, firstName, lastName);
     }
 
     public void removeFriend(Long userId, Long friendId) {

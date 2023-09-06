@@ -7,6 +7,7 @@ import com.hart.cosettle.friend.response.DeleteFriendRequestResponse;
 import com.hart.cosettle.friend.response.GetFriendRequestsResponse;
 import com.hart.cosettle.friend.response.GetFriendsResponse;
 import com.hart.cosettle.friend.response.RemoveFriendResponse;
+import com.hart.cosettle.friend.response.SearchFriendResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,15 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search-friend")
+    public ResponseEntity<SearchFriendResponse> searchFriend(
+            @RequestParam("userId") Long userId,
+            @RequestParam("searchTerm") String searchTerm) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new SearchFriendResponse("success", this.friendService.searchFriend(userId, searchTerm)));
+    }
+
+    @GetMapping("/search-friends")
     public ResponseEntity<GetFriendsResponse> searchFriends(
             @RequestParam("userId") Long userId,
             @RequestParam("searchTerm") String searchTerm,
