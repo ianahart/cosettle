@@ -6,9 +6,9 @@ export const http = axios.create({
 });
 
 export const Client = {
-    searchFriend: (userId: number, searchTerm: string) => {
-        return http.get(`/friends/search-friend?userId=${userId}&searchTerm=${searchTerm}`)
-    },
+  searchFriend: (userId: number, searchTerm: string) => {
+    return http.get(`/friends/search-friend?userId=${userId}&searchTerm=${searchTerm}`);
+  },
 
   searchFriends: (
     userId: number,

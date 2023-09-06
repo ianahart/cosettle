@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.friend.Friend;
+import com.hart.cosettle.friend.FriendRepository;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
 import com.hart.cosettle.user.dto.ChatUserDto;
@@ -21,6 +23,7 @@ import com.hart.cosettle.user.request.ChangePasswordUserRequest;
 import com.hart.cosettle.util.MyUtils;
 
 import java.security.Key;
+import java.util.List;
 
 import com.hart.cosettle.advice.BadRequestException;
 
@@ -40,14 +43,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
+    private final FriendRepository friendRepository;
 
     @Autowired
     public UserService(UserRepository userRepository,
             PasswordResetService passwordResetService,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder,
+            FriendRepository friendRepository) {
         this.userRepository = userRepository;
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
+        this.friendRepository = friendRepository;
 
     }
 
@@ -58,13 +64,35 @@ public class UserService {
         return this.userRepository.getUser(userId);
     }
 
+    private void addFriendShipStatus(List<SearchUserDto> users, Long userId) {
+        for (SearchUserDto user : users) {
+            Friend friend = null;
+            friend = this.friendRepository.getFriendShip(userId, user.getUserId());
+            if (friend == null) {
+                friend = this.friendRepository.getFriendShip(user.getUserId(), userId);
+            }
+            if (friend != null) {
+                if (friend.getAccepted()) {
+                    user.setStatus("Friends");
+                } else if (!friend.getAccepted() && friend.getRequested()) {
+                    user.setStatus("Pending");
+                } else {
+                    user.setStatus("");
+                }
+            }
+        }
+
+    }
+
     public UserPaginationDto searchUsers(Long userId, String direction, int page, int pageSize, String term) {
         int currentPage = MyUtils.paginate(page, direction);
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
         Page<SearchUserDto> results = this.userRepository.searchUsers(userId, term, paging);
+        List<SearchUserDto> users = results.getContent();
 
+        addFriendShipStatus(users, userId);
         return new UserPaginationDto(
-                results.getContent(),
+                users,
                 currentPage,
                 pageSize,
                 results.getTotalPages(),

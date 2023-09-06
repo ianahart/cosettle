@@ -88,7 +88,7 @@ const Users = ({ users, addFriendRequest }: IUsersProps) => {
                 </Box>
               </Flex>
             </Box>
-            {user.userId !== currentUser.id && (
+            {user.userId !== currentUser.id && user.status === null && (
               <Button
                 onClick={() => sendFriendRequest(user.userId, currentUser.id)}
                 bg="transparent"
@@ -101,6 +101,17 @@ const Users = ({ users, addFriendRequest }: IUsersProps) => {
                   <AiOutlinePlus />
                 </Box>
                 Add as friend
+              </Button>
+            )}
+            {user.userId !== currentUser.id && user.status !== null && (
+              <Button
+                bg="transparent"
+                border="1px solid"
+                borderColor="text.primary"
+                color="text.primary"
+                _hover={{ bg: 'transparent' }}
+              >
+                {user.status}
               </Button>
             )}
           </Flex>

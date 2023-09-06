@@ -7,6 +7,7 @@ public class SearchUserDto {
     private String lastName;
     private String email;
     private String avatarUrl;
+    private String status;
 
     public SearchUserDto() {
 
@@ -29,6 +30,10 @@ public class SearchUserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public Long getUserId() {
@@ -73,6 +78,10 @@ public class SearchUserDto {
 
     public void setProfileId(Long profileId) {
         this.profileId = profileId;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -167,6 +167,7 @@ export interface ISearchUser {
   lastName: string;
   profileId: number;
   userId: number;
+  status: string;
 }
 
 export interface IChatUser {

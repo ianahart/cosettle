@@ -5,7 +5,6 @@ import { UserContext } from '../../context/user';
 import { Client } from '../../util/client';
 import { BsFillChatRightTextFill } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { MdSettings } from 'react-icons/md';
 import Friend from '../Friends/Friend';
 
 interface IFriendListProps {
@@ -187,9 +186,6 @@ const FriendList = ({ handleSwitchChat }: IFriendListProps) => {
               mx="0.25rem"
             >
               <AiOutlineSearch />
-            </Box>
-            <Box color="text.primary" mx="0.25rem">
-              <MdSettings />
             </Box>
           </Flex>
         </Flex>
