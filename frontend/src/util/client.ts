@@ -6,6 +6,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getUsers: (page: number, pageSize: number, direction: string) => {
+    return http.get(`/users?page=${page}&pageSize=${pageSize}&direction=${direction}`);
+  },
+
   searchFriend: (userId: number, searchTerm: string) => {
     return http.get(`/friends/search-friend?userId=${userId}&searchTerm=${searchTerm}`);
   },

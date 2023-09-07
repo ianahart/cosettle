@@ -16,6 +16,7 @@ import com.hart.cosettle.friend.FriendRepository;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
 import com.hart.cosettle.user.dto.ChatUserDto;
+import com.hart.cosettle.user.dto.MinimalUserDto;
 import com.hart.cosettle.user.dto.SearchUserDto;
 import com.hart.cosettle.user.dto.UserDto;
 import com.hart.cosettle.user.dto.UserPaginationDto;
@@ -84,14 +85,15 @@ public class UserService {
 
     }
 
-    public UserPaginationDto searchUsers(Long userId, String direction, int page, int pageSize, String term) {
+    public UserPaginationDto<SearchUserDto> searchUsers(Long userId, String direction, int page, int pageSize,
+            String term) {
         int currentPage = MyUtils.paginate(page, direction);
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
         Page<SearchUserDto> results = this.userRepository.searchUsers(userId, term, paging);
         List<SearchUserDto> users = results.getContent();
 
         addFriendShipStatus(users, userId);
-        return new UserPaginationDto(
+        return new UserPaginationDto<SearchUserDto>(
                 users,
                 currentPage,
                 pageSize,
@@ -191,7 +193,21 @@ public class UserService {
         user.setPassword(this.passwordEncoder.encode(request.getNewPassword()));
 
         this.userRepository.save(user);
-        ;
+
+    }
+
+    public UserPaginationDto<MinimalUserDto> getUsers(int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<MinimalUserDto> result = this.userRepository.getUsers(getCurrentlyLoggedInUser().getId(), paging);
+        System.out.println(result.getContent());
+        List<MinimalUserDto> users = result.getContent();
+        return new UserPaginationDto<MinimalUserDto>(
+                users,
+                currentPage,
+                pageSize,
+                result.getTotalPages(),
+                direction);
 
     }
 }

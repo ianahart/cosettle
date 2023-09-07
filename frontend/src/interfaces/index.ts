@@ -24,6 +24,13 @@ export interface IPrivateMessage {
   senderUserId: number;
 }
 
+export interface IMinimalUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+}
+
 export interface IResetPasswordForm {
   password: { name: string; value: string; error: string; type: string };
   confirmPassword: { name: string; value: string; error: string; type: string };

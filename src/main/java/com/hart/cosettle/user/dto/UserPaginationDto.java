@@ -2,8 +2,8 @@ package com.hart.cosettle.user.dto;
 
 import java.util.List;
 
-public class UserPaginationDto {
-    private List<SearchUserDto> users;
+public class UserPaginationDto<T> {
+    private List<T> users;
     private int page;
     private int pageSize;
     private int totalPages;
@@ -13,7 +13,7 @@ public class UserPaginationDto {
 
     }
 
-    public UserPaginationDto(List<SearchUserDto> users, int page, int pageSize, int totalPages, String direction) {
+    public UserPaginationDto(List<T> users, int page, int pageSize, int totalPages, String direction) {
         this.users = users;
         this.page = page;
         this.pageSize = pageSize;
@@ -25,7 +25,7 @@ public class UserPaginationDto {
         return page;
     }
 
-    public List<SearchUserDto> getUsers() {
+    public List<T> getUsers() {
         return users;
     }
 
@@ -45,7 +45,7 @@ public class UserPaginationDto {
         this.page = page;
     }
 
-    public void setUsers(List<SearchUserDto> users) {
+    public void setUsers(List<T> users) {
         this.users = users;
     }
 
