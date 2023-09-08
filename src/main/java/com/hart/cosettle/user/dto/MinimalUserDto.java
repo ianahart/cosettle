@@ -18,6 +18,7 @@ public class MinimalUserDto {
         this.avatarUrl = avatarUrl;
     }
 
+    public Long getId() {
         return id;
     }
 

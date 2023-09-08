@@ -14,6 +14,7 @@ import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.space.Space;
 import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
+import com.hart.cosettle.group.Group;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -102,6 +103,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrivateMessage> sender;
 
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> adminGroups;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> userGroups;
+
     public User() {
 
     }
@@ -141,6 +148,14 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Group> getUserGroups() {
+        return userGroups;
+    }
+
+    public List<Group> getAdminGroups() {
+        return adminGroups;
     }
 
     public Theme getTheme() {
@@ -218,6 +233,14 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setUserGroups(List<Group> userGroups) {
+        this.userGroups = userGroups;
+    }
+
+    public void setAdminGroups(List<Group> adminGroups) {
+        this.adminGroups = adminGroups;
     }
 
     public void setSpaces(List<Space> spaces) {

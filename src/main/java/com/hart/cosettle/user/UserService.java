@@ -196,11 +196,14 @@ public class UserService {
 
     }
 
+    public List<User> getUserByIds(List<Long> userIds) {
+        return this.userRepository.getUsersByIds(userIds);
+    }
+
     public UserPaginationDto<MinimalUserDto> getUsers(int page, int pageSize, String direction) {
         int currentPage = MyUtils.paginate(page, direction);
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
         Page<MinimalUserDto> result = this.userRepository.getUsers(getCurrentlyLoggedInUser().getId(), paging);
-        System.out.println(result.getContent());
         List<MinimalUserDto> users = result.getContent();
         return new UserPaginationDto<MinimalUserDto>(
                 users,

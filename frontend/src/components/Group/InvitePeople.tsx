@@ -12,7 +12,13 @@ interface IInvitePeopleProps {
   handleAddUserId: (userId: number) => void;
 }
 
-const InvitePeople = ({ users, getUsers, page, totalPages, handleAddUserId }: IInvitePeopleProps) => {
+const InvitePeople = ({
+  users,
+  getUsers,
+  page,
+  totalPages,
+  handleAddUserId,
+}: IInvitePeopleProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const { user } = useContext(UserContext) as IUserContext;

@@ -7,6 +7,7 @@ import Avatar from '../Shared/Avatar';
 import VisibilitySelect from './VisibilitySelect';
 import InvitePeople from './InvitePeople';
 import { Client } from '../../util/client';
+import BasicSpinner from '../Shared/BasicSpinner';
 
 interface ICreateViewProps {
   switchView: (view: string) => void;
@@ -16,11 +17,14 @@ const CreateView = ({ switchView }: ICreateViewProps) => {
   const shouldRun = useRef(true);
   const { user } = useContext(UserContext) as IUserContext;
   const [userIds, setUserIds] = useState<number[]>([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [groupName, setGroupName] = useState('');
   const [users, setUsers] = useState<IMinimalUser[]>([]);
   const [pagination, setPagination] = useState<IPagination>({
     direction: 'next',
     page: 0,
-    pageSize: 1,
+    pageSize: 3,
     totalPages: 0,
   });
   const [privacy, setPrivacy] = useState('');
@@ -58,6 +62,24 @@ const CreateView = ({ switchView }: ICreateViewProps) => {
       getUsers(false);
     }
   }, [getUsers]);
+
+  const handleOnCreateGroup = () => {
+    setError('');
+    if (groupName.trim().length === 0 || privacy.trim().length === 0) {
+      setError('Please fill out group name and privacy');
+      return;
+    }
+    setLoading(true);
+    Client.createGroup(user.id, groupName, privacy, userIds)
+      .then(() => {
+        switchView('main');
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        throw new Error(err.response.data.message);
+      });
+  };
 
   return (
     <Flex
@@ -109,10 +131,19 @@ const CreateView = ({ switchView }: ICreateViewProps) => {
             <Text>Admin</Text>
           </Box>
         </Flex>
+        {error.length > 0 && (
+          <Flex justify="center" my="0.5rem">
+            <Text fontSize="0.8rem" color="red.400">
+              {error}
+            </Text>
+          </Flex>
+        )}
         <Box>
           <form>
             <FormControl my="2rem">
               <Input
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
                 borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
                 placeholder="Group name"
               />
@@ -132,11 +163,18 @@ const CreateView = ({ switchView }: ICreateViewProps) => {
           </form>
         </Box>
       </Box>
-      <Flex>
-        <Button w="100%" colorScheme="purple">
-          Create
-        </Button>
-      </Flex>
+      {loading && (
+        <Flex justify="center">
+          <BasicSpinner message="Creating group..." color="light.primary" />
+        </Flex>
+      )}
+      {!loading && (
+        <Flex>
+          <Button onClick={handleOnCreateGroup} w="100%" colorScheme="purple">
+            Create
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 };

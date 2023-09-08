@@ -6,6 +6,15 @@ export const http = axios.create({
 });
 
 export const Client = {
+  createGroup: (
+    adminId: number,
+    groupName: string,
+    privacy: string,
+    userIds: number[]
+  ) => {
+    return http.post('/groups', { adminId, groupName, privacy, userIds });
+  },
+
   getUsers: (page: number, pageSize: number, direction: string) => {
     return http.get(`/users?page=${page}&pageSize=${pageSize}&direction=${direction}`);
   },
