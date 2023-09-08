@@ -32,6 +32,9 @@ import ProfileRoute from './routes/ProfileRoute';
 import CreateGroupRoute from './routes/Group/CreateGroupRoute';
 import GroupRoute from './routes/Group/GroupRoute';
 import YourGroupsRoute from './routes/Group/YourGroupsRoute';
+import About from './components/Group/GroupLayout/About';
+import Posts from './components/Group/GroupLayout/Posts';
+import Members from './components/Group/GroupLayout/Members';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -148,7 +151,33 @@ function App() {
                       <GroupRoute />
                     </RequireAuth>
                   }
-                />
+                >
+                  <Route
+                    path="about"
+                    element={
+                      <RequireAuth>
+                        <About />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="posts"
+                    element={
+                      <RequireAuth>
+                        <Posts />
+                      </RequireAuth>
+                    }
+                  />
+
+                  <Route
+                    path="members"
+                    element={
+                      <RequireAuth>
+                        <Members />
+                      </RequireAuth>
+                    }
+                  />
+                </Route>
               </Route>
               <Route
                 path="/:username/messages"

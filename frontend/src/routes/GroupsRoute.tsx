@@ -17,7 +17,7 @@ const GroupsRoute = () => {
         border="1px solid"
         borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
       >
-        <Box className="group-outlet-container" mt="3rem" border="1px solid pink">
+        <Box className="group-outlet-container" mt="3rem">
           <Outlet />
         </Box>
       </Box>

@@ -18,5 +18,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
                 AND g.name = :groupName
                 )
             """)
-    boolean checkIfUserInGroupAlready(@Param("adminId") Long adminId, @Param("userId") Long userId, @Param("groupName") String groupName);
+    boolean checkIfUserInGroupAlready(@Param("adminId") Long adminId, @Param("userId") Long userId,
+            @Param("groupName") String groupName);
 }
