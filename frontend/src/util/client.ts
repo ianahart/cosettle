@@ -19,6 +19,18 @@ export const Client = {
       `/group-members/invites?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
     );
   },
+
+  getJoinedGroups: (
+    userId: number,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/group-members/joined-groups?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   getAdminGroups: (
     adminId: number,
     page: number,
@@ -29,7 +41,6 @@ export const Client = {
       `/groups/admin?adminId=${adminId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
     );
   },
-
   createGroup: (
     adminId: number,
     groupName: string,

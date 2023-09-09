@@ -10,9 +10,10 @@ dayjs.extend(localizedFormat);
 
 interface IGroupPreviewProps {
   adminGroup: IGroup;
+  joined: boolean;
 }
 
-const GroupPreview = ({ adminGroup }: IGroupPreviewProps) => {
+const GroupPreview = ({ adminGroup, joined }: IGroupPreviewProps) => {
   const navigate = useNavigate();
 
   const goToGroup = (id: number) => {
@@ -38,9 +39,11 @@ const GroupPreview = ({ adminGroup }: IGroupPreviewProps) => {
           {adminGroup.name}
         </Text>
       </Flex>
-      <Text mt="0.25rem" fontSize="0.7rem">
-        Created {dayjs(adminGroup.createdAt).format('L')}
-      </Text>
+      {!joined && (
+        <Text mt="0.25rem" fontSize="0.7rem">
+          Created {dayjs(adminGroup.createdAt).format('L')}
+        </Text>
+      )}
     </Box>
   );
 };

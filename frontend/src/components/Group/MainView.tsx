@@ -5,12 +5,19 @@ import { FaUsers } from 'react-icons/fa';
 import { Link as RouterLink } from 'react-router-dom';
 import AdminGroups from './AdminGroups';
 import InviteRequests from './InviteRequests';
+import JoinedGroups from './JoinedGroups';
+import { useState } from 'react';
 
 interface IMainViewProps {
   switchView: (view: string) => void;
 }
 
 const MainView = ({ switchView }: IMainViewProps) => {
+  const [refresh, setRefresh] = useState(false);
+
+  const handleRefresh = () => {
+    setRefresh((prevState) => !prevState);
+  };
   return (
     <Box p="1rem" color="text.primary">
       <Box as="header" display="flex" justifyContent="space-between" alignItems="center">
@@ -75,13 +82,16 @@ const MainView = ({ switchView }: IMainViewProps) => {
       </RouterLink>
       <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
       <Box my="2rem">
-        <InviteRequests />
+        <InviteRequests handleRefresh={handleRefresh} />
       </Box>
       <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
       <Box my="2rem">
         <AdminGroups />
       </Box>
       <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box my="2rem">
+        <JoinedGroups refresh={refresh} />
+      </Box>
     </Box>
   );
 };

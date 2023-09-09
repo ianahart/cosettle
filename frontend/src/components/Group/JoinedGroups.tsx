@@ -1,22 +1,17 @@
-import {
-  Box,
-  Heading,
-  Flex,
-  Text,
-  Button,
-  Image,
-  Grid,
-  GridItem,
-} from '@chakra-ui/react';
+import { Box, Heading, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../../context/user';
 import { IJoinedGroup, IPagination, IUserContext } from '../../interfaces';
 import { useNavigate } from 'react-router-dom';
 import { Client } from '../../util/client';
 import groupBG from '../../assets/group.png';
-import BasicSpinner from '../../components/Shared/BasicSpinner';
+import BasicSpinner from '../Shared/BasicSpinner';
 
-const YourGroupsRoute = () => {
+interface IJoinedGroupsProps {
+  refresh: boolean;
+}
+
+const JoinedGroups = ({ refresh }: IJoinedGroupsProps) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as IUserContext;
   const [joinedGroups, setJoinedGroups] = useState<IJoinedGroup[]>([]);
@@ -24,7 +19,7 @@ const YourGroupsRoute = () => {
   const [message, setMessage] = useState('');
   const [pagination, setPagination] = useState<IPagination>({
     page: 0,
-    pageSize: 3,
+    pageSize: 2,
     direction: 'next',
     totalPages: 0,
   });
@@ -34,6 +29,11 @@ const YourGroupsRoute = () => {
   const goToGroup = (id: number) => {
     navigate(`/groups/${id}`);
   };
+
+  useEffect(() => {
+    setJoinedGroups([]);
+    getJoinedGroups(false);
+  }, [refresh]);
 
   const getJoinedGroups = (paginate: boolean) => {
     const pageNum = paginate ? pagination.page : -1;
@@ -85,10 +85,10 @@ const YourGroupsRoute = () => {
           <Text textAlign="center">{message}</Text>
         </Flex>
       )}
-      <Grid gridTemplateColumns="1fr 1fr 1fr" my="1rem" className="overflow-scroll">
+      <Box my="1rem" height="200px" overflowY="auto" className="overflow-scroll">
         {joinedGroups.map((jg) => {
           return (
-            <GridItem
+            <Box
               key={jg.id}
               _hover={{ bg: '#161515' }}
               cursor="pointer"
@@ -96,20 +96,21 @@ const YourGroupsRoute = () => {
               my="1rem"
               p="0.5rem"
             >
-              <Image borderRadius={8} src={jg.url ? jg.url : groupBG} />
-              <Text
-                fontSize="1.2rem"
-                color="text.primary"
-                align="center"
-                ml="0.5rem"
-                fontWeight="bold"
-              >
-                {jg.groupName}
-              </Text>
-            </GridItem>
+              <Flex align="center">
+                <Image
+                  height="45px"
+                  width="45px"
+                  borderRadius={8}
+                  src={jg.url ? jg.url : groupBG}
+                />
+                <Text ml="0.5rem" fontWeight="bold">
+                  {jg.groupName}
+                </Text>
+              </Flex>
+            </Box>
           );
         })}
-      </Grid>
+      </Box>
       {pagination.page < pagination.totalPages - 1 && (
         <Flex>
           <Button
@@ -126,4 +127,4 @@ const YourGroupsRoute = () => {
   );
 };
 
-export default YourGroupsRoute;
+export default JoinedGroups;

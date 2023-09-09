@@ -1,6 +1,7 @@
 package com.hart.cosettle.groupmember;
 
 import com.hart.cosettle.groupmember.dto.InviteDto;
+import com.hart.cosettle.groupmember.dto.JoinedGroupDto;
 import com.hart.cosettle.groupmember.dto.PaginationDto;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.advice.ForbiddenException;
@@ -59,6 +60,15 @@ public class GroupMemberService {
         groupMember.setAccepted(accepted);
 
         this.groupMemberRepository.save(groupMember);
+    }
+
+    public PaginationDto<JoinedGroupDto> getJoinedGroups(Long userId, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<JoinedGroupDto> result = this.groupMemberRepository.getJoinedGroups(userId, paging);
+
+        return new PaginationDto<JoinedGroupDto>(result.getContent(), currentPage, pageSize, result.getTotalPages(),
+                direction);
     }
 
     public PaginationDto<InviteDto> getInvites(Long userId, int page, int pageSize, String direction) {

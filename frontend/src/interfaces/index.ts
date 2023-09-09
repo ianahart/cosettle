@@ -12,6 +12,15 @@ export interface IChangePasswordForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IJoinedGroup {
+  adminId: number;
+  groupId: number;
+  groupName: string;
+  groupPrivacy: string;
+  id: number;
+  url: string;
+}
+
 export interface IPrivateMessage {
   createdAt: Date;
   id: number;

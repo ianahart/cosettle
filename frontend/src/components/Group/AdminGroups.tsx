@@ -72,7 +72,7 @@ const AdminGroups = () => {
       )}
       <Box my="1rem" height="200px" overflowY="auto" className="overflow-scroll">
         {adminGroups.map((ag) => {
-          return <GroupPreview adminGroup={ag} key={ag.id} />;
+          return <GroupPreview joined={false} adminGroup={ag} key={ag.id} />;
         })}
       </Box>
       {pagination.page < pagination.totalPages - 1 && (

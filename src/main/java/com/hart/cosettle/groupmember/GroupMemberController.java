@@ -3,6 +3,7 @@ package com.hart.cosettle.groupmember;
 import com.hart.cosettle.groupmember.request.UpdateGroupMemberRequest;
 import com.hart.cosettle.groupmember.response.DeleteGroupMemberResponse;
 import com.hart.cosettle.groupmember.response.GetGroupMemberInvitesResponse;
+import com.hart.cosettle.groupmember.response.GetJoinedGroupsResponse;
 import com.hart.cosettle.groupmember.response.UpdateGroupMemberResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,17 @@ public class GroupMemberController {
     public ResponseEntity<DeleteGroupMemberResponse> deleteGroupMember(@PathVariable("id") Long id) {
         this.groupMemberService.deleteGroupMember(id);
         return ResponseEntity.status(HttpStatus.OK).body(new DeleteGroupMemberResponse("success"));
+    }
+
+    @GetMapping("/joined-groups")
+    public ResponseEntity<GetJoinedGroupsResponse> getJoinedGroups(
+            @RequestParam("userId") Long userId,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new GetJoinedGroupsResponse("success",
+                this.groupMemberService.getJoinedGroups(userId, page, pageSize, direction)));
     }
 
     @GetMapping("/invites")

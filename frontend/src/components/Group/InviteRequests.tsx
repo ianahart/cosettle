@@ -6,7 +6,11 @@ import { Client } from '../../util/client';
 import BasicSpinner from '../Shared/BasicSpinner';
 import groupBG from '../../assets/group.png';
 
-const InviteRequests = () => {
+interface IInviteRequestsProps {
+  handleRefresh: () => void;
+}
+
+const InviteRequests = ({ handleRefresh }: IInviteRequestsProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const shouldRun = useRef(true);
   const [loading, setLoading] = useState(false);
@@ -25,9 +29,9 @@ const InviteRequests = () => {
 
   const acceptInvite = (id: number) => {
     Client.acceptInvite(id, true)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         removeInvite(id);
+        handleRefresh();
       })
       .catch((err) => {
         throw new Error(err.response.data.message);

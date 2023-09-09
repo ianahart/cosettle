@@ -1,6 +1,7 @@
 package com.hart.cosettle.groupmember;
 
 import com.hart.cosettle.groupmember.dto.InviteDto;
+import com.hart.cosettle.groupmember.dto.JoinedGroupDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,19 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> {
+
+    @Query(value = """
+            SELECT new com.hart.cosettle.groupmember.dto.JoinedGroupDto(
+              gm.id AS id, g.id AS groupId, g.url AS url, g.name AS groupName,
+              g.privacy AS groupPrivacy, a.id AS adminId
+            ) FROM GroupMember gm
+              INNER JOIN gm.member m
+              INNER JOIN gm.group g
+              INNER JOIN gm.group.admin a
+              WHERE m.id = :userId
+              AND  gm.accepted = true
+            """)
+    Page<JoinedGroupDto> getJoinedGroups(@Param("userId") Long userId, Pageable paging);
 
     @Query(value = """
             SELECT new com.hart.cosettle.groupmember.dto.InviteDto(
