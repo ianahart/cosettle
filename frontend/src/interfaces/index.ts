@@ -24,6 +24,14 @@ export interface IPrivateMessage {
   senderUserId: number;
 }
 
+export interface IInvite {
+  adminFirstName: string;
+  adminLastName: string;
+  id: number;
+  name: string;
+  url: string;
+}
+
 export interface IGroup {
   id: number;
   adminId: number;

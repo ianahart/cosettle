@@ -67,12 +67,16 @@ public class GroupMember {
     public GroupMember(
             Group group,
             User member,
-            User inviter
+            User inviter,
+            Boolean accepted,
+            Boolean requested
 
     ) {
         this.group = group;
         this.member = member;
         this.inviter = inviter;
+        this.accepted = accepted;
+        this.requested = requested;
     }
 
     public Long getId() {
