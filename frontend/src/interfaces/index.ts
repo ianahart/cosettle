@@ -24,6 +24,21 @@ export interface IPrivateMessage {
   senderUserId: number;
 }
 
+export interface IGroup {
+  id: number;
+  adminId: number;
+  createdAt: Date;
+  name: string;
+  url: string;
+}
+
+export interface IMinimalUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+}
+
 export interface IResetPasswordForm {
   password: { name: string; value: string; error: string; type: string };
   confirmPassword: { name: string; value: string; error: string; type: string };

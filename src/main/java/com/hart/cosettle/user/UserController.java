@@ -4,6 +4,7 @@ import com.hart.cosettle.user.dto.UserDto;
 import com.hart.cosettle.user.request.ChangePasswordUserRequest;
 import com.hart.cosettle.user.response.ChangePasswordUserResponse;
 import com.hart.cosettle.user.response.GetUserResponse;
+import com.hart.cosettle.user.response.GetUsersResponse;
 import com.hart.cosettle.user.response.SearchUserResponse;
 import com.hart.cosettle.advice.NotFoundException;
 
@@ -29,6 +30,17 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<GetUsersResponse> getUsers(
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new GetUsersResponse("success", this.userService.getUsers(page, pageSize, direction)));
+
     }
 
     @GetMapping("/{userId}")

@@ -35,7 +35,7 @@ const Account = () => {
     <Box>
       <HeadingStack heading="Account" />
       <MenuLink to={`${slug}/friends`} text="Friends" icon={<AiOutlineHeart />} />
-      <MenuLink to={`${slug}/groups`} text="Groups" icon={<FiUsers />} />
+      <MenuLink to={`/groups`} text="Groups" icon={<FiUsers />} />
       <MenuLink to={`${slug}/messages`} text="Messages" icon={<AiOutlineMessage />} />
       <MenuLink to={`${slug}/settings`} text="Settings" icon={<FiSettings />} />
       <Flex alignItems="center" my="0.5rem">

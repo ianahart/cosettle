@@ -1,8 +1,10 @@
 package com.hart.cosettle.user;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.hart.cosettle.user.dto.ChatUserDto;
+import com.hart.cosettle.user.dto.MinimalUserDto;
 import com.hart.cosettle.user.dto.SearchUserDto;
 
 import org.springframework.data.domain.Page;
@@ -14,6 +16,21 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Query(value = """
+            SELECT u FROM User u WHERE u.id IN (:userIds)
+            """)
+    List<User> getUsersByIds(@Param("userIds") List<Long> userIds);
+
+    @Query(value = """
+             SELECT new com.hart.cosettle.user.dto.MinimalUserDto(
+             u.id AS id, u.firstName AS firstName, u.lastName AS lastName,
+             p.avatarUrl AS avatarUrl
+             ) FROM User u
+            INNER JOIN u.profile p
+             WHERE u.id <> :userId
+                 """)
+    Page<MinimalUserDto> getUsers(@Param("userId") Long userId, Pageable paging);
 
     @Query(value = """
             SELECT new com.hart.cosettle.user.dto.ChatUserDto(

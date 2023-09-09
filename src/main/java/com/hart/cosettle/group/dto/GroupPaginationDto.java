@@ -1,20 +1,26 @@
-package com.hart.cosettle.user.dto;
+package com.hart.cosettle.group.dto;
 
 import java.util.List;
 
-public class UserPaginationDto<T> {
-    private List<T> users;
+public class GroupPaginationDto<T> {
+    private List<T> groups;
     private int page;
     private int pageSize;
     private int totalPages;
     private String direction;
 
-    public UserPaginationDto() {
+    public GroupPaginationDto() {
 
     }
 
-    public UserPaginationDto(List<T> users, int page, int pageSize, int totalPages, String direction) {
-        this.users = users;
+    public GroupPaginationDto(
+            List<T> groups,
+            int page,
+            int pageSize,
+            int totalPages,
+            String direction) {
+
+        this.groups = groups;
         this.page = page;
         this.pageSize = pageSize;
         this.totalPages = totalPages;
@@ -25,8 +31,8 @@ public class UserPaginationDto<T> {
         return page;
     }
 
-    public List<T> getUsers() {
-        return users;
+    public List<T> getGroups() {
+        return groups;
     }
 
     public int getPageSize() {
@@ -45,8 +51,8 @@ public class UserPaginationDto<T> {
         this.page = page;
     }
 
-    public void setUsers(List<T> users) {
-        this.users = users;
+    public void setGroups(List<T> groups) {
+        this.groups = groups;
     }
 
     public void setPageSize(int pageSize) {

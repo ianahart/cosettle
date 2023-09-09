@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.friend.Friend;
@@ -14,6 +15,8 @@ import com.hart.cosettle.refreshtoken.RefreshToken;
 import com.hart.cosettle.space.Space;
 import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
+import com.hart.cosettle.group.Group;
+import com.hart.cosettle.groupmember.GroupMember;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -102,6 +105,15 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrivateMessage> sender;
 
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Group> adminGroups;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMember> groupMembers;
+
+    @OneToMany(mappedBy = "inviter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMember> inviters;
+
     public User() {
 
     }
@@ -141,6 +153,18 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public List<GroupMember> getInviters() {
+        return inviters;
+    }
+
+    public List<GroupMember> getGroupMembers() {
+        return groupMembers;
+    }
+
+    public List<Group> getAdminGroups() {
+        return adminGroups;
     }
 
     public Theme getTheme() {
@@ -218,6 +242,19 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setInviters(List<GroupMember> inviters) {
+        this.inviters = inviters;
+    }
+
+    public void setGroupMembers(List<GroupMember> groupMembers) {
+        this.groupMembers = groupMembers;
+    }
+
+    public void setAdminGroups(List<Group> adminGroups) {
+
+        this.adminGroups = adminGroups;
     }
 
     public void setSpaces(List<Space> spaces) {

@@ -1,16 +1,17 @@
 package com.hart.cosettle.user.response;
 
+import com.hart.cosettle.user.dto.SearchUserDto;
 import com.hart.cosettle.user.dto.UserPaginationDto;
 
 public class SearchUserResponse {
     private String message;
-    private UserPaginationDto data;
+    private UserPaginationDto<SearchUserDto> data;
 
     public SearchUserResponse() {
 
     }
 
-    public SearchUserResponse(String message, UserPaginationDto data) {
+    public SearchUserResponse(String message, UserPaginationDto<SearchUserDto> data) {
         this.message = message;
         this.data = data;
     }
@@ -19,11 +20,11 @@ public class SearchUserResponse {
         return message;
     }
 
-    public UserPaginationDto getData() {
+    public UserPaginationDto<SearchUserDto> getData() {
         return data;
     }
 
-    public void setData(UserPaginationDto data) {
+    public void setData(UserPaginationDto<SearchUserDto> data) {
         this.data = data;
     }
 
