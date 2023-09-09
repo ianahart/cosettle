@@ -46,7 +46,7 @@ public class GroupService {
         List<GroupMember> groupMembers = new ArrayList<>();
 
         for (User user : this.userService.getUserByIds(request.getUserIds())) {
-            groupMembers.add(new GroupMember(group, user, getAdmin(request.getAdminId())));
+            groupMembers.add(new GroupMember(group, user, getAdmin(request.getAdminId()), false, true));
         }
         return groupMembers;
     }

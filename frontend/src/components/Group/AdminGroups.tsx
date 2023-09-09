@@ -4,10 +4,12 @@ import { UserContext } from '../../context/user';
 import { IGroup, IPagination, IUserContext } from '../../interfaces';
 import { Client } from '../../util/client';
 import GroupPreview from './GroupPreview';
+import BasicSpinner from '../Shared/BasicSpinner';
 
 const AdminGroups = () => {
   const { user } = useContext(UserContext) as IUserContext;
   const [adminGroups, setAdminGroups] = useState<IGroup[]>([]);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [pagination, setPagination] = useState<IPagination>({
     page: 0,
@@ -21,6 +23,7 @@ const AdminGroups = () => {
   const getAdminGroups = (paginate: boolean) => {
     const pageNum = paginate ? pagination.page : -1;
     setMessage('');
+    setLoading(true);
     Client.getAdminGroups(user.id, pageNum, pagination.pageSize, pagination.direction)
       .then((res) => {
         const { direction, groups, page, pageSize, totalPages } = res.data.data;
@@ -35,8 +38,10 @@ const AdminGroups = () => {
           totalPages,
         }));
         setAdminGroups((prevState) => [...prevState, ...groups]);
+        setLoading(false);
       })
       .catch((err) => {
+        setLoading(false);
         throw new Error(err.response.data.message);
       });
   };
@@ -55,6 +60,11 @@ const AdminGroups = () => {
           Groups you manage
         </Heading>
       </Box>
+      {loading && (
+        <Flex justify="center" my="1rem">
+          <BasicSpinner message="Loading your groups..." color="light.primary" />
+        </Flex>
+      )}
       {message.length > 0 && (
         <Flex my="1rem" justify="center">
           <Text textAlign="center">{message}</Text>

@@ -6,6 +6,19 @@ export const http = axios.create({
 });
 
 export const Client = {
+  acceptInvite: (id: number, accepted: boolean) => {
+    return http.patch(`/group-members/${id}`, { accepted });
+  },
+
+  ignoreInvite: (id: number) => {
+    return http.delete(`/group-members/${id}`);
+  },
+
+  getInvites: (userId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `/group-members/invites?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
   getAdminGroups: (
     adminId: number,
     page: number,
