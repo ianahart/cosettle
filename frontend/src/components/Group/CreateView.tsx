@@ -69,6 +69,11 @@ const CreateView = ({ switchView }: ICreateViewProps) => {
       setError('Please fill out group name and privacy');
       return;
     }
+
+    if (userIds.length === 0) {
+      setError('Please select at least one person');
+      return;
+    }
     setLoading(true);
     Client.createGroup(user.id, groupName, privacy, userIds)
       .then(() => {

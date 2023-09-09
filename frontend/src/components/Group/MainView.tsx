@@ -3,6 +3,9 @@ import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import { FiSettings } from 'react-icons/fi';
 import { FaUsers } from 'react-icons/fa';
 import { Link as RouterLink } from 'react-router-dom';
+import AdminGroups from './AdminGroups';
+import InvitePeople from './InvitePeople';
+import InviteRequests from './InviteRequests';
 
 interface IMainViewProps {
   switchView: (view: string) => void;
@@ -71,6 +74,16 @@ const MainView = ({ switchView }: IMainViewProps) => {
           </Box>
         </Flex>
       </RouterLink>
+      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box my="2rem">
+        <InviteRequests />
+      </Box>
+      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box my="2rem">
+        <AdminGroups />
+      </Box>
+      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
     </Box>
   );
 };

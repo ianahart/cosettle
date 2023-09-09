@@ -6,6 +6,17 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getAdminGroups: (
+    adminId: number,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/groups/admin?adminId=${adminId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   createGroup: (
     adminId: number,
     groupName: string,

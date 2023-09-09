@@ -1,19 +1,24 @@
 package com.hart.cosettle.group;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import com.hart.cosettle.groupmember.GroupMember;
 import com.hart.cosettle.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -36,18 +41,17 @@ public class Group {
     private String name;
     @Column(name = "privacy")
     private String privacy;
-    @Column(name = "accepted")
-    private Boolean accepted;
-    @Column(name = "requested")
-    private Boolean requested;
+    @Column(name = "url")
+    private String url;
+    @Column(name = "filename")
+    private String filename;
 
     @JoinColumn(name = "admin_id", referencedColumnName = "id")
     @ManyToOne()
     private User admin;
 
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne()
-    private User user;
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMember> groupMembers;
 
     public Group() {
 
@@ -58,42 +62,38 @@ public class Group {
             Timestamp createdAt,
             Timestamp updatedAt,
             String name,
-            Boolean requested,
-            Boolean accepted) {
+            String url,
+            String filename,
+            String privacy) {
 
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.name = name;
-        this.requested = requested;
-        this.accepted = accepted;
+        this.url = url;
+        this.filename = filename;
+        this.privacy = privacy;
     }
 
     public Group(
             User admin,
-            User user,
             String name,
-            String privacy,
-            Boolean accepted,
-            Boolean requested) {
+            String privacy) {
         this.admin = admin;
-        this.user = user;
         this.name = name;
         this.privacy = privacy;
-        this.accepted = accepted;
-        this.requested = requested;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Boolean getAccepted() {
-        return accepted;
+    public String getUrl() {
+        return url;
     }
 
-    public Boolean getRequested() {
-        return requested;
+    public String getFilename() {
+        return filename;
     }
 
     public String getPrivacy() {
@@ -104,12 +104,12 @@ public class Group {
         return name;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public User getAdmin() {
         return admin;
+    }
+
+    public List<GroupMember> getGroupMembers() {
+        return groupMembers;
     }
 
     public Timestamp getCreatedAt() {
@@ -128,18 +128,6 @@ public class Group {
         this.name = name;
     }
 
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public void setRequested(Boolean requested) {
-        this.requested = requested;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public void setAdmin(User admin) {
         this.admin = admin;
     }
@@ -153,8 +141,20 @@ public class Group {
 
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public void setPrivacy(String privacy) {
         this.privacy = privacy;
+    }
+
+    public void setGroupMembers(List<GroupMember> groupMembers) {
+        this.groupMembers = groupMembers;
     }
 
 }

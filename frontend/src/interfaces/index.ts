@@ -24,6 +24,14 @@ export interface IPrivateMessage {
   senderUserId: number;
 }
 
+export interface IGroup {
+  id: number;
+  adminId: number;
+  createdAt: Date;
+  name: string;
+  url: string;
+}
+
 export interface IMinimalUser {
   id: number;
   firstName: string;

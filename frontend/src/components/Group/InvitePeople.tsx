@@ -55,7 +55,7 @@ const InvitePeople = ({
         border="1px solid"
         borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
       >
-        <Text>Invite people (optional)</Text>
+        <Text>Invite people</Text>
 
         {dropdownOpen && (
           <Box
