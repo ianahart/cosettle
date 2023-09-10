@@ -1,12 +1,17 @@
 package com.hart.cosettle.group;
 
 import com.hart.cosettle.group.request.CreateGroupRequest;
+import com.hart.cosettle.group.request.UpdateGroupRequest;
 import com.hart.cosettle.group.response.CreateGroupResponse;
 import com.hart.cosettle.group.response.GetAdminGroupsResponse;
+import com.hart.cosettle.group.response.GetGroupResponse;
+import com.hart.cosettle.group.response.UpdateGroupResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,20 @@ public class GroupController {
 
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UpdateGroupResponse> updateGroup(@PathVariable("id") Long id,
+                @RequestBody UpdateGroupRequest request) {
+        this.groupService.updateGroup(id, request.getName());
+        return ResponseEntity.status(HttpStatus.OK).body(new UpdateGroupResponse("success"));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetGroupResponse> getGroup(@PathVariable("id") Long id) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new GetGroupResponse("success", this.groupService.getGroup(id)));
     }
 
     @GetMapping("/admin")

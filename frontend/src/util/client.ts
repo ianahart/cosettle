@@ -6,6 +6,13 @@ export const http = axios.create({
 });
 
 export const Client = {
+  updateGroupName: (groupId: number, name: string) => {
+    return http.patch(`/groups/${groupId}`, { name });
+  },
+  getGroup: (groupId: number) => {
+    return http.get(`/groups/${groupId}`);
+  },
+
   acceptInvite: (id: number, accepted: boolean) => {
     return http.patch(`/group-members/${id}`, { accepted });
   },

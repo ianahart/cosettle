@@ -11,6 +11,20 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
+    @Query(value = """
+            SELECT DISTINCT new com.hart.cosettle.group.dto.GroupDto(
+            g.id AS id, a.id AS adminId, g.createdAt AS createdAt,
+            g.name AS name,
+            g.url AS url, g.privacy AS privacy
+
+            ) FROM Group g
+            INNER JOIN g.admin a
+            WHERE g.id = :groupId
+            ORDER BY g.name
+
+                """)
+
+    GroupDto getGroup(@Param("groupId") Long groupId);
 
     @Query(value = """
             SELECT DISTINCT new com.hart.cosettle.group.dto.GroupDto(

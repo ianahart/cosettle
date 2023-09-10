@@ -9,9 +9,10 @@ import BasicSpinner from '../Shared/BasicSpinner';
 
 interface IJoinedGroupsProps {
   refresh: boolean;
+  handleRefresh: (refresh: boolean) => void;
 }
 
-const JoinedGroups = ({ refresh }: IJoinedGroupsProps) => {
+const JoinedGroups = ({ refresh, handleRefresh }: IJoinedGroupsProps) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext) as IUserContext;
   const [joinedGroups, setJoinedGroups] = useState<IJoinedGroup[]>([]);
@@ -31,8 +32,11 @@ const JoinedGroups = ({ refresh }: IJoinedGroupsProps) => {
   };
 
   useEffect(() => {
-    setJoinedGroups([]);
-    getJoinedGroups(false);
+    if (refresh) {
+      setJoinedGroups([]);
+      getJoinedGroups(false);
+      handleRefresh(false);
+    }
   }, [refresh]);
 
   const getJoinedGroups = (paginate: boolean) => {

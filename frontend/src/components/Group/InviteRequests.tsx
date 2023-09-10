@@ -7,7 +7,7 @@ import BasicSpinner from '../Shared/BasicSpinner';
 import groupBG from '../../assets/group.png';
 
 interface IInviteRequestsProps {
-  handleRefresh: () => void;
+  handleRefresh: (refresh: boolean) => void;
 }
 
 const InviteRequests = ({ handleRefresh }: IInviteRequestsProps) => {
@@ -31,7 +31,7 @@ const InviteRequests = ({ handleRefresh }: IInviteRequestsProps) => {
     Client.acceptInvite(id, true)
       .then(() => {
         removeInvite(id);
-        handleRefresh();
+        handleRefresh(true);
       })
       .catch((err) => {
         throw new Error(err.response.data.message);

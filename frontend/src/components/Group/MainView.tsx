@@ -15,8 +15,8 @@ interface IMainViewProps {
 const MainView = ({ switchView }: IMainViewProps) => {
   const [refresh, setRefresh] = useState(false);
 
-  const handleRefresh = () => {
-    setRefresh((prevState) => !prevState);
+  const handleRefresh = (r: boolean) => {
+    setRefresh(r);
   };
   return (
     <Box p="1rem" color="text.primary">
@@ -90,7 +90,7 @@ const MainView = ({ switchView }: IMainViewProps) => {
       </Box>
       <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
       <Box my="2rem">
-        <JoinedGroups refresh={refresh} />
+        <JoinedGroups handleRefresh={handleRefresh} refresh={refresh} />
       </Box>
     </Box>
   );

@@ -47,6 +47,7 @@ export interface IGroup {
   createdAt: Date;
   name: string;
   url: string;
+  privacy: string;
 }
 
 export interface IMinimalUser {

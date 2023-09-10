@@ -17,6 +17,15 @@ export const tokenState = {
   token: '',
 };
 
+export const groupState = {
+  id: 0,
+  adminId: 0,
+  createdAt: new Date(),
+  name: 'Group name',
+  url: '',
+  privacy: '',
+};
+
 export const profileState = {
   userId: 0,
   profileId: 0,

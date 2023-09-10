@@ -4,7 +4,7 @@ import GroupLayout from '../../components/Group/GroupLayout';
 const CreateGroupRoute = () => {
   return (
     <Box>
-      <GroupLayout preview={true} />
+      <GroupLayout paramId={undefined} preview={true} />
     </Box>
   );
 };

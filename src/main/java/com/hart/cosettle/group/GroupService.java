@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.hart.cosettle.advice.BadRequestException;
+import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.advice.ForbiddenException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,15 @@ public class GroupService {
 
     public User getAdmin(Long adminId) {
         return this.userService.getUserById(adminId);
+    }
+
+    public Group getGroupById(Long groupId) {
+        return this.groupRepository.findById(groupId)
+                .orElseThrow(() -> new NotFoundException("Group not found"));
+    }
+
+    public GroupDto getGroup(Long groupId) {
+        return this.groupRepository.getGroup(groupId);
     }
 
     private List<GroupMember> packageNewGroupMembers(CreateGroupRequest request, Group group) {
@@ -80,5 +91,16 @@ public class GroupService {
                 adminGroups.getTotalPages(),
                 direction);
 
+    }
+
+    public void updateGroup(Long id, String name) {
+        User user = this.userService.getCurrentlyLoggedInUser();
+        Group group = getGroupById(id);
+        if (user.getId() != group.getAdmin().getId()) {
+            throw new ForbiddenException("Do not have necessary priveleges to update a group");
+        }
+
+        group.setName(name);
+        this.groupRepository.save(group);
     }
 }
