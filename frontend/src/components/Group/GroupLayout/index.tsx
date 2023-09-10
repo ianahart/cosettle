@@ -25,6 +25,20 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
     setViewport(curViewport);
   };
 
+  const uploadGroupBackgroundImage = (newFile: File) => {
+    Client.uploadGroupBackgroundImage(group.id, newFile)
+      .then((res) => {
+        setGroup((prevState) => ({
+          ...prevState,
+          url: res.data.url,
+        }));
+        window.location.reload();
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const handleUpdateName = (name: string) => {
     if (name.length === 0) return;
     Client.updateGroupName(group.id, name)
@@ -74,7 +88,13 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
         cursor={preview ? 'not-allowed' : 'unset'}
         pointerEvents={preview ? 'none' : 'unset'}
       >
-        {viewport === 'desktop' && <BackgroundImage preview={preview} />}
+        {viewport === 'desktop' && (
+          <BackgroundImage
+            uploadGroupBackgroundImage={uploadGroupBackgroundImage}
+            adminId={group.adminId}
+            url={group.url}
+          />
+        )}
         <Name group={group} preview={preview} handleUpdateName={handleUpdateName} />
         <Links />
         <Box my="2rem">

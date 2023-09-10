@@ -2,10 +2,12 @@ package com.hart.cosettle.group;
 
 import com.hart.cosettle.group.request.CreateGroupRequest;
 import com.hart.cosettle.group.request.UpdateGroupRequest;
+import com.hart.cosettle.group.request.UploadGroupImageRequest;
 import com.hart.cosettle.group.response.CreateGroupResponse;
 import com.hart.cosettle.group.response.GetAdminGroupsResponse;
 import com.hart.cosettle.group.response.GetGroupResponse;
 import com.hart.cosettle.group.response.UpdateGroupResponse;
+import com.hart.cosettle.group.response.UploadGroupImageResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ public class GroupController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<UpdateGroupResponse> updateGroup(@PathVariable("id") Long id,
-                @RequestBody UpdateGroupRequest request) {
+            @RequestBody UpdateGroupRequest request) {
         this.groupService.updateGroup(id, request.getName());
         return ResponseEntity.status(HttpStatus.OK).body(new UpdateGroupResponse("success"));
     }
@@ -59,4 +61,11 @@ public class GroupController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new CreateGroupResponse("success"));
     }
 
+    @PatchMapping("/{id}/upload")
+    public ResponseEntity<UploadGroupImageResponse> uploadGroupImage(
+            @PathVariable("id") Long id,
+            UploadGroupImageRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new UploadGroupImageResponse("success", this.groupService.uploadGroupImage(id, request.getFile())));
+    }
 }
