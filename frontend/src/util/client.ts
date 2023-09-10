@@ -6,6 +6,12 @@ export const http = axios.create({
 });
 
 export const Client = {
+  uploadGroupBackgroundImage: (groupId: number, file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return http.patch(`groups/${groupId}/upload`, formData);
+  },
+
   updateGroupName: (groupId: number, name: string) => {
     return http.patch(`/groups/${groupId}`, { name });
   },

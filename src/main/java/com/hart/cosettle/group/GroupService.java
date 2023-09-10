@@ -11,9 +11,11 @@ import com.hart.cosettle.util.MyUtils;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.hart.cosettle.advice.BadRequestException;
 import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.amazon.AmazonService;
 import com.hart.cosettle.advice.ForbiddenException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class GroupService {
@@ -29,15 +32,45 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final UserService userService;
     private final GroupMemberRepository groupMemberRepository;
+    private final AmazonService amazonService;
+    private final String BUCKET_NAME = "arrow-date/cosettle/backgrounds";
+    private final int MAX_MEGA_BYTES = 2;
 
     @Autowired
     public GroupService(GroupRepository groupRepository,
             UserService userService,
-            GroupMemberRepository groupMemberRepository) {
+            GroupMemberRepository groupMemberRepository,
+            AmazonService amazonService) {
         this.groupRepository = groupRepository;
         this.userService = userService;
         this.groupMemberRepository = groupMemberRepository;
+        this.amazonService = amazonService;
 
+    }
+
+    private boolean validateImageSize(MultipartFile image) {
+        return image.getSize() > MAX_MEGA_BYTES * 1024 * 1024;
+    }
+
+    public String uploadGroupImage(Long groupId, MultipartFile file) {
+
+        if (validateImageSize(file)) {
+            throw new BadRequestException("Image cannot exceed " + MAX_MEGA_BYTES + "MB");
+        }
+
+        Group group = getGroupById(groupId);
+        if (group.getFilename() != null) {
+            this.amazonService.delete(BUCKET_NAME, group.getFilename());
+        }
+
+        String filename = this.amazonService.upload(BUCKET_NAME, file.getOriginalFilename(), file);
+        Map<String, String> contents = this.amazonService.getPublicUrl(BUCKET_NAME, filename);
+
+        group.setUrl(contents.get("url"));
+        group.setFilename(contents.get("filename"));
+        Group updatedGroup = this.groupRepository.save(group);
+
+        return updatedGroup.getUrl();
     }
 
     public User getAdmin(Long adminId) {
