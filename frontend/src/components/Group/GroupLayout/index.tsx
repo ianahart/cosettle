@@ -72,6 +72,8 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
     }
   }, [paramId]);
 
+  const name = 'chip';
+
   return (
     <Box
       width={viewport === 'desktop' ? '100%' : '50%'}
@@ -98,7 +100,7 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
         <Name group={group} preview={preview} handleUpdateName={handleUpdateName} />
         <Links />
         <Box my="2rem">
-          <Outlet />
+          <Outlet context={[group]} />
         </Box>
         {preview && <ContentPreview viewport={viewport} />}
       </Box>
