@@ -1,5 +1,6 @@
 package com.hart.cosettle.groupmember;
 
+import com.hart.cosettle.groupmember.dto.GroupMemberDto;
 import com.hart.cosettle.groupmember.dto.InviteDto;
 import com.hart.cosettle.groupmember.dto.JoinedGroupDto;
 import com.hart.cosettle.groupmember.dto.PaginationDto;
@@ -78,5 +79,15 @@ public class GroupMemberService {
 
         return new PaginationDto<InviteDto>(result.getContent(), currentPage, pageSize, result.getTotalPages(),
                 direction);
+    }
+
+    public PaginationDto<GroupMemberDto> getGroupMembers(Long groupId, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<GroupMemberDto> result = this.groupMemberRepository.getGroupMembers(groupId, paging);
+
+        return new PaginationDto<GroupMemberDto>(result.getContent(), currentPage, pageSize, result.getTotalPages(),
+                direction);
+
     }
 }

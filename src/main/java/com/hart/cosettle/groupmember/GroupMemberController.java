@@ -3,6 +3,7 @@ package com.hart.cosettle.groupmember;
 import com.hart.cosettle.groupmember.request.UpdateGroupMemberRequest;
 import com.hart.cosettle.groupmember.response.DeleteGroupMemberResponse;
 import com.hart.cosettle.groupmember.response.GetGroupMemberInvitesResponse;
+import com.hart.cosettle.groupmember.response.GetGroupMembersResponse;
 import com.hart.cosettle.groupmember.response.GetJoinedGroupsResponse;
 import com.hart.cosettle.groupmember.response.UpdateGroupMemberResponse;
 
@@ -27,6 +28,17 @@ public class GroupMemberController {
     @Autowired
     public GroupMemberController(GroupMemberService groupMemberService) {
         this.groupMemberService = groupMemberService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<GetGroupMembersResponse> getGroupMembers(
+            @RequestParam("groupId") Long groupId,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new GetGroupMembersResponse("success",
+                        this.groupMemberService.getGroupMembers(groupId, page, pageSize, direction)));
     }
 
     @PatchMapping("/{id}")

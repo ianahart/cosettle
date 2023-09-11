@@ -21,6 +21,15 @@ export interface IJoinedGroup {
   url: string;
 }
 
+export interface IGroupMember {
+  firstName: string;
+  id: number;
+  lastName: string;
+  profileId: number;
+  url: string;
+  userId: number;
+}
+
 export interface IPrivateMessage {
   createdAt: Date;
   id: number;

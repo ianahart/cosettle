@@ -6,6 +6,17 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getGroupMembers: (
+    groupId: number,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/group-members?groupId=${groupId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   uploadGroupBackgroundImage: (groupId: number, file: File) => {
     const formData = new FormData();
     formData.append('file', file);
