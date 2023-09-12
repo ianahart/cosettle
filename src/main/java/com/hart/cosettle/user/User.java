@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Collection;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.passwordreset.PasswordReset;
+import com.hart.cosettle.post.Post;
 import com.hart.cosettle.privatemessage.PrivateMessage;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
@@ -114,6 +114,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "inviter", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupMember> inviters;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
     public User() {
 
     }
@@ -153,6 +156,10 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 
     public List<GroupMember> getInviters() {
@@ -250,6 +257,10 @@ public class User implements UserDetails {
 
     public void setGroupMembers(List<GroupMember> groupMembers) {
         this.groupMembers = groupMembers;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public void setAdminGroups(List<Group> adminGroups) {
