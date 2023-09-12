@@ -81,7 +81,7 @@ const JoinedGroups = ({ refresh, handleRefresh }: IJoinedGroupsProps) => {
       </Box>
       {loading && (
         <Flex justify="center" my="1rem">
-          <BasicSpinner message="Loading your groups..." color="light.primary" />
+          <BasicSpinner message="Loading joined groups..." color="light.primary" />
         </Flex>
       )}
       {message.length > 0 && (
