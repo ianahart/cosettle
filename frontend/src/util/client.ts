@@ -6,6 +6,11 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getPosts: (groupId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `/posts?groupId=${groupId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
   createPost: (groupId: number, userId: number, content: string, file: File | null) => {
     const formData = new FormData();
     formData.append('groupId', groupId.toString());

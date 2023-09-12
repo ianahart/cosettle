@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.hart.cosettle.groupmember.GroupMember;
+import com.hart.cosettle.post.Post;
 import com.hart.cosettle.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -53,6 +54,9 @@ public class Group {
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupMember> groupMembers;
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
     public Group() {
 
     }
@@ -96,6 +100,10 @@ public class Group {
         return filename;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     public String getPrivacy() {
         return privacy;
     }
@@ -126,6 +134,10 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public void setAdmin(User admin) {

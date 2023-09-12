@@ -25,9 +25,10 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 interface ICreatePostProps {
   handleCreatePost: (content: string, file: File | null) => void;
+  createPostError: string;
 }
 
-const CreatePost = ({ handleCreatePost }: ICreatePostProps) => {
+const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => {
   const MAX_MEGA_BYTES = 2 * 1024 * 1024;
   const { user } = useContext(UserContext) as IUserContext;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -95,6 +96,13 @@ const CreatePost = ({ handleCreatePost }: ICreatePostProps) => {
       borderRadius={8}
       p="0.5rem"
     >
+      {createPostError.length > 0 && (
+        <Flex my="1rem" justify="center">
+          <Text color="red.400" fontSize="0.85rem">
+            {createPostError}
+          </Text>
+        </Flex>
+      )}
       <Flex align="center">
         <Avatar
           width="45px"

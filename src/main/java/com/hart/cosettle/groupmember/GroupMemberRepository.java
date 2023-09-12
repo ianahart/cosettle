@@ -23,6 +23,7 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> 
             INNER JOIN gm.member m
             INNER JOIN gm.member.profile p
             WHERE g.id = :groupId
+            AND gm.accepted = true
              """)
     Page<GroupMemberDto> getGroupMembers(@Param("groupId") Long groupId, Pageable paging);
 

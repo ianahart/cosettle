@@ -21,6 +21,17 @@ export interface IJoinedGroup {
   url: string;
 }
 
+export interface IPost {
+  userId: number;
+  url: string;
+  lastName: string;
+  id: number;
+  firstName: string;
+  createdAt: Date;
+  avatarUrl: string;
+  content: string;
+}
+
 export interface IGroupMember {
   firstName: string;
   id: number;
