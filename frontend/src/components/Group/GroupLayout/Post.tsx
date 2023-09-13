@@ -1,15 +1,16 @@
-import { IPost, IUserContext } from '../../../interfaces';
+import { IComment, IPagination, IPost, IUserContext } from '../../../interfaces';
 import {
   Box,
   Flex,
   Image,
   Text,
-  Input,
+  Textarea,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   IconButton,
+  Button,
 } from '@chakra-ui/react';
 import Avatar from '../../Shared/Avatar';
 //@ts-ignore
@@ -17,9 +18,11 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { BsHandThumbsUp, BsThreeDots, BsTrash } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { UserContext } from '../../../context/user';
+import { Client } from '../../../util/client';
 dayjs.extend(relativeTime);
+
 interface IPostProps {
   post: IPost;
   handleLikePost: (postId: number, userId: number) => void;
@@ -34,7 +37,17 @@ const Post = ({
   handleDeletePost,
 }: IPostProps) => {
   const { user } = useContext(UserContext) as IUserContext;
-  const commentInput = useRef<HTMLInputElement>(null);
+  const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const [error, setError] = useState('');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [commentPrompt, setCommentPrompt] = useState(false);
+  const [pagination, setPagination] = useState<IPagination>({
+    pageSize: 1,
+    page: 0,
+    totalPages: 0,
+    direction: 'next',
+  });
 
   const toggleLike = (action: string) => {
     if (action === 'like') {
@@ -46,6 +59,45 @@ const Post = ({
 
   const deletePost = () => {
     handleDeletePost(post.id);
+  };
+
+  const createComment = () => {
+    setError('');
+    if (comment.length > 200 || comment.trim().length === 0) {
+      setError('Comment must be between 1 and 200 characters');
+      return;
+    }
+    Client.createComment(post.id, user.id, comment)
+      .then(() => {
+        setComment('');
+        setCommentPrompt(false);
+        setComments([]);
+        getComments(false);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const getComments = (paginate: boolean) => {
+    const pageNum = paginate ? pagination.page : -1;
+
+    Client.getComments(post.id, pageNum, pagination.pageSize, pagination.direction)
+      .then((res) => {
+        const { totalPages, page, pageSize, direction, comments } = res.data.data;
+        setPagination((prevState) => ({
+          ...prevState,
+          totalPages,
+          page,
+          pageSize,
+          direction,
+        }));
+
+        setComments((prevState) => [...prevState, ...comments]);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
   };
 
   return (
@@ -96,7 +148,15 @@ const Post = ({
           <Text mb="1rem" fontSize="0.9rem">
             {post.content}
           </Text>
-          {post.url && <Image width="100%" src={post.url} alt={post.content} />}
+          {post.url && (
+            <Image
+              width="50%"
+              mx="auto"
+              borderRadius={4}
+              src={post.url}
+              alt={post.content}
+            />
+          )}
         </Box>
       </Box>
       <Box>
@@ -131,7 +191,7 @@ const Post = ({
           </Text>
         </Flex>
         <Flex
-          onClick={() => commentInput.current?.focus()}
+          onClick={() => commentTextareaRef.current?.focus()}
           cursor="pointer"
           align="center"
         >
@@ -143,7 +203,7 @@ const Post = ({
           </Text>
         </Flex>
       </Flex>
-      <Flex>
+      <Flex p="0.5rem">
         <Avatar
           width="35px"
           height="35px"
@@ -151,23 +211,87 @@ const Post = ({
           firstName={user.firstName}
           lastName={user.lastName}
         />
-        <Input
-          ref={commentInput}
-          ml="0.5rem"
-          _placeholder={{ fontSize: '0.85rem' }}
-          fontSize="0.85rem"
-          borderRadius={20}
-          bg="#161515"
-          border="none"
-          placeholder="Write a comment..."
-        />
+        {!commentPrompt ? (
+          <Box
+            cursor="pointer"
+            onClick={() => setCommentPrompt(true)}
+            ml="0.5rem"
+            width="100%"
+            bg="#161515"
+            borderRadius={20}
+            minH="35px"
+            p="0.5rem"
+          >
+            <Text>Write a comment...</Text>
+          </Box>
+        ) : (
+          <Box ml="0.5rem" width="100%" bg="#161515" borderRadius={8}>
+            <Textarea
+              value={comment}
+              resize="none"
+              onChange={(e) => setComment(e.target.value)}
+              ref={commentTextareaRef}
+              _placeholder={{ fontSize: '0.85rem' }}
+              fontSize="0.85rem"
+              borderRadius={8}
+              bg="#161515"
+              border="none"
+              placeholder="Write a comment..."
+            />
+            {error.length > 0 && (
+              <Text color="red.400" textAlign="center" fontSize="0.8rem">
+                {error}
+              </Text>
+            )}
+            <Flex p="0.5rem" justify="flex-end">
+              <Button onClick={createComment} colorScheme="purple" size="sm">
+                Post
+              </Button>
+              <Button onClick={() => setCommentPrompt(false)} ml="0.5rem" size="sm">
+                Cancel
+              </Button>
+            </Flex>
+          </Box>
+        )}
       </Flex>
-      <Flex justify="center" my="1rem">
-        <Text cursor="pointer" fontSize="0.9rem">
-          View Comments...
-        </Text>
-      </Flex>
-      {/*Comments go here*/}
+      {!comments.length && (
+        <Flex justify="center" my="1rem">
+          <Text
+            role="button"
+            onClick={() => getComments(false)}
+            cursor="pointer"
+            fontSize="0.9rem"
+          >
+            View Comments...
+          </Text>
+        </Flex>
+      )}
+      {comments.map((comment) => {
+        return (
+          <Flex my="1rem" ml="3rem" key={comment.id} align="center">
+            <Avatar
+              firstName={comment.firstName}
+              lastName={comment.lastName}
+              url={comment.avatarUrl}
+              width="35px"
+              height="35px"
+            />
+            <Box borderRadius={8} p="1rem" bg="#161515" ml="0.5rem">
+              <Text fontSize="0.9rem" fontWeight="bold">
+                {comment.firstName} {comment.lastName}
+              </Text>
+              <Text fontSize="0.9rem">{comment.text}</Text>
+            </Box>
+          </Flex>
+        );
+      })}
+      {pagination.page < pagination.totalPages - 1 && (
+        <Flex justify="center">
+          <Button colorScheme="purple" onClick={() => getComments(true)}>
+            More comments...
+          </Button>
+        </Flex>
+      )}
     </Box>
   );
 };
