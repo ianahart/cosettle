@@ -17,6 +17,7 @@ import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
 import com.hart.cosettle.group.Group;
 import com.hart.cosettle.groupmember.GroupMember;
+import com.hart.cosettle.like.Like;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -117,6 +118,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
+
     public User() {
 
     }
@@ -164,6 +168,10 @@ public class User implements UserDetails {
 
     public List<GroupMember> getInviters() {
         return inviters;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
     }
 
     public List<GroupMember> getGroupMembers() {
@@ -249,6 +257,10 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 
     public void setInviters(List<GroupMember> inviters) {

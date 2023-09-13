@@ -2,6 +2,7 @@ package com.hart.cosettle.post;
 
 import com.hart.cosettle.group.Group;
 import com.hart.cosettle.group.GroupService;
+import com.hart.cosettle.like.LikeService;
 import com.hart.cosettle.post.dto.PaginationDto;
 import com.hart.cosettle.post.dto.PostDto;
 import com.hart.cosettle.post.request.CreatePostRequest;
@@ -12,9 +13,11 @@ import com.hart.cosettle.util.MyUtils;
 import java.util.Map;
 
 import com.hart.cosettle.advice.BadRequestException;
+import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.amazon.AmazonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +33,7 @@ public class PostService {
     private final GroupService groupService;
     private final UserService userService;
     private final AmazonService amazonService;
+    private final LikeService likeService;
     private final String BUCKET_NAME = "/arrow-date/cosettle/posts";
 
     @Autowired
@@ -37,11 +41,13 @@ public class PostService {
             PostRepository postRepository,
             GroupService groupService,
             UserService userService,
-            AmazonService amazonService) {
+            AmazonService amazonService,
+            @Lazy LikeService likeService) {
         this.postRepository = postRepository;
         this.groupService = groupService;
         this.userService = userService;
         this.amazonService = amazonService;
+        this.likeService = likeService;
     }
 
     private boolean validatePostLength(String content) {
@@ -90,9 +96,21 @@ public class PostService {
         int currentPage = MyUtils.paginate(page, direction);
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
         Page<PostDto> result = this.postRepository.getPosts(groupId, paging);
+        User currentUser = this.userService.getCurrentlyLoggedInUser();
+
+        for (PostDto post : result.getContent()) {
+            post.setUserLiked(this.likeService.checkIfAlreadyLiked(post.getId(),
+                    currentUser.getId()));
+            post.setTotalLikes(this.likeService.getTotalLikesByPost(post.getId()));
+        }
 
         return new PaginationDto<PostDto>(result.getContent(), currentPage, pageSize, result.getTotalPages(),
                 direction);
 
+    }
+
+    public Post getPostById(Long id) {
+        return this.postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Post not found"));
     }
 }

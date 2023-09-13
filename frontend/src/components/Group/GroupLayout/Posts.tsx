@@ -22,6 +22,42 @@ const Posts = () => {
   });
   const [createPostError, setCreatePostError] = useState('');
 
+  const updatePostLike = (postId: number, userLiked: boolean) => {
+    setPosts(
+      posts.map((post) => {
+        if (post.id === postId) {
+          post.userLiked = userLiked;
+          if (userLiked) {
+            post.totalLikes += 1;
+          } else {
+            post.totalLikes -= 1;
+          }
+        }
+        return post;
+      })
+    );
+  };
+
+  const handleLikePost = (postId: number, userId: number) => {
+    Client.likePost(postId, userId)
+      .then((res) => {
+        updatePostLike(postId, true);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
+  const handleUnlikePost = (postId: number, userId: number) => {
+    Client.unlikePost(postId, userId)
+      .then((res) => {
+        updatePostLike(postId, false);
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const handleCreatePost = (content: string, file: File | null) => {
     setCreatePostLoading(true);
     Client.createPost(group.id, user.id, content, file)
@@ -84,7 +120,14 @@ const Posts = () => {
         )}
         <Box my="1rem">
           {posts.map((post) => {
-            return <Post post={post} key={post.id} />;
+            return (
+              <Post
+                handleUnlikePost={handleUnlikePost}
+                handleLikePost={handleLikePost}
+                post={post}
+                key={post.id}
+              />
+            );
           })}
         </Box>
         {pagination.page < pagination.totalPages - 1 && (
