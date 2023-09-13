@@ -3,12 +3,15 @@ package com.hart.cosettle.post;
 import com.hart.cosettle.amazon.AmazonService;
 import com.hart.cosettle.post.request.CreatePostRequest;
 import com.hart.cosettle.post.response.CreatePostResponse;
+import com.hart.cosettle.post.response.DeletePostResponse;
 import com.hart.cosettle.post.response.GetPostsResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +26,12 @@ public class PostController {
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeletePostResponse> deletePost(@PathVariable("id") Long id) {
+        this.postService.deletePost(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new DeletePostResponse("success"));
     }
 
     @GetMapping("")

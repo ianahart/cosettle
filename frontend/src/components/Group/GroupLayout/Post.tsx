@@ -1,10 +1,21 @@
 import { IPost, IUserContext } from '../../../interfaces';
-import { Box, Flex, Image, Text, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Image,
+  Text,
+  Input,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from '@chakra-ui/react';
 import Avatar from '../../Shared/Avatar';
 //@ts-ignore
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { BsHandThumbsUp } from 'react-icons/bs';
+import { BsHandThumbsUp, BsThreeDots, BsTrash } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
 import { useContext, useRef } from 'react';
 import { UserContext } from '../../../context/user';
@@ -13,9 +24,15 @@ interface IPostProps {
   post: IPost;
   handleLikePost: (postId: number, userId: number) => void;
   handleUnlikePost: (postId: number, userId: number) => void;
+  handleDeletePost: (postId: number) => void;
 }
 
-const Post = ({ post, handleLikePost, handleUnlikePost }: IPostProps) => {
+const Post = ({
+  post,
+  handleLikePost,
+  handleUnlikePost,
+  handleDeletePost,
+}: IPostProps) => {
   const { user } = useContext(UserContext) as IUserContext;
   const commentInput = useRef<HTMLInputElement>(null);
 
@@ -27,8 +44,35 @@ const Post = ({ post, handleLikePost, handleUnlikePost }: IPostProps) => {
     }
   };
 
+  const deletePost = () => {
+    handleDeletePost(post.id);
+  };
+
   return (
     <Box p="0.5rem" bg="black.tertiary" borderRadius={8} my="1.2rem">
+      <Flex justify="flex-end">
+        <Menu>
+          <MenuButton
+            _hover={{ bg: 'transparent' }}
+            _active={{ bg: 'transparent' }}
+            bg="transparent"
+            as={IconButton}
+            aria-label="Options"
+            icon={
+              <Box color="text.primary">
+                <BsThreeDots />
+              </Box>
+            }
+          />
+          <MenuList border="none" bg="#161515">
+            {user.id === post.userId && (
+              <MenuItem icon={<BsTrash />} bg="#161515" onClick={deletePost}>
+                Delete
+              </MenuItem>
+            )}
+          </MenuList>
+        </Menu>
+      </Flex>
       <Flex>
         <Avatar
           height="45px"

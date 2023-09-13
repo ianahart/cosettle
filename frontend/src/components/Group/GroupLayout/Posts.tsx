@@ -38,9 +38,19 @@ const Posts = () => {
     );
   };
 
+  const handleDeletePost = (postId: number) => {
+    Client.deletePost(postId)
+      .then(() => {
+        setPosts((prevState) => prevState.filter((post) => post.id !== postId));
+      })
+      .catch((err) => {
+        throw new Error(err.response.data.message);
+      });
+  };
+
   const handleLikePost = (postId: number, userId: number) => {
     Client.likePost(postId, userId)
-      .then((res) => {
+      .then(() => {
         updatePostLike(postId, true);
       })
       .catch((err) => {
@@ -50,7 +60,7 @@ const Posts = () => {
 
   const handleUnlikePost = (postId: number, userId: number) => {
     Client.unlikePost(postId, userId)
-      .then((res) => {
+      .then(() => {
         updatePostLike(postId, false);
       })
       .catch((err) => {
@@ -122,6 +132,7 @@ const Posts = () => {
           {posts.map((post) => {
             return (
               <Post
+                handleDeletePost={handleDeletePost}
                 handleUnlikePost={handleUnlikePost}
                 handleLikePost={handleLikePost}
                 post={post}

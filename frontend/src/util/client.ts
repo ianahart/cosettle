@@ -6,10 +6,12 @@ export const http = axios.create({
 });
 
 export const Client = {
+  deletePost: (postId: number) => {
+    return http.delete(`/posts/${postId}`);
+  },
   unlikePost: (postId: number, userId: number) => {
     return http.post(`/likes/unlike`, { postId, userId });
   },
-
   likePost: (postId: number, userId: number) => {
     return http.post('/likes', { postId, userId });
   },

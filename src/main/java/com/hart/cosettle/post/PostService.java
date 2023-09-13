@@ -14,6 +14,7 @@ import java.util.Map;
 
 import com.hart.cosettle.advice.BadRequestException;
 import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.advice.ForbiddenException;
 import com.hart.cosettle.amazon.AmazonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,5 +113,15 @@ public class PostService {
     public Post getPostById(Long id) {
         return this.postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Post not found"));
+    }
+
+    public void deletePost(Long id) {
+        User user = this.userService.getCurrentlyLoggedInUser();
+        Post post = getPostById(id);
+        if (user.getId() != post.getUser().getId()) {
+            throw new ForbiddenException("Cannot delete another user's post");
+        }
+
+        this.postRepository.delete(post);
     }
 }
