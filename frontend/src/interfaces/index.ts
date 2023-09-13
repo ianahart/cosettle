@@ -30,6 +30,8 @@ export interface IPost {
   createdAt: Date;
   avatarUrl: string;
   content: string;
+  userLiked: boolean;
+  totalLikes: number;
 }
 
 export interface IGroupMember {

@@ -6,6 +6,13 @@ export const http = axios.create({
 });
 
 export const Client = {
+  unlikePost: (postId: number, userId: number) => {
+    return http.post(`/likes/unlike`, { postId, userId });
+  },
+
+  likePost: (postId: number, userId: number) => {
+    return http.post('/likes', { postId, userId });
+  },
   getPosts: (groupId: number, page: number, pageSize: number, direction: string) => {
     return http.get(
       `/posts?groupId=${groupId}&page=${page}&pageSize=${pageSize}&direction=${direction}`

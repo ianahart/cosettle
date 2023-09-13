@@ -11,6 +11,8 @@ public class PostDto {
     private Long userId;
     private String avatarUrl;
     private String content;
+    private Boolean userLiked;
+    private int totalLikes;
 
     public PostDto() {
     }
@@ -36,6 +38,14 @@ public class PostDto {
 
     public Long getId() {
         return id;
+    }
+
+    public Boolean getUserLiked() {
+        return userLiked;
+    }
+
+    public int getTotalLikes() {
+        return totalLikes;
     }
 
     public String getContent() {
@@ -72,6 +82,14 @@ public class PostDto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
+    }
+
+    public void setUserLiked(Boolean userLiked) {
+        this.userLiked = userLiked;
     }
 
     public void setContent(String content) {

@@ -1,19 +1,24 @@
 package com.hart.cosettle.post;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.hart.cosettle.group.Group;
+import com.hart.cosettle.like.Like;
 import com.hart.cosettle.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -45,6 +50,9 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne()
     private User user;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
 
     public Post() {
 
@@ -83,6 +91,10 @@ public class Post {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
     }
 
     public String getUrl() {
@@ -143,5 +155,9 @@ public class Post {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 }
