@@ -3,6 +3,7 @@ package com.hart.cosettle.post;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.hart.cosettle.comment.Comment;
 import com.hart.cosettle.group.Group;
 import com.hart.cosettle.like.Like;
 import com.hart.cosettle.user.User;
@@ -54,6 +55,9 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
     public Post() {
 
     }
@@ -95,6 +99,10 @@ public class Post {
 
     public List<Like> getLikes() {
         return likes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public String getUrl() {
@@ -159,5 +167,9 @@ public class Post {
 
     public void setLikes(List<Like> likes) {
         this.likes = likes;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

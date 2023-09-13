@@ -21,6 +21,14 @@ export interface IJoinedGroup {
   url: string;
 }
 
+export interface IComment {
+  avatarUrl: string;
+  id: number;
+  text: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface IPost {
   userId: number;
   url: string;

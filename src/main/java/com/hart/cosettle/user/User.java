@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.hart.cosettle.comment.Comment;
 import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.post.Post;
@@ -121,6 +122,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
     public User() {
 
     }
@@ -164,6 +168,10 @@ public class User implements UserDetails {
 
     public List<Post> getPosts() {
         return posts;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public List<GroupMember> getInviters() {
@@ -334,6 +342,10 @@ public class User implements UserDetails {
 
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public void setUsers(List<Friend> users) {
