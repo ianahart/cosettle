@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Viewport from './Viewport';
 import BackgroundImage from './BackgroundImage';
 import Name from './Name';
@@ -7,8 +7,7 @@ import Links from './Links';
 import { Outlet } from 'react-router-dom';
 import ContentPreview from './ContentPreview';
 import { groupState } from '../../../state/initialState';
-import { IGroup, IUserContext } from '../../../interfaces';
-import { UserContext } from '../../../context/user';
+import { IGroup } from '../../../interfaces';
 import { Client } from '../../../util/client';
 
 interface IGroupLayoutProps {
@@ -17,7 +16,6 @@ interface IGroupLayoutProps {
 }
 
 const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
-  const { user } = useContext(UserContext) as IUserContext;
   const [viewport, setViewport] = useState('desktop'); // preview
   const [group, setGroup] = useState<IGroup>(groupState);
 

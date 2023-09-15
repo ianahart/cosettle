@@ -6,6 +6,17 @@ export const http = axios.create({
 });
 
 export const Client = {
+  searchGroups: (
+    searchTerm: string,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/groups/search?searchTerm=${searchTerm}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   getComments: (postId: number, page: number, pageSize: number, direction: string) => {
     return http.get(
       `/comments?postId=${postId}&page=${page}&pageSize=${pageSize}&direction=${direction}`

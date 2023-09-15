@@ -6,6 +6,7 @@ import com.hart.cosettle.group.request.UploadGroupImageRequest;
 import com.hart.cosettle.group.response.CreateGroupResponse;
 import com.hart.cosettle.group.response.GetAdminGroupsResponse;
 import com.hart.cosettle.group.response.GetGroupResponse;
+import com.hart.cosettle.group.response.SearchGroupResponse;
 import com.hart.cosettle.group.response.UpdateGroupResponse;
 import com.hart.cosettle.group.response.UploadGroupImageResponse;
 
@@ -67,5 +68,15 @@ public class GroupController {
             UploadGroupImageRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new UploadGroupImageResponse("success", this.groupService.uploadGroupImage(id, request.getFile())));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<SearchGroupResponse> searchGroups(
+            @RequestParam("searchTerm") String searchTerm,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction) {
+        return ResponseEntity.status(HttpStatus.OK).body(new SearchGroupResponse("success",
+                this.groupService.getSearchGroups(searchTerm, page, pageSize, direction)));
     }
 }
