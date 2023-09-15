@@ -43,7 +43,7 @@ const Post = ({
   const [comments, setComments] = useState<IComment[]>([]);
   const [commentPrompt, setCommentPrompt] = useState(false);
   const [pagination, setPagination] = useState<IPagination>({
-    pageSize: 1,
+    pageSize: 4,
     page: 0,
     totalPages: 0,
     direction: 'next',

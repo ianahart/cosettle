@@ -126,6 +126,20 @@ public class GroupService {
 
     }
 
+    public GroupPaginationDto<GroupDto> getSearchGroups(String searchTerm, int page, int pageSize, String direction) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<GroupDto> searchGroups = this.groupRepository.getSearchGroups(searchTerm.toLowerCase(), paging);
+
+        return new GroupPaginationDto<GroupDto>(
+                searchGroups.getContent(),
+                currentPage,
+                pageSize,
+                searchGroups.getTotalPages(),
+                direction);
+
+    }
+
     public void updateGroup(Long id, String name) {
         User user = this.userService.getCurrentlyLoggedInUser();
         Group group = getGroupById(id);
