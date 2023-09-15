@@ -18,6 +18,7 @@ interface IGroupLayoutProps {
 const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
   const [viewport, setViewport] = useState('desktop'); // preview
   const [group, setGroup] = useState<IGroup>(groupState);
+  const [isGroupMemberOrAdmin, setIsGroupMemberOrAdmin] = useState(false);
 
   const handleSetViewport = (curViewport: string) => {
     setViewport(curViewport);
@@ -57,7 +58,8 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
     Client.getGroup(parseInt(groupId))
       .then((res) => {
         const { data } = res.data;
-        setGroup(data);
+        setGroup(data.group);
+        setIsGroupMemberOrAdmin(data.isGroupMemberOrAdmin);
       })
       .catch((err) => {
         throw new Error(err.response.data.message);
@@ -69,8 +71,6 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
       getGroup();
     }
   }, [paramId]);
-
-  const name = 'chip';
 
   return (
     <Box
@@ -85,8 +85,16 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
 
       <Box
         className="group-layout-container"
-        cursor={preview ? 'not-allowed' : 'unset'}
-        pointerEvents={preview ? 'none' : 'unset'}
+        cursor={
+          preview || (!isGroupMemberOrAdmin && group.privacy === 'private')
+            ? 'not-allowed'
+            : 'unset'
+        }
+        pointerEvents={
+          preview || (!isGroupMemberOrAdmin && group.privacy === 'private')
+            ? 'none'
+            : 'unset'
+        }
       >
         {viewport === 'desktop' && (
           <BackgroundImage

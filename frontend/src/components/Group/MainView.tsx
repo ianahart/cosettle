@@ -44,7 +44,7 @@ const MainView = ({ switchView }: IMainViewProps) => {
   const goToGroup = (groupId: number) => {
     setSearchGroups([]);
     setSearchTerm('');
-    navigate(`/groups/${groupId}`);
+    navigate(`/groups/${groupId}/about`);
   };
 
   const applySearch = (paginate: boolean) => {

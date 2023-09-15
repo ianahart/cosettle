@@ -2,6 +2,7 @@ package com.hart.cosettle.group;
 
 import com.hart.cosettle.group.dto.GroupDto;
 import com.hart.cosettle.group.dto.GroupPaginationDto;
+import com.hart.cosettle.group.dto.GroupWithMemberDto;
 import com.hart.cosettle.group.request.CreateGroupRequest;
 import com.hart.cosettle.groupmember.GroupMember;
 import com.hart.cosettle.groupmember.GroupMemberRepository;
@@ -82,8 +83,21 @@ public class GroupService {
                 .orElseThrow(() -> new NotFoundException("Group not found"));
     }
 
-    public GroupDto getGroup(Long groupId) {
-        return this.groupRepository.getGroup(groupId);
+    private boolean checkIsGroupMemberOrAdmin(User user, Group group) {
+        List<Long> groupMemberIds = group.getGroupMembers()
+                .stream().filter(gm -> gm.getAccepted())
+                .map(gm -> gm.getMember().getId()).toList();
+
+        return groupMemberIds.contains(user.getId()) || user.getId() == group.getAdmin().getId() ? true : false;
+    }
+
+    public GroupWithMemberDto getGroup(Long groupId) {
+        Group groupEntity = getGroupById(groupId);
+        User user = this.userService.getCurrentlyLoggedInUser();
+
+        boolean isGroupMemberOrAdmin = checkIsGroupMemberOrAdmin(user, groupEntity);
+
+        return new GroupWithMemberDto(isGroupMemberOrAdmin, this.groupRepository.getGroup(groupId));
     }
 
     private List<GroupMember> packageNewGroupMembers(CreateGroupRequest request, Group group) {

@@ -17,7 +17,7 @@ const GroupPreview = ({ adminGroup, joined }: IGroupPreviewProps) => {
   const navigate = useNavigate();
 
   const goToGroup = (id: number) => {
-    navigate(`/groups/${id}`);
+    navigate(`/groups/${id}/about`);
   };
 
   return (
