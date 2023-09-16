@@ -2,23 +2,35 @@ import { Box, Flex, Text, Input } from '@chakra-ui/react';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { HiOutlinePhotograph } from 'react-icons/hi';
 import { AiOutlineSmile } from 'react-icons/ai';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/user';
+import { IUserContext } from '../../../interfaces';
 
 interface IContentPreviewProps {
   viewport: string;
 }
 
 const ContentPreview = ({ viewport }: IContentPreviewProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Flex
       flexDir={viewport === 'desktop' ? 'row' : 'column'}
       justify="space-between"
       className="group-content-preview-container"
-      bg="#161515"
+      bg={user.theme === 'dark' ? '#161515' : 'transparent'}
+      border={user.theme === 'dark' ? 'none' : '1px solid'}
+      borderColor={user.theme === 'dark' ? 'unset' : 'border.primary'}
       p="1rem"
       borderRadius={8}
       minH="200px"
     >
-      <Box width="100%" m="0.5rem" bg="#2c2a2a" borderRadius={8} p="2rem">
+      <Box
+        width="100%"
+        m="0.5rem"
+        bg={user.theme === 'dark' ? '#2c2a2a' : 'border.primary'}
+        borderRadius={8}
+        p="2rem"
+      >
         <Flex flexGrow="2" align="center">
           <Box color="text.primary" fontSize="2rem" mr="0.5rem">
             <BiSolidUserCircle />
@@ -26,7 +38,7 @@ const ContentPreview = ({ viewport }: IContentPreviewProps) => {
           <Input
             border="none"
             borderRadius={20}
-            bg="black.tertiary"
+            bg={user.theme === 'dark' ? 'black.tertiary' : 'border.primary'}
             placeholder="What's on your mind?"
           />
         </Flex>
@@ -49,7 +61,7 @@ const ContentPreview = ({ viewport }: IContentPreviewProps) => {
         m="0.5rem"
         minW={['100%', '250px', '250px']}
         height="80px"
-        bg="#2c2a2a"
+        bg={user.theme === 'dark' ? '#2c2a2a' : 'border.primary'}
         borderRadius={8}
         p="1rem"
       >

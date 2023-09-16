@@ -84,7 +84,7 @@ const Name = ({ preview, group, handleUpdateName }: INameProps) => {
         mb="1rem"
         mt="1rem"
         borderBottom="1px solid"
-        borderColor="text.secondary"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
       ></Box>
     </Box>
   );

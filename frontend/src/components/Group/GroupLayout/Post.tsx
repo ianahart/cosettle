@@ -101,7 +101,12 @@ const Post = ({
   };
 
   return (
-    <Box p="0.5rem" bg="black.tertiary" borderRadius={8} my="1.2rem">
+    <Box
+      p="0.5rem"
+      bg={user.theme === 'dark' ? 'black.tertiary' : 'transparent'}
+      borderRadius={8}
+      my="1.2rem"
+    >
       <Flex justify="flex-end">
         <Menu>
           <MenuButton
@@ -116,9 +121,14 @@ const Post = ({
               </Box>
             }
           />
-          <MenuList border="none" bg="#161515">
+          <MenuList border="none" bg={user.theme === 'dark' ? '#161515' : 'gray'}>
             {user.id === post.userId && (
-              <MenuItem icon={<BsTrash />} bg="#161515" onClick={deletePost}>
+              <MenuItem
+                color={user.theme === 'dark' ? 'text.secondary' : 'light.primary'}
+                icon={<BsTrash />}
+                bg={user.theme === 'dark' ? '#161515' : 'gray'}
+                onClick={deletePost}
+              >
                 Delete
               </MenuItem>
             )}
@@ -168,7 +178,7 @@ const Post = ({
         mt="0.25rem"
         mb="0.5rem"
         borderBottom="1px solid"
-        borderColor="text.secondary"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'unset'}
       ></Box>
       <Flex my="1rem" p="1rem" align="center" justify="space-between">
         <Flex
@@ -217,7 +227,7 @@ const Post = ({
             onClick={() => setCommentPrompt(true)}
             ml="0.5rem"
             width="100%"
-            bg="#161515"
+            bg={user.theme === 'dark' ? '#161515' : 'border.primary'}
             borderRadius={20}
             minH="35px"
             p="0.5rem"
@@ -225,7 +235,12 @@ const Post = ({
             <Text>Write a comment...</Text>
           </Box>
         ) : (
-          <Box ml="0.5rem" width="100%" bg="#161515" borderRadius={8}>
+          <Box
+            ml="0.5rem"
+            width="100%"
+            bg={user.theme === 'dark' ? '#161515' : 'unset'}
+            borderRadius={8}
+          >
             <Textarea
               value={comment}
               resize="none"
@@ -276,7 +291,13 @@ const Post = ({
               width="35px"
               height="35px"
             />
-            <Box borderRadius={8} p="1rem" bg="#161515" ml="0.5rem">
+            <Box
+              borderRadius={8}
+              p="1rem"
+              bg={user.theme === 'dark' ? '#161515' : 'gray'}
+              color={user.theme === 'dark' ? 'text.primary' : 'text.secondary'}
+              ml="0.5rem"
+            >
               <Text fontSize="0.9rem" fontWeight="bold">
                 {comment.firstName} {comment.lastName}
               </Text>

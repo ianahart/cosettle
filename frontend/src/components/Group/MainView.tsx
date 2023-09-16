@@ -16,16 +16,18 @@ import AdminGroups from './AdminGroups';
 import InviteRequests from './InviteRequests';
 import JoinedGroups from './JoinedGroups';
 import groupBG from '../../assets/group.png';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 import { Client } from '../../util/client';
-import { IGroup, IPagination } from '../../interfaces';
+import { IGroup, IPagination, IUserContext } from '../../interfaces';
+import { UserContext } from '../../context/user';
 
 interface IMainViewProps {
   switchView: (view: string) => void;
 }
 
 const MainView = ({ switchView }: IMainViewProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
   const [searchGroups, setSearchGroups] = useState<IGroup[]>([]);
@@ -102,7 +104,7 @@ const MainView = ({ switchView }: IMainViewProps) => {
           color="text.primary"
           placeholder="Search groups"
           border="none"
-          bg="#323432"
+          bg={user.theme === 'dark' ? '#323432' : 'border.primary'}
           borderRadius="20px"
         />
         <Box fontSize="1.2rem" position="absolute" top="10px" left="5px">
@@ -198,15 +200,27 @@ const MainView = ({ switchView }: IMainViewProps) => {
           </Box>
         </Flex>
       </RouterLink>
-      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box
+        borderBottom="1px solid"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
+        my="1rem"
+      ></Box>
       <Box my="2rem">
         <InviteRequests handleRefresh={handleRefresh} />
       </Box>
-      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box
+        borderBottom="1px solid"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
+        my="1rem"
+      ></Box>
       <Box my="2rem">
         <AdminGroups />
       </Box>
-      <Box borderBottom="1px solid" borderColor="text.secondary" my="1rem"></Box>
+      <Box
+        borderBottom="1px solid"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
+        my="1rem"
+      ></Box>
       <Box my="2rem">
         <JoinedGroups handleRefresh={handleRefresh} refresh={refresh} />
       </Box>

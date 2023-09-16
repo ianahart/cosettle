@@ -2,17 +2,28 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useOutletContext } from 'react-router-dom';
 import { RiEarthFill } from 'react-icons/ri';
 import { AiFillLock } from 'react-icons/ai';
-import { IGroup } from '../../../interfaces';
+import { IGroup, IUserContext } from '../../../interfaces';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/user';
 
 const About = () => {
   const [group] = useOutletContext<IGroup[]>();
+
+  const { user } = useContext(UserContext) as IUserContext;
+
   return (
     <Box color="text.primary">
       <Flex
         borderRadius={8}
         p="0.5rem"
         my="0.5rem"
-        bg={group.privacy === 'public' ? '#161515' : 'transparent'}
+        bg={
+          group.privacy === 'public' && user.theme === 'dark'
+            ? '#161515'
+            : group.privacy == 'public' && user.theme !== 'dark'
+            ? 'border.primary'
+            : 'transparent'
+        }
       >
         <Flex
           width="35px"
@@ -22,7 +33,7 @@ const About = () => {
           borderRadius="50%"
           align="center"
           mx="0.25rem"
-          bg="black.tertiary"
+          bg={user.theme === 'dark' ? 'black.tertiary' : 'border.primary'}
           fontSize="1.3rem"
         >
           <RiEarthFill />
@@ -36,7 +47,13 @@ const About = () => {
         borderRadius={8}
         p="0.5rem"
         my="0.5rem"
-        bg={group.privacy === 'private' ? '#161515' : 'transparent'}
+        bg={
+          group.privacy === 'private' && user.theme === 'dark'
+            ? '#161515'
+            : group.privacy == 'private' && user.theme !== 'dark'
+            ? 'border.primary'
+            : 'transparent'
+        }
       >
         <Flex
           width="35px"
@@ -46,7 +63,7 @@ const About = () => {
           borderRadius="50%"
           align="center"
           mx="0.25rem"
-          bg="black.tertiary"
+          bg={user.theme === 'dark' ? 'black.tertiary' : 'border.primary'}
           fontSize="1.3rem"
         >
           <AiFillLock />

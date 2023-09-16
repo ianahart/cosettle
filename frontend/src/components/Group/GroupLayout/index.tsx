@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Viewport from './Viewport';
 import BackgroundImage from './BackgroundImage';
 import Name from './Name';
@@ -7,8 +7,9 @@ import Links from './Links';
 import { Outlet } from 'react-router-dom';
 import ContentPreview from './ContentPreview';
 import { groupState } from '../../../state/initialState';
-import { IGroup } from '../../../interfaces';
+import { IGroup, IUserContext } from '../../../interfaces';
 import { Client } from '../../../util/client';
+import { UserContext } from '../../../context/user';
 
 interface IGroupLayoutProps {
   preview: boolean;
@@ -16,6 +17,7 @@ interface IGroupLayoutProps {
 }
 
 const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   const [viewport, setViewport] = useState('desktop'); // preview
   const [group, setGroup] = useState<IGroup>(groupState);
   const [isGroupMemberOrAdmin, setIsGroupMemberOrAdmin] = useState(false);
@@ -76,7 +78,7 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
     <Box
       width={viewport === 'desktop' ? '100%' : '50%'}
       p="1rem"
-      bg="black.tertiary"
+      bg={user.theme === 'dark' ? 'black.tertiary' : 'transparent'}
       minH="600px"
       borderRadius={8}
       mx="auto"

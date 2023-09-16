@@ -91,7 +91,7 @@ const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => 
   return (
     <Box
       onClick={onOpen}
-      bg="black.tertiary"
+      bg={user.theme === 'dark' ? 'black.tertiary' : 'gray'}
       cursor="pointer"
       borderRadius={8}
       p="0.5rem"
@@ -116,7 +116,7 @@ const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => 
             pl="0.5rem"
             align="center"
             minH="40px"
-            bg="#161515"
+            bg={user.theme === 'dark' ? '#161515' : 'border.primary'}
             border="none"
             borderRadius={20}
             width="100%"
@@ -127,7 +127,7 @@ const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => 
       </Flex>
       <Box
         borderBottom="1px solid"
-        borderColor="text.secondary"
+        borderColor={user.theme === 'dark' ? 'text.secondary' : 'border.primary'}
         mt="1rem"
         mb="0.5rem"
       ></Box>
@@ -141,7 +141,10 @@ const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => 
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="black.tertiary" color="text.primary">
+        <ModalContent
+          bg={user.theme === 'dark' ? 'black.tertiary' : 'border.primary'}
+          color="text.primary"
+        >
           <ModalHeader>Create a post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -216,7 +219,11 @@ const CreatePost = ({ handleCreatePost, createPostError }: ICreatePostProps) => 
                 </Flex>
               )}
             </Box>
-            <Box my="1rem" borderBottom="1px solid" borderColor="text.secondary"></Box>
+            <Box
+              my="1rem"
+              borderBottom="1px solid"
+              borderColor={user.theme === 'dark' ? 'text.secondary' : 'transparent'}
+            ></Box>
 
             <Flex position="relative" align="center" justify="center">
               <Box>

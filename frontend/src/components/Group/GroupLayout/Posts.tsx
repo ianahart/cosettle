@@ -114,7 +114,7 @@ const Posts = () => {
       borderRadius={8}
       p="1rem"
       color="text.primary"
-      bg="#161515"
+      bg={user.theme === 'dark' ? '#161515' : 'border.primary'}
       maxW="968px"
       mx="auto"
     >

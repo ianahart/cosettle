@@ -1,11 +1,13 @@
 import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useOutletContext } from 'react-router-dom';
-import { IGroup, IMinimalUser, IPagination } from '../../../interfaces';
-import { useState } from 'react';
+import { IGroup, IMinimalUser, IPagination, IUserContext } from '../../../interfaces';
+import { useContext, useState } from 'react';
 import { Client } from '../../../util/client';
 import Avatar from '../../Shared/Avatar';
+import { UserContext } from '../../../context/user';
 
 const Invite = () => {
+  const { user } = useContext(UserContext) as IUserContext;
   const [group] = useOutletContext<IGroup[]>();
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState('');
@@ -98,7 +100,7 @@ const Invite = () => {
             placeholder="Enter a name..."
             _placeholder={{ fontSize: '0.9rem' }}
             width="80%"
-            bg="#323432"
+            bg={user.theme === 'dark' ? '#323432' : 'border.primary'}
             borderRadius={20}
             border="none"
           />

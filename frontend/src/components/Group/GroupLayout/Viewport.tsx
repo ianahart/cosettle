@@ -1,5 +1,8 @@
 import { AiOutlineMobile, AiOutlineDesktop } from 'react-icons/ai';
 import { Box, Text, Flex } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { UserContext } from '../../../context/user';
+import { IUserContext } from '../../../interfaces';
 
 interface IViewportProps {
   viewport: string;
@@ -7,9 +10,13 @@ interface IViewportProps {
 }
 
 const Viewport = ({ viewport, handleSetViewport }: IViewportProps) => {
+  const { user } = useContext(UserContext) as IUserContext;
   return (
     <Flex justify="space-between">
-      <Text fontWeight="bold" color="light.primary">
+      <Text
+        fontWeight="bold"
+        color={user.theme === 'dark' ? 'light.primary' : 'text.primary'}
+      >
         {viewport === 'desktop' ? 'Desktop Preview' : 'Mobile Preview'}
       </Text>
       <Flex>
