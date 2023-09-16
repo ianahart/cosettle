@@ -2,6 +2,7 @@ package com.hart.cosettle.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.friend.FriendRepository;
+import com.hart.cosettle.groupmember.GroupMemberService;
 import com.hart.cosettle.passwordreset.PasswordResetService;
 import com.hart.cosettle.passwordreset.request.PasswordResetRequest;
 import com.hart.cosettle.user.dto.ChatUserDto;
@@ -45,16 +47,19 @@ public class UserService {
     private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
     private final FriendRepository friendRepository;
+    private final GroupMemberService groupMemberService;
 
     @Autowired
     public UserService(UserRepository userRepository,
             PasswordResetService passwordResetService,
             PasswordEncoder passwordEncoder,
-            FriendRepository friendRepository) {
+            FriendRepository friendRepository,
+            @Lazy GroupMemberService groupMemberService) {
         this.userRepository = userRepository;
         this.passwordResetService = passwordResetService;
         this.passwordEncoder = passwordEncoder;
         this.friendRepository = friendRepository;
+        this.groupMemberService = groupMemberService;
 
     }
 
@@ -205,6 +210,23 @@ public class UserService {
         Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
         Page<MinimalUserDto> result = this.userRepository.getUsers(getCurrentlyLoggedInUser().getId(), paging);
         List<MinimalUserDto> users = result.getContent();
+        return new UserPaginationDto<MinimalUserDto>(
+                users,
+                currentPage,
+                pageSize,
+                result.getTotalPages(),
+                direction);
+
+    }
+
+    public UserPaginationDto<MinimalUserDto> searchUsersByName(String name, int page, int pageSize, String direction,
+            Long groupId, Long adminId) {
+        int currentPage = MyUtils.paginate(page, direction);
+        Pageable paging = PageRequest.of(currentPage, pageSize, Sort.by("id").descending());
+        Page<MinimalUserDto> result = this.userRepository.searchUsersByName(name.toLowerCase(), adminId, paging);
+        List<MinimalUserDto> users = result.getContent().stream()
+                .filter(u -> !this.groupMemberService.checkIfGroupMember(u.getId(), groupId)).toList();
+
         return new UserPaginationDto<MinimalUserDto>(
                 users,
                 currentPage,

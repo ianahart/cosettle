@@ -56,4 +56,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
             ORDER BY u.id
                 """)
     Page<SearchUserDto> searchUsers(@Param("userId") Long userId, @Param("term") String term, Pageable paging);
+
+    @Query(value = """
+             SELECT new com.hart.cosettle.user.dto.MinimalUserDto(
+             u.id AS id, u.firstName AS firstName, u.lastName AS lastName,
+             p.avatarUrl AS avatarUrl
+             ) FROM User u
+            INNER JOIN u.profile p
+             WHERE u.id <> :adminId
+             AND CONCAT(LOWER(u.firstName), ' ', LOWER(u.lastName)) LIKE %:name%
+                 """)
+    Page<MinimalUserDto> searchUsersByName(@Param("name") String name,
+            @Param("adminId") Long adminId,
+            Pageable paging);
+
 }

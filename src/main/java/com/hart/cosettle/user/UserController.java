@@ -6,6 +6,7 @@ import com.hart.cosettle.user.response.ChangePasswordUserResponse;
 import com.hart.cosettle.user.response.GetUserResponse;
 import com.hart.cosettle.user.response.GetUsersResponse;
 import com.hart.cosettle.user.response.SearchUserResponse;
+import com.hart.cosettle.user.response.SearchUsersByNameResponse;
 import com.hart.cosettle.advice.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,19 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/search/name")
+    public ResponseEntity<SearchUsersByNameResponse> searchUsersByName(
+            @RequestParam("name") String name,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("direction") String direction,
+            @RequestParam("groupId") Long groupId,
+            @RequestParam("adminId") Long adminId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new SearchUsersByNameResponse("success",
+                this.userService.searchUsersByName(name, page, pageSize, direction, groupId, adminId)));
     }
 
     @GetMapping("")
