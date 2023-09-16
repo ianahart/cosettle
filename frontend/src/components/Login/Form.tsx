@@ -17,6 +17,7 @@ const Form = () => {
   const [error, setError] = useState('');
 
   const updateField = (name: string, value: string, attribute: string) => {
+    if (name === 'confirmPassword') return;
     setForm((prevState) => ({
       ...prevState,
       [name]: { ...prevState[name as keyof ILoginForm], [attribute]: value },
