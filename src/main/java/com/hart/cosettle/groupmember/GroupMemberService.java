@@ -4,7 +4,10 @@ import com.hart.cosettle.groupmember.dto.GroupMemberDto;
 import com.hart.cosettle.groupmember.dto.InviteDto;
 import com.hart.cosettle.groupmember.dto.JoinedGroupDto;
 import com.hart.cosettle.groupmember.dto.PaginationDto;
+import com.hart.cosettle.groupmember.request.CreateGroupMemberInviteRequest;
 import com.hart.cosettle.advice.NotFoundException;
+import com.hart.cosettle.group.Group;
+import com.hart.cosettle.group.GroupService;
 import com.hart.cosettle.advice.ForbiddenException;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
@@ -22,13 +25,27 @@ public class GroupMemberService {
 
     private final UserService userService;
     private final GroupMemberRepository groupMemberRepository;
+    private final GroupService groupService;
 
     @Autowired
     public GroupMemberService(
             UserService userService,
-            GroupMemberRepository groupMemberRepository) {
+            GroupMemberRepository groupMemberRepository,
+            GroupService groupService) {
         this.userService = userService;
         this.groupMemberRepository = groupMemberRepository;
+        this.groupService = groupService;
+    }
+
+    public void sendGroupMemberInvite(CreateGroupMemberInviteRequest request) {
+        User member = this.userService.getUserById(request.getUserId());
+        User admin = this.userService.getUserById(request.getAdminId());
+        Group group = this.groupService.getGroupById(request.getGroupId());
+        this.groupMemberRepository.save(new GroupMember(group, member, admin, false, true));
+    }
+
+    public boolean checkIfGroupMember(Long userId, Long groupId) {
+        return this.groupMemberRepository.checkIfGroupMember(userId, groupId);
     }
 
     private GroupMember getGroupMember(Long id) {

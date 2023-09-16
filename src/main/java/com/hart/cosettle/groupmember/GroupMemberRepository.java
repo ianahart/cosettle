@@ -15,6 +15,16 @@ import org.springframework.stereotype.Repository;
 public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> {
 
     @Query(value = """
+            SELECT EXISTS(SELECT 1 FROM GroupMember gm
+             INNER JOIN gm.member m
+             INNER JOIN gm.group g
+             WHERE m.id = :userId
+             AND g.id = :groupId
+            )
+                """)
+    boolean checkIfGroupMember(@Param("userId") Long userId, @Param("groupId") Long groupId);
+
+    @Query(value = """
             SELECT new com.hart.cosettle.groupmember.dto.GroupMemberDto(
              gm.id AS id, m.id AS userId, p.id AS profileId, m.firstName as firstName,
              m.lastName AS lastName, p.avatarUrl as url

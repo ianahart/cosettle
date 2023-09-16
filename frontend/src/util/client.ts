@@ -6,6 +6,22 @@ export const http = axios.create({
 });
 
 export const Client = {
+  sendGroupInvite: (userId: number, adminId: number, groupId: number) => {
+    return http.post('/group-members/invites', { userId, adminId, groupId });
+  },
+
+  searchUsersByName: (
+    name: string,
+    page: number,
+    pageSize: number,
+    direction: string,
+    groupId: number,
+    adminId: number
+  ) => {
+    return http.get(
+      `/users/search/name?name=${name}&page=${page}&pageSize=${pageSize}&direction=${direction}&groupId=${groupId}&adminId=${adminId}`
+    );
+  },
   searchGroups: (
     searchTerm: string,
     page: number,
