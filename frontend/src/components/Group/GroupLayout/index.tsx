@@ -104,7 +104,7 @@ const GroupLayout = ({ preview, paramId = undefined }: IGroupLayoutProps) => {
           />
         )}
         <Name group={group} preview={preview} handleUpdateName={handleUpdateName} />
-        <Links />
+        <Links adminId={group.adminId} />
         <Box my="2rem">
           <Outlet context={[group]} />
         </Box>
