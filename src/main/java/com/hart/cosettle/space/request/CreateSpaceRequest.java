@@ -11,8 +11,12 @@ public class CreateSpaceRequest {
     private String size;
     @Size(min = 1, max = 100, message = "Capacity must be between 1 and 100 characters")
     private String capacity;
-    @Size(min = 1, max = 250, message = "Location must be between 1 and 250 characters")
-    private String location;
+    @Size(min = 1, max = 250, message = "Street must be between 1 and 250 characters")
+    private String street;
+    @Size(min = 1, max = 250, message = "City must be between 1 and 250 characters")
+    private String city;
+    private String type;
+    private String country;
     @Size(min = 1, max = 300, message = "Description must be between 1 and 300 characters")
     private String description;
     @Size(min = 1, max = 100, message = "Flooring must be between 1 and 100 characters")
@@ -45,7 +49,10 @@ public class CreateSpaceRequest {
     public CreateSpaceRequest(
             String size,
             String capacity,
-            String location,
+            String street,
+            String type,
+            String city,
+            String country,
             String description,
             String flooring,
             String wifi,
@@ -62,7 +69,10 @@ public class CreateSpaceRequest {
             String phoneNumber) {
         this.size = size;
         this.capacity = capacity;
-        this.location = location;
+        this.street = street;
+        this.type = type;
+        this.city = city;
+        this.country = country;
         this.description = description;
         this.flooring = flooring;
         this.wifi = wifi;
@@ -115,10 +125,6 @@ public class CreateSpaceRequest {
         return lastName;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
     public String getOpenTime() {
         return openTime;
     }
@@ -141,6 +147,22 @@ public class CreateSpaceRequest {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getPhoneNumber() {
@@ -183,8 +205,20 @@ public class CreateSpaceRequest {
         this.lastName = lastName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setOpenTime(String openTime) {
