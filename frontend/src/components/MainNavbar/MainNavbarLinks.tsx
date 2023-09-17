@@ -23,7 +23,6 @@ const MainNavbarLinks = ({
         alignItems={alignItems}
         flexDirection={flexDir === 'row' ? 'row' : 'column'}
       >
-        <MainNavbarLink isMobile={isMobile} path="/about" text="About" />
         <MainNavbarLink isMobile={isMobile} path="/explorer" text="Explorer" />
         <MainNavbarLink isMobile={isMobile} path="/login" text="Login" />
         <MainNavbarLink isMobile={isMobile} path="/register" text="Sign Up" />

@@ -8,6 +8,7 @@ import com.hart.cosettle.user.User;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.mapping.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -41,8 +42,14 @@ public class Space {
     private String size;
     @Column(name = "capacity", length = 100)
     private String capacity;
-    @Column(name = "location", length = 250)
-    private String location;
+    @Column(name = "street", length = 250)
+    private String street;
+    @Column(name = "city", length = 250)
+    private String city;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "country")
+    private String country;
     @Column(name = "description", length = 300)
     private String description;
     @Column(name = "flooring", length = 100)
@@ -89,7 +96,10 @@ public class Space {
             Timestamp updatedAt,
             String size,
             String capacity,
-            String location,
+            String street,
+            String city,
+            String country,
+            String type,
             String description,
             String flooring,
             String wifi,
@@ -109,7 +119,10 @@ public class Space {
         this.updatedAt = updatedAt;
         this.size = size;
         this.capacity = capacity;
-        this.location = location;
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.type = type;
         this.description = description;
         this.flooring = flooring;
         this.wifi = wifi;
@@ -130,7 +143,10 @@ public class Space {
             User user,
             String size,
             String capacity,
-            String location,
+            String street,
+            String city,
+            String country,
+            String type,
             String description,
             String flooring,
             String wifi,
@@ -148,7 +164,10 @@ public class Space {
         this.user = user;
         this.size = size;
         this.capacity = capacity;
-        this.location = location;
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.type = type;
         this.description = description;
         this.flooring = flooring;
         this.wifi = wifi;
@@ -213,10 +232,6 @@ public class Space {
         return lastName;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
     public String getOpenTime() {
         return openTime;
     }
@@ -239,6 +254,22 @@ public class Space {
 
     public Timestamp getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getStreet() {
+        return street;
     }
 
     public Boolean getUtilities() {
@@ -301,8 +332,20 @@ public class Space {
         this.lastName = lastName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setOpenTime(String openTime) {

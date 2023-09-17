@@ -1,9 +1,11 @@
-import { Box, Flex, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormLabel, Textarea, Select } from '@chakra-ui/react';
 import Header from './Header';
 import { IDescriptionForm, IUserContext } from '../../interfaces';
 import FormField from '../Shared/FormField';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
+import { countries } from '../../state/initialState';
+import { spaceTypes } from '../../state/initialState';
 
 interface IDescriptionProps {
   form: IDescriptionForm;
@@ -22,6 +24,12 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
     handleUpdateField(name, value, attribute, step);
   };
 
+  const handleOnSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    handleUpdateField(name, value, 'value', step);
+  };
+
   const handleOnTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     handleUpdateField(name, value, 'value', step);
@@ -29,19 +37,69 @@ const Description = ({ form, step, handleUpdateField }: IDescriptionProps) => {
   return (
     <Box>
       <Header heading="Description" />
+      <Box my="1.5rem" width="90%" mx="auto">
+        <FormLabel>Space Type</FormLabel>
+        <Select
+          defaultValue={'Work Space'}
+          onChange={handleOnSelectChange}
+          name="type"
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
+        >
+          {spaceTypes.map((spaceType) => {
+            return (
+              <option key={spaceType.id} value={spaceType.value}>
+                {spaceType.name}
+              </option>
+            );
+          })}
+        </Select>
+      </Box>
       <FormField
         updateField={updateField}
-        name={form.location.name}
-        value={form.location.value}
-        error={form.location.error}
-        type={form.location.type}
-        label="Location"
-        id="location"
+        name={form.street.name}
+        value={form.street.value}
+        error={form.street.error}
+        type={form.street.type}
+        label="Street"
+        id="street"
         width="90%"
-        errorField="Location"
+        errorField="Street"
         isDark={false}
         borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
       />
+      <FormField
+        updateField={updateField}
+        name={form.city.name}
+        value={form.city.value}
+        error={form.city.error}
+        type={form.city.type}
+        label="City"
+        id="city"
+        width="90%"
+        errorField="City"
+        isDark={false}
+        borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
+      />
+
+      <Box my="1.5rem" width="90%" mx="auto">
+        <FormLabel color="text.primary">Country</FormLabel>
+        <Select
+          defaultValue={'United States'}
+          onChange={handleOnSelectChange}
+          name="country"
+          placeholder="Select country"
+          borderColor={`${user.theme === 'dark' ? 'text.secondary' : 'border.primary'}`}
+        >
+          {countries.map((country) => {
+            return (
+              <option key={country.id} value={country.name}>
+                {country.name}
+              </option>
+            );
+          })}
+        </Select>
+      </Box>
+
       <Flex>
         <FormField
           updateField={updateField}

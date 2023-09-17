@@ -143,9 +143,12 @@ export interface IUserContext {
 }
 
 export interface IDescriptionForm {
+  type: { name: string; value: string; error: string; type: string; step: string };
   size: { name: string; value: string; error: string; type: string; step: string };
   capacity: { name: string; value: string; error: string; type: string; step: string };
-  location: { name: string; value: string; error: string; type: string; step: string };
+  country: { name: string; value: string; error: string; type: string; step: string };
+  city: { name: string; value: string; error: string; type: string; step: string };
+  street: { name: string; value: string; error: string; type: string; step: string };
   description: { name: string; value: string; error: string; type: string; step: string };
   flooring: { name: string; value: string; error: string; type: string; step: string };
   wifi: { name: string; value: string; error: string; type: string; step: string };

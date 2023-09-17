@@ -1,5 +1,5 @@
 import { Box, Button, ButtonGroup, Flex, Text } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createSpaceState } from '../state/initialState';
 import { ICreateSpaceForm, IDay, IUserContext } from '../interfaces';
@@ -59,6 +59,31 @@ const CreateSpaceRoute = () => {
     updatedForm.steps[step][name as keyof TStep][attribute] = value;
     setForm(updatedForm);
   };
+
+  const clearForm = () => {
+    for (let prop in form.steps) {
+      for (let key in form.steps[prop]) {
+        const exclude = [
+          'days',
+          'bathroom',
+          'utilities',
+          'food',
+          'type',
+          'country',
+          'openTime',
+          'closeTime',
+        ];
+        if (!exclude.includes(key)) {
+          handleUpdateField(key, '', 'value', prop);
+          handleUpdateField(key, '', 'error', prop);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    return () => clearForm();
+  }, []);
 
   const prevPage = () => {
     if (form.selectedIndex - 1 < 0) {
@@ -137,7 +162,10 @@ const CreateSpaceRoute = () => {
     const body = {
       size: form.steps.description.size.value,
       capacity: form.steps.description.capacity.value,
-      location: form.steps.description.location.value,
+      street: form.steps.description.street.value,
+      city: form.steps.description.city.value,
+      country: form.steps.description.country.value,
+      type: form.steps.description.type.value,
       description: form.steps.description.description.value,
       flooring: form.steps.description.flooring.value,
       wifi: form.steps.description.wifi.value,
@@ -165,6 +193,7 @@ const CreateSpaceRoute = () => {
       })
       .then(() => {
         setIsLoading(false);
+        setForm(createSpaceState);
         navigate('/');
       })
       .catch((err) => {
