@@ -1,31 +1,12 @@
-import { Box, Button } from '@chakra-ui/react';
-import { useEffect, useRef } from 'react';
-import { Client } from '../util/client';
+import { Box } from '@chakra-ui/react';
+import Hero from '../components/Home/Hero';
+import SpaceTypes from '../components/Home/SpaceTypes';
 
 const HomeRoute = () => {
-  const shouldRun = useRef(true);
-
-  const makeHeartBeat = () => {
-    Client.heartbeat()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    if (shouldRun.current) {
-      shouldRun.current = false;
-      makeHeartBeat();
-    }
-  }, [shouldRun.current, makeHeartBeat]);
-
   return (
-    <Box>
-      Home
-      <Button onClick={makeHeartBeat}>Heartbeat</Button>
+    <Box mx="auto" mt="2rem" maxWidth="968px">
+      <Hero />
+      <SpaceTypes />
     </Box>
   );
 };

@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import Logo from '../Shared/Logo';
+import { Link as RouterLink } from 'react-router-dom';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import MainNavbarLinks from './MainNavbarLinks';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
@@ -49,7 +50,9 @@ const MainNavbar = () => {
       justifyContent="space-between"
       p="0.25rem"
     >
-      <Logo />
+      <RouterLink to="/">
+        <Logo />
+      </RouterLink>
       <MainNavbarLinks
         isMobile={false}
         display={['none', 'none', 'flex']}

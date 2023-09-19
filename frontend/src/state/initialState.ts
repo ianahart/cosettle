@@ -1,4 +1,16 @@
 import { nanoid } from 'nanoid';
+import workspaceImg from '../assets/workspace.svg';
+import chillZoneImg from '../assets/chill_zone.svg';
+import coffeeShopImg from '../assets/coffee_shop.svg';
+import restaurantImg from '../assets/restaurant.svg';
+
+export const spaces = [
+  { name: 'Work Space', value: 'work_space', id: 1, image: workspaceImg },
+  { name: 'Chill Zone', value: 'chill_zone', id: 2, image: chillZoneImg },
+  { name: 'Restaurant', value: 'restaurant', id: 3, image: coffeeShopImg },
+  { name: 'Coffee Shop', value: 'coffee_shop', id: 4, image: restaurantImg },
+];
+
 export const registerFormState = {
   firstName: { name: 'firstName', value: '', error: '', type: 'text' },
   lastName: { name: 'lastName', value: '', error: '', type: 'text' },

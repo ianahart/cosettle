@@ -6,6 +6,13 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface ISpaceType {
+  name: string;
+  id: number;
+  image: string;
+  value: string;
+}
+
 export interface IChangePasswordForm {
   password: { name: string; value: string; error: string; type: string };
   newPassword: { name: string; value: string; error: string; type: string };
