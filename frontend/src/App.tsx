@@ -36,6 +36,7 @@ import About from './components/Group/GroupLayout/About';
 import Posts from './components/Group/GroupLayout/Posts';
 import Members from './components/Group/GroupLayout/Members';
 import Invite from './components/Group/GroupLayout/Invite';
+import SpaceRoute from './routes/SpaceRoute';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -95,6 +96,7 @@ function App() {
                   </RequireGuest>
                 }
               />
+              <Route path="/spaces/:id" element={<SpaceRoute />}></Route>
               <Route
                 path="/forgot-password"
                 element={

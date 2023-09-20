@@ -6,6 +6,12 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface ICustomSelectData {
+  name: string;
+  value: string;
+  id: number;
+}
+
 export interface ISpaceType {
   name: string;
   id: number;
@@ -47,6 +53,40 @@ export interface IPost {
   content: string;
   userLiked: boolean;
   totalLikes: number;
+}
+
+export interface IPhoto {
+  createdAt: Date;
+  filename: string;
+  id: number;
+  url: string;
+}
+
+export interface ISpace {
+  bathrooms: boolean;
+  capacity: string;
+  city: string;
+  closeTime: string;
+  country: string;
+  createdAt: Date;
+  days: string;
+  description: string;
+  email: string;
+  firstName: string;
+  flooring: string;
+  food: boolean;
+  id: number;
+  lastName: string;
+  openTime: string;
+  phoneNumber: string;
+  photos: IPhoto[];
+  price: string;
+  size: string;
+  street: string;
+  type: string;
+  updatedAt: Date;
+  utilities: boolean;
+  wifi: string;
 }
 
 export interface IGroupMember {

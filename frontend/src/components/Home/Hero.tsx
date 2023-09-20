@@ -43,12 +43,15 @@ const Hero = () => {
             </Box>
             <Text textTransform="uppercase">Explore Space</Text>
           </Button>
-          <Text           color={
-            nonAuthTheme === 'dark' || user.theme === 'dark'
-              ? 'light.primary'
-              : 'text.primary'
-          }
-  my="1rem" textAlign="center">
+          <Text
+            color={
+              nonAuthTheme === 'dark' || user.theme === 'dark'
+                ? 'light.primary'
+                : 'text.primary'
+            }
+            my="1rem"
+            textAlign="center"
+          >
             or
           </Text>
           <Button borderRadius={20} onClick={goToCreateSpace}>

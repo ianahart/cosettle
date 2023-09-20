@@ -36,7 +36,8 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**",    "/ws/**", "ws/**", "http://localhost:8080/", "http://localhost:5173/**")
+                .requestMatchers("/api/v1/auth/**", "/ws/**", "ws/**", "http://localhost:8080/",
+                        "http://localhost:5173/**", "/api/v1/spaces/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

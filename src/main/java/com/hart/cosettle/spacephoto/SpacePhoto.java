@@ -2,6 +2,7 @@ package com.hart.cosettle.spacephoto;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.hart.cosettle.space.Space;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,6 +33,8 @@ public class SpacePhoto {
     private String url;
     @Column(name = "filename", length = 400)
     private String filename;
+
+    @JsonBackReference
     @ManyToOne()
     @JoinColumn(name = "space_id", referencedColumnName = "id")
     private Space space;

@@ -3,6 +3,7 @@ package com.hart.cosettle.space;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hart.cosettle.spacephoto.SpacePhoto;
 import com.hart.cosettle.user.User;
 
@@ -83,6 +84,7 @@ public class Space {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpacePhoto> spacePhotos;
 

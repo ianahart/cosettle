@@ -6,6 +6,19 @@ export const http = axios.create({
 });
 
 export const Client = {
+  fetchSpaces: (
+    country: string,
+    spaceType: string,
+    city: string,
+    page: number,
+    pageSize: number,
+    direction: string
+  ) => {
+    return http.get(
+      `/spaces?country=${country}&spaceType=${spaceType}&city=${city}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
   sendGroupInvite: (userId: number, adminId: number, groupId: number) => {
     return http.post('/group-members/invites', { userId, adminId, groupId });
   },
