@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ISpace, IUserContext } from '../interfaces';
 import { spaceState } from '../state/initialState';
@@ -29,7 +29,7 @@ const SpaceRoute = () => {
   return (
     <Box minH="100vh">
       <Flex
-                bg={user.theme === 'dark'  || nonAuthTheme === 'dark'? '#1d1d1d' : 'transparent'}
+        bg={user.theme === 'dark' || nonAuthTheme === 'dark' ? '#1d1d1d' : 'transparent'}
         borderRadius={8}
         className="single-space-container"
         mt="5rem"

@@ -37,6 +37,7 @@ import Posts from './components/Group/GroupLayout/Posts';
 import Members from './components/Group/GroupLayout/Members';
 import Invite from './components/Group/GroupLayout/Invite';
 import SpaceRoute from './routes/SpaceRoute';
+import FavoritesRoute from './routes/FavoritesRoute';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -194,6 +195,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <MessagesRoute />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/spaces/favorites"
+                element={
+                  <RequireAuth>
+                    <FavoritesRoute />
                   </RequireAuth>
                 }
               />

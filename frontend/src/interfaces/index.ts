@@ -19,6 +19,15 @@ export interface ISpaceType {
   value: string;
 }
 
+export interface IFavorite {
+  city: string;
+  country: string;
+  id: number;
+  spaceId: number;
+  spacePhoto: IPhoto;
+  street: string;
+}
+
 export interface IChangePasswordForm {
   password: { name: string; value: string; error: string; type: string };
   newPassword: { name: string; value: string; error: string; type: string };

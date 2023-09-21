@@ -6,8 +6,18 @@ export const http = axios.create({
 });
 
 export const Client = {
-  addToFavorites: (userId: number, spaceId: number) => {
-    return http.post('/favorites', { userId, spaceId });
+  getFavorites: (userId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `/favorites?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
+  isFavorited: (userId: number, spaceId: number) => {
+    return http.get(`/favorites/is-favorited?userId=${userId}&spaceId=${spaceId}`);
+  },
+
+  toggleFavorite: (userId: number, spaceId: number, action: string) => {
+    return http.post('/favorites', { userId, spaceId, action });
   },
 
   fetchSpace: (id: string | undefined) => {

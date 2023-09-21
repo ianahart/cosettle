@@ -27,6 +27,18 @@ const Description = ({ space }: IDescriptionProps) => {
   const provider = useMemo(() => new OpenStreetMapProvider(), []);
 
   useEffect(() => {
+    if (user.id !== 0 && space.id !== 0) {
+      Client.isFavorited(user.id, space.id)
+        .then((res) => {
+          setIsFavorited(res.data.data);
+        })
+        .catch((err) => {
+          throw new Error(err.response.data.message);
+        });
+    }
+  }, [user.id, space.id]);
+
+  useEffect(() => {
     const geocode = async () => {
       const results = await provider.search({
         query: `${space.street}, ${space.city}, ${space.country}`,
@@ -40,15 +52,14 @@ const Description = ({ space }: IDescriptionProps) => {
     }
   }, [space.city, space.street, space.country]);
 
-  const addToFavorites = () => {
+  const toggleFavorite = (action: string) => {
     if (user.id === 0) {
       navigate('/login');
       return;
     }
-    Client.addToFavorites(user.id, space.id)
-      .then((res) => {
-        console.log(res);
-        setIsFavorited(true);
+    Client.toggleFavorite(user.id, space.id, action)
+      .then(() => {
+        action === 'favorite' ? setIsFavorited(true) : setIsFavorited(false);
       })
       .catch((err) => {
         throw new Error(err.response.data.message);
@@ -67,11 +78,16 @@ const Description = ({ space }: IDescriptionProps) => {
       }
     >
       <Box>
-        <Flex onClick={addToFavorites} cursor="pointer" justify="flex-end" align="center">
+        <Flex
+          onClick={() => toggleFavorite(isFavorited ? 'unfavorite' : 'favorite')}
+          cursor="pointer"
+          justify="flex-end"
+          align="center"
+        >
           <Box color={isFavorited ? 'orange' : 'inherit'} fontSize="1.2rem">
             <AiOutlineStar />
           </Box>
-          <Text ml="0.25rem">Add to Favorites</Text>
+          <Text ml="0.25rem">{isFavorited ? 'Unfavorite' : 'Add to Favorites'}</Text>
         </Flex>
 
         <Box my="2rem">

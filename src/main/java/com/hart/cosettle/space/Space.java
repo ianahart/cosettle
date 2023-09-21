@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.hart.cosettle.favorite.Favorite;
 import com.hart.cosettle.spacephoto.SpacePhoto;
 import com.hart.cosettle.user.User;
 
@@ -87,6 +88,10 @@ public class Space {
     @JsonManagedReference
     @OneToMany(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SpacePhoto> spacePhotos;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites;
 
     public Space() {
 

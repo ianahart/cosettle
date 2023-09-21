@@ -7,6 +7,7 @@ import java.util.Collection;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hart.cosettle.comment.Comment;
+import com.hart.cosettle.favorite.Favorite;
 import com.hart.cosettle.friend.Friend;
 import com.hart.cosettle.passwordreset.PasswordReset;
 import com.hart.cosettle.post.Post;
@@ -125,6 +126,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites;
+
     public User() {
 
     }
@@ -168,6 +172,10 @@ public class User implements UserDetails {
 
     public List<Post> getPosts() {
         return posts;
+    }
+
+    public List<Favorite> getFavorites() {
+        return favorites;
     }
 
     public List<Comment> getComments() {
@@ -265,6 +273,10 @@ public class User implements UserDetails {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setFavorites(List<Favorite> favorites) {
+        this.favorites = favorites;
     }
 
     public void setLikes(List<Like> likes) {
