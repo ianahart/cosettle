@@ -74,4 +74,20 @@ public interface SpaceRepository extends JpaRepository<Space, Long> {
 
     Page<SpaceDto> getSpaces(@Param("country") String country,
             @Param("spaceType") String spaceType, @Param("city") String city, Pageable paging);
+
+    @Query(value = """
+            SELECT new com.hart.cosettle.space.dto.SpaceDto(
+            s.id AS id, s.createdAt AS createdAt, s.updatedAt AS updatedAt, s.size AS size, s.capacity AS capacity,
+            s.street AS street, s.city AS city, s.country AS country,
+            s.type AS type, s.description AS description, s.flooring AS flooring,
+            s.wifi AS wifi, s.price AS price, s.days AS days, s.openTime AS openTime,
+            s.closeTime AS closeTime, s.bathrooms AS bathrooms, s.utilities AS utilities,
+            s.food AS food, s.firstName AS firstName, s.lastName AS lastName, s.email AS email,
+            s.phoneNumber AS phoneNumber
+            ) FROM Space s
+            WHERE s.id = :id
+                    """)
+
+    SpaceDto getSpace(@Param("id") Long id);
+
 }

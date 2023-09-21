@@ -80,6 +80,10 @@ body {
 }
 
 @media (max-width: 1076px) {
+  .single-space-container {
+    flex-direction: column;
+  }
+
   .outlet-container {
     width: 95%;
   }
@@ -93,5 +97,21 @@ body {
   .group-sidebar-container {
     max-width: 100%;
     min-width: 100%;
+  }
+}
+
+.single-space-container {
+  max-width: 1463px;
+  width: 1463px;
+}
+
+.time-picker svg {
+  stroke: #e4e3e3;
+}
+
+@media (max-width: 1464px) {
+  .single-space-container {
+    max-width: 100%;
+    width: 100%;
   }
 }

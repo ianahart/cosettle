@@ -553,3 +553,37 @@ export const countries = [
   { value: 'Zambia', name: 'Zambia', id: 242 },
   { value: 'Zimbabwe', name: 'Zimbabwe', id: 243 },
 ];
+
+export const spaceState = {
+  bathrooms: false,
+  capacity: '',
+  city: '',
+  country: '',
+  closeTime: '17:00',
+  createdAt: new Date(),
+  days: '',
+  description: '',
+  email: '',
+  firstName: '',
+  flooring: 'wood',
+  food: false,
+  id: 0,
+  lastName: '',
+  openTime: '9:00',
+  phoneNumber: '',
+  photos: [],
+  price: '',
+  size: '',
+  street: '',
+  type: '',
+  updatedAt: new Date(),
+  utilities: false,
+  wifi: '',
+};
+
+export const photoState = {
+  createdAt: new Date(),
+  filename: '',
+  id: 0,
+  url: '',
+};

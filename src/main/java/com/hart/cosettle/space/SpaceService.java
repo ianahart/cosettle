@@ -29,6 +29,15 @@ public class SpaceService {
         this.userService = userService;
     }
 
+    public SpaceDto getSpace(Long id) {
+        Space spaceEntity = getSpaceById(id);
+        SpaceDto spaceDto = this.spaceRepository.getSpace(id);
+
+        spaceDto.setPhotos(spaceEntity.getSpacePhotos());
+        return spaceDto;
+
+    }
+
     public Boolean convertStringToBoolean(String stringBoolean) {
         return stringBoolean.equals("true") ? true : false;
     }

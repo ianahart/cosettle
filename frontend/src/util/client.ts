@@ -6,6 +6,14 @@ export const http = axios.create({
 });
 
 export const Client = {
+  addToFavorites: (userId: number, spaceId: number) => {
+    return http.post('/favorites', { userId, spaceId });
+  },
+
+  fetchSpace: (id: string | undefined) => {
+    return http.get(`/spaces/${id}`);
+  },
+
   fetchSpaces: (
     country: string,
     spaceType: string,
