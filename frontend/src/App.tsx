@@ -38,6 +38,8 @@ import Members from './components/Group/GroupLayout/Members';
 import Invite from './components/Group/GroupLayout/Invite';
 import SpaceRoute from './routes/SpaceRoute';
 import FavoritesRoute from './routes/FavoritesRoute';
+import CreateReviewRoute from './routes/CreateReviewRoute';
+import ReviewsRoute from './routes/ReviewsRoute';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -274,6 +276,15 @@ function App() {
                 }
               />
               <Route path="/explorer" element={<ExplorerRoute />} />
+              <Route path="/reviews" element={<ReviewsRoute />} />
+              <Route
+                path="/reviews/create"
+                element={
+                  <RequireAuth>
+                    <CreateReviewRoute />
+                  </RequireAuth>
+                }
+              />
             </Routes>
           </WithAxios>
         </Box>

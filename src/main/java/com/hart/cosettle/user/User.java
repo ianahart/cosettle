@@ -14,6 +14,7 @@ import com.hart.cosettle.post.Post;
 import com.hart.cosettle.privatemessage.PrivateMessage;
 import com.hart.cosettle.profile.Profile;
 import com.hart.cosettle.refreshtoken.RefreshToken;
+import com.hart.cosettle.review.Review;
 import com.hart.cosettle.space.Space;
 import com.hart.cosettle.theme.Theme;
 import com.hart.cosettle.token.Token;
@@ -129,6 +130,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorite> favorites;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
     public User() {
 
     }
@@ -168,6 +172,10 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public List<Post> getPosts() {
@@ -358,6 +366,10 @@ public class User implements UserDetails {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public void setUsers(List<Friend> users) {

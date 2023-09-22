@@ -6,6 +6,16 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IReview {
+  id: number;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  rating: number;
+  text: string;
+}
+
 export interface ICustomSelectData {
   name: string;
   value: string;
