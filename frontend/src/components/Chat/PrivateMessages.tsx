@@ -139,27 +139,29 @@ const PrivateMessages = ({ currentChatUserId }: IChatMessagesProps) => {
           );
         })}
       </Flex>
-      <Box bg="#333131" borderBottomRadius={4}>
-        <Textarea
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Write a message..."
-          color="light.primary"
-          resize="none"
-          fontSize="0.9rem"
-          bg="#333131"
-          border="none"
-          borderTopRadius={0}
-        ></Textarea>
-        <Flex p="0.5rem" justify="flex-end">
-          <Button
-            onClick={() => sendPrivateMessage(chatUser.id, user.id)}
-            colorScheme="purple"
-          >
-            Send
-          </Button>
-        </Flex>
-      </Box>
+      {chatUser.id !== 0 && (
+        <Box bg="#333131" borderBottomRadius={4}>
+          <Textarea
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Write a message..."
+            color="light.primary"
+            resize="none"
+            fontSize="0.9rem"
+            bg="#333131"
+            border="none"
+            borderTopRadius={0}
+          ></Textarea>
+          <Flex p="0.5rem" justify="flex-end">
+            <Button
+              onClick={() => sendPrivateMessage(chatUser.id, user.id)}
+              colorScheme="purple"
+            >
+              Send
+            </Button>
+          </Flex>
+        </Box>
+      )}
     </Box>
   );
 };
