@@ -18,12 +18,6 @@ const SidebarContent = () => {
         <SettingsLink icon={<BiUserCircle />} to="details" text="My details" />
         <SettingsLink icon={<PiUserListBold />} to="edit-profile" text="Edit profile" />
         <SettingsLink icon={<RiLockPasswordLine />} to="password" text="Password" />
-        <SettingsLink
-          icon={<MdOutlineNotifications />}
-          to="notifications"
-          text="Notifications"
-        />
-        <SettingsLink icon={<AiOutlineEye />} to="visibility" text="Visibility" />
       </Box>
     </Box>
   );
