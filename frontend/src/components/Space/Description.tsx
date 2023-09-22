@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
 //@ts-ignore
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import WriteReviewTrigger from './WriteReviewTrigger';
+import StarRating from '../Review/StarRating';
 
 interface IDescriptionProps {
   space: ISpace;
@@ -81,13 +83,19 @@ const Description = ({ space }: IDescriptionProps) => {
         <Flex
           onClick={() => toggleFavorite(isFavorited ? 'unfavorite' : 'favorite')}
           cursor="pointer"
-          justify="flex-end"
+          justify="space-between"
           align="center"
         >
-          <Box color={isFavorited ? 'orange' : 'inherit'} fontSize="1.2rem">
-            <AiOutlineStar />
+          <Box>
+            <StarRating spaceId={space.id} />
+            <WriteReviewTrigger userId={user.id} spaceId={space.id} />
           </Box>
-          <Text ml="0.25rem">{isFavorited ? 'Unfavorite' : 'Add to Favorites'}</Text>
+          <Flex align="center">
+            <Box color={isFavorited ? 'orange' : 'inherit'} fontSize="1.2rem">
+              <AiOutlineStar />
+            </Box>
+            <Text ml="0.25rem">{isFavorited ? 'Unfavorite' : 'Add to Favorites'}</Text>
+          </Flex>
         </Flex>
 
         <Box my="2rem">

@@ -6,6 +6,20 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getReviews: (spaceId: number, page: number, pageSize: number, direction: string) => {
+    return http.get(
+      `/reviews?spaceId=${spaceId}&page=${page}&pageSize=${pageSize}&direction=${direction}`
+    );
+  },
+
+  getReviewStats: (spaceId: number) => {
+    return http.get(`/reviews/stats?spaceId=${spaceId}`);
+  },
+
+  createReview: (userId: number, spaceId: number, rating: number, review: string) => {
+    return http.post('/reviews', { userId, spaceId, rating, review });
+  },
+
   getFavorites: (userId: number, page: number, pageSize: number, direction: string) => {
     return http.get(
       `/favorites?userId=${userId}&page=${page}&pageSize=${pageSize}&direction=${direction}`

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hart.cosettle.favorite.Favorite;
+import com.hart.cosettle.review.Review;
 import com.hart.cosettle.spacephoto.SpacePhoto;
 import com.hart.cosettle.user.User;
 
@@ -92,6 +93,10 @@ public class Space {
     @JsonManagedReference
     @OneToMany(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorite> favorites;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
     public Space() {
 
@@ -197,6 +202,10 @@ public class Space {
 
     public List<SpacePhoto> getSpacePhotos() {
         return spacePhotos;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 
     public String getDays() {
@@ -389,6 +398,10 @@ public class Space {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
 }
