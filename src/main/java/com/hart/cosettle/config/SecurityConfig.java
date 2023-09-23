@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**", "/ws/**", "ws/**", "wss/**", "/wss/**",
-                        "https://cosettle-c845ecf11f50.herokuapp.com/",
-                        "https://cosettle.netlify.app/**", "/api/v1/spaces/**", "/api/v1/reviews/**")
+                        "https://cosettle.netlify.app/**", "https://cosettle-c845ecf11f50.herokuapp.com/",
+                        "/api/v1/spaces/**", "/api/v1/reviews/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
