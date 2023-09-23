@@ -6,6 +6,15 @@ export interface IRegisterForm {
   confirmPassword: { name: string; value: string; error: string; type: string };
 }
 
+export interface IGroupMessage {
+  avatarUrl: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  message: string;
+  userId: number;
+}
+
 export interface IReview {
   id: number;
   userId: number;

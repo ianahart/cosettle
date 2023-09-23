@@ -8,6 +8,9 @@ import com.hart.cosettle.groupmember.request.CreateGroupMemberInviteRequest;
 import com.hart.cosettle.advice.NotFoundException;
 import com.hart.cosettle.group.Group;
 import com.hart.cosettle.group.GroupService;
+
+import java.util.List;
+
 import com.hart.cosettle.advice.ForbiddenException;
 import com.hart.cosettle.user.User;
 import com.hart.cosettle.user.UserService;
@@ -96,6 +99,10 @@ public class GroupMemberService {
 
         return new PaginationDto<InviteDto>(result.getContent(), currentPage, pageSize, result.getTotalPages(),
                 direction);
+    }
+
+    public List<Long> getGroupMemberUserIds(Long groupId) {
+        return this.groupMemberRepository.getGroupMemberUserIds(groupId);
     }
 
     public PaginationDto<GroupMemberDto> getGroupMembers(Long groupId, int page, int pageSize, String direction) {
