@@ -404,4 +404,185 @@ public class Space {
         this.reviews = reviews;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((size == null) ? 0 : size.hashCode());
+        result = prime * result + ((capacity == null) ? 0 : capacity.hashCode());
+        result = prime * result + ((street == null) ? 0 : street.hashCode());
+        result = prime * result + ((city == null) ? 0 : city.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((country == null) ? 0 : country.hashCode());
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((flooring == null) ? 0 : flooring.hashCode());
+        result = prime * result + ((wifi == null) ? 0 : wifi.hashCode());
+        result = prime * result + ((price == null) ? 0 : price.hashCode());
+        result = prime * result + ((days == null) ? 0 : days.hashCode());
+        result = prime * result + ((openTime == null) ? 0 : openTime.hashCode());
+        result = prime * result + ((closeTime == null) ? 0 : closeTime.hashCode());
+        result = prime * result + ((bathrooms == null) ? 0 : bathrooms.hashCode());
+        result = prime * result + ((utilities == null) ? 0 : utilities.hashCode());
+        result = prime * result + ((food == null) ? 0 : food.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        result = prime * result + ((spacePhotos == null) ? 0 : spacePhotos.hashCode());
+        result = prime * result + ((favorites == null) ? 0 : favorites.hashCode());
+        result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Space other = (Space) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        if (size == null) {
+            if (other.size != null)
+                return false;
+        } else if (!size.equals(other.size))
+            return false;
+        if (capacity == null) {
+            if (other.capacity != null)
+                return false;
+        } else if (!capacity.equals(other.capacity))
+            return false;
+        if (street == null) {
+            if (other.street != null)
+                return false;
+        } else if (!street.equals(other.street))
+            return false;
+        if (city == null) {
+            if (other.city != null)
+                return false;
+        } else if (!city.equals(other.city))
+            return false;
+        if (type == null) {
+            if (other.type != null)
+                return false;
+        } else if (!type.equals(other.type))
+            return false;
+        if (country == null) {
+            if (other.country != null)
+                return false;
+        } else if (!country.equals(other.country))
+            return false;
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (flooring == null) {
+            if (other.flooring != null)
+                return false;
+        } else if (!flooring.equals(other.flooring))
+            return false;
+        if (wifi == null) {
+            if (other.wifi != null)
+                return false;
+        } else if (!wifi.equals(other.wifi))
+            return false;
+        if (price == null) {
+            if (other.price != null)
+                return false;
+        } else if (!price.equals(other.price))
+            return false;
+        if (days == null) {
+            if (other.days != null)
+                return false;
+        } else if (!days.equals(other.days))
+            return false;
+        if (openTime == null) {
+            if (other.openTime != null)
+                return false;
+        } else if (!openTime.equals(other.openTime))
+            return false;
+        if (closeTime == null) {
+            if (other.closeTime != null)
+                return false;
+        } else if (!closeTime.equals(other.closeTime))
+            return false;
+        if (bathrooms == null) {
+            if (other.bathrooms != null)
+                return false;
+        } else if (!bathrooms.equals(other.bathrooms))
+            return false;
+        if (utilities == null) {
+            if (other.utilities != null)
+                return false;
+        } else if (!utilities.equals(other.utilities))
+            return false;
+        if (food == null) {
+            if (other.food != null)
+                return false;
+        } else if (!food.equals(other.food))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (phoneNumber == null) {
+            if (other.phoneNumber != null)
+                return false;
+        } else if (!phoneNumber.equals(other.phoneNumber))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        if (spacePhotos == null) {
+            if (other.spacePhotos != null)
+                return false;
+        } else if (!spacePhotos.equals(other.spacePhotos))
+            return false;
+        if (favorites == null) {
+            if (other.favorites != null)
+                return false;
+        } else if (!favorites.equals(other.favorites))
+            return false;
+        if (reviews == null) {
+            if (other.reviews != null)
+                return false;
+        } else if (!reviews.equals(other.reviews))
+            return false;
+        return true;
+    }
+
 }

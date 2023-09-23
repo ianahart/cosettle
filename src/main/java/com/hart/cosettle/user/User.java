@@ -417,4 +417,192 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        result = prime * result + (loggedIn ? 1231 : 1237);
+        result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
+        result = prime * result + ((profile == null) ? 0 : profile.hashCode());
+        result = prime * result + ((theme == null) ? 0 : theme.hashCode());
+        result = prime * result + ((tokens == null) ? 0 : tokens.hashCode());
+        result = prime * result + ((refreshTokens == null) ? 0 : refreshTokens.hashCode());
+        result = prime * result + ((passwordResets == null) ? 0 : passwordResets.hashCode());
+        result = prime * result + ((spaces == null) ? 0 : spaces.hashCode());
+        result = prime * result + ((role == null) ? 0 : role.hashCode());
+        result = prime * result + ((friends == null) ? 0 : friends.hashCode());
+        result = prime * result + ((users == null) ? 0 : users.hashCode());
+        result = prime * result + ((receivers == null) ? 0 : receivers.hashCode());
+        result = prime * result + ((sender == null) ? 0 : sender.hashCode());
+        result = prime * result + ((adminGroups == null) ? 0 : adminGroups.hashCode());
+        result = prime * result + ((groupMembers == null) ? 0 : groupMembers.hashCode());
+        result = prime * result + ((inviters == null) ? 0 : inviters.hashCode());
+        result = prime * result + ((posts == null) ? 0 : posts.hashCode());
+        result = prime * result + ((likes == null) ? 0 : likes.hashCode());
+        result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+        result = prime * result + ((favorites == null) ? 0 : favorites.hashCode());
+        result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
+        result = prime * result + ((groupMessages == null) ? 0 : groupMessages.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (password == null) {
+            if (other.password != null)
+                return false;
+        } else if (!password.equals(other.password))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        if (loggedIn != other.loggedIn)
+            return false;
+        if (abbreviation == null) {
+            if (other.abbreviation != null)
+                return false;
+        } else if (!abbreviation.equals(other.abbreviation))
+            return false;
+        if (profile == null) {
+            if (other.profile != null)
+                return false;
+        } else if (!profile.equals(other.profile))
+            return false;
+        if (theme == null) {
+            if (other.theme != null)
+                return false;
+        } else if (!theme.equals(other.theme))
+            return false;
+        if (tokens == null) {
+            if (other.tokens != null)
+                return false;
+        } else if (!tokens.equals(other.tokens))
+            return false;
+        if (refreshTokens == null) {
+            if (other.refreshTokens != null)
+                return false;
+        } else if (!refreshTokens.equals(other.refreshTokens))
+            return false;
+        if (passwordResets == null) {
+            if (other.passwordResets != null)
+                return false;
+        } else if (!passwordResets.equals(other.passwordResets))
+            return false;
+        if (spaces == null) {
+            if (other.spaces != null)
+                return false;
+        } else if (!spaces.equals(other.spaces))
+            return false;
+        if (role != other.role)
+            return false;
+        if (friends == null) {
+            if (other.friends != null)
+                return false;
+        } else if (!friends.equals(other.friends))
+            return false;
+        if (users == null) {
+            if (other.users != null)
+                return false;
+        } else if (!users.equals(other.users))
+            return false;
+        if (receivers == null) {
+            if (other.receivers != null)
+                return false;
+        } else if (!receivers.equals(other.receivers))
+            return false;
+        if (sender == null) {
+            if (other.sender != null)
+                return false;
+        } else if (!sender.equals(other.sender))
+            return false;
+        if (adminGroups == null) {
+            if (other.adminGroups != null)
+                return false;
+        } else if (!adminGroups.equals(other.adminGroups))
+            return false;
+        if (groupMembers == null) {
+            if (other.groupMembers != null)
+                return false;
+        } else if (!groupMembers.equals(other.groupMembers))
+            return false;
+        if (inviters == null) {
+            if (other.inviters != null)
+                return false;
+        } else if (!inviters.equals(other.inviters))
+            return false;
+        if (posts == null) {
+            if (other.posts != null)
+                return false;
+        } else if (!posts.equals(other.posts))
+            return false;
+        if (likes == null) {
+            if (other.likes != null)
+                return false;
+        } else if (!likes.equals(other.likes))
+            return false;
+        if (comments == null) {
+            if (other.comments != null)
+                return false;
+        } else if (!comments.equals(other.comments))
+            return false;
+        if (favorites == null) {
+            if (other.favorites != null)
+                return false;
+        } else if (!favorites.equals(other.favorites))
+            return false;
+        if (reviews == null) {
+            if (other.reviews != null)
+                return false;
+        } else if (!reviews.equals(other.reviews))
+            return false;
+        if (groupMessages == null) {
+            if (other.groupMessages != null)
+                return false;
+        } else if (!groupMessages.equals(other.groupMessages))
+            return false;
+        return true;
+    }
+
 }

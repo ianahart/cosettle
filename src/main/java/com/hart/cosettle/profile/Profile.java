@@ -119,4 +119,65 @@ public class Profile {
         this.avatarFilename = avatarFilename;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
+        result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        result = prime * result + ((avatarFilename == null) ? 0 : avatarFilename.hashCode());
+        result = prime * result + ((avatarUrl == null) ? 0 : avatarUrl.hashCode());
+        result = prime * result + ((bio == null) ? 0 : bio.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Profile other = (Profile) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (createdAt == null) {
+            if (other.createdAt != null)
+                return false;
+        } else if (!createdAt.equals(other.createdAt))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        if (avatarFilename == null) {
+            if (other.avatarFilename != null)
+                return false;
+        } else if (!avatarFilename.equals(other.avatarFilename))
+            return false;
+        if (avatarUrl == null) {
+            if (other.avatarUrl != null)
+                return false;
+        } else if (!avatarUrl.equals(other.avatarUrl))
+            return false;
+        if (bio == null) {
+            if (other.bio != null)
+                return false;
+        } else if (!bio.equals(other.bio))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        return true;
+    }
+
 }
