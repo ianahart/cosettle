@@ -431,7 +431,7 @@ public class User implements UserDetails {
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + (loggedIn ? 1231 : 1237);
         result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
-        result = prime * result + ((profile == null) ? 0 : profile.hashCode());
+        // result = prime * result + ((profile == null) ? 0 : profile.hashCode());
         result = prime * result + ((theme == null) ? 0 : theme.hashCode());
         result = prime * result + ((tokens == null) ? 0 : tokens.hashCode());
         result = prime * result + ((refreshTokens == null) ? 0 : refreshTokens.hashCode());
