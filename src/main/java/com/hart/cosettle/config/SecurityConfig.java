@@ -32,13 +32,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and()
-
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**", "/ws/**", "ws/**", "wss/**", "/wss/**",
-                        "https://cosettle.netlify.app/**", "https://cosettle-c845ecf11f50.herokuapp.com/",
-                        "/api/v1/spaces/**", "/api/v1/reviews/**")
+                        "/api/v1/spaces/**", "/api/v1/reviews/**",
+                        "https://cosettle-c845ecf11f50.herokuapp.com/", "https://cosettle.netlify.app/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
