@@ -49,6 +49,11 @@ public class GroupService {
 
     }
 
+    public Long getAdminByGroupId(Long groupId) {
+
+        return this.groupRepository.getAdminByGroupId(groupId);
+    }
+
     private boolean validateImageSize(MultipartFile image) {
         return image.getSize() > MAX_MEGA_BYTES * 1024 * 1024;
     }

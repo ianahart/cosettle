@@ -1,5 +1,7 @@
 package com.hart.cosettle.groupmember;
 
+import java.util.List;
+
 import com.hart.cosettle.groupmember.dto.GroupMemberDto;
 import com.hart.cosettle.groupmember.dto.InviteDto;
 import com.hart.cosettle.groupmember.dto.JoinedGroupDto;
@@ -13,6 +15,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMember, Long> {
+
+    @Query(value = """
+              SELECT m.id FROM GroupMember gm
+              INNER JOIN gm.member m
+              INNER JOIN gm.group g
+              WHERE g.id = :groupId
+            """)
+    List<Long> getGroupMemberUserIds(@Param("groupId") Long groupId);
 
     @Query(value = """
             SELECT EXISTS(SELECT 1 FROM GroupMember gm

@@ -40,6 +40,7 @@ import SpaceRoute from './routes/SpaceRoute';
 import FavoritesRoute from './routes/FavoritesRoute';
 import CreateReviewRoute from './routes/CreateReviewRoute';
 import ReviewsRoute from './routes/ReviewsRoute';
+import Chat from './components/Group/GroupLayout/Chat';
 
 function App() {
   const { updateUser, stowTokens, user, nonAuthTheme } = useContext(
@@ -171,6 +172,14 @@ function App() {
                     element={
                       <RequireAuth>
                         <Posts />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="chat"
+                    element={
+                      <RequireAuth>
+                        <Chat />
                       </RequireAuth>
                     }
                   />

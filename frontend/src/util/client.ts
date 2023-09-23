@@ -6,6 +6,10 @@ export const http = axios.create({
 });
 
 export const Client = {
+  getGroupMessages: (groupId: number) => {
+    return http.get(`/group-messages?groupId=${groupId}`);
+  },
+
   getReviews: (spaceId: number, page: number, pageSize: number, direction: string) => {
     return http.get(
       `/reviews?spaceId=${spaceId}&page=${page}&pageSize=${pageSize}&direction=${direction}`

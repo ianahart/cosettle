@@ -50,6 +50,15 @@ const Links = ({ adminId }: ILinksProps) => {
           <Text color="text.primary">Invite</Text>
         </RouterLink>
       )}
+      <RouterLink
+        style={({ isActive }) => ({
+          borderBottom: isActive ? '1px solid #805AD5' : 'none',
+        })}
+        className="group-links"
+        to="chat"
+      >
+        <Text color="text.primary">Group Chat</Text>
+      </RouterLink>
     </Flex>
   );
 };

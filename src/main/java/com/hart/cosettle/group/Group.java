@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.hart.cosettle.groupmember.GroupMember;
+import com.hart.cosettle.groupmessage.GroupMessage;
 import com.hart.cosettle.post.Post;
 import com.hart.cosettle.user.User;
 
@@ -57,6 +58,9 @@ public class Group {
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GroupMessage> groupMessages;
+
     public Group() {
 
     }
@@ -94,6 +98,10 @@ public class Group {
 
     public String getUrl() {
         return url;
+    }
+
+    public List<GroupMessage> getGroupMessages() {
+        return groupMessages;
     }
 
     public String getFilename() {
@@ -138,6 +146,10 @@ public class Group {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public void setGroupMessages(List<GroupMessage> groupMessages) {
+        this.groupMessages = groupMessages;
     }
 
     public void setAdmin(User admin) {
