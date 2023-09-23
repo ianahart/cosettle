@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://localhost:8080/",
+  "proxy": "https://cosettle-c845ecf11f50.herokuapp.com/",
   "type": "module",
   "scripts": {
     "dev": "vite",

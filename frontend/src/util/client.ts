@@ -2,7 +2,7 @@ import axios from 'axios';
 import { IRegisterForm } from '../interfaces';
 
 export const http = axios.create({
-  baseURL: 'http://localhost:5173/api/v1',
+  baseURL: 'https://cosettle.netlify.app/api/v1',
 });
 
 export const Client = {

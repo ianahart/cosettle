@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/v1/': 'http://localhost:8080',
+      '/api/v1/': 'https://cosettle-c845ecf11f50.herokuapp.com',
     },
   },
 });

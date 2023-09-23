@@ -18,7 +18,7 @@ const Chat = () => {
   const shouldRun = useRef(true);
 
   const connect = () => {
-    let Sock = new SockJS('http://localhost:8080/ws');
+    let Sock = new SockJS('https://cosettle-c845ecf11f50.herokuapp.com/wss');
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };

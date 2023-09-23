@@ -1,5 +1,5 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import { retreiveTokens, slugify } from '../../util';
+import { retreiveTokens } from '../../util';
 import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { IUserContext } from '../../interfaces';

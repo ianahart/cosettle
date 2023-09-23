@@ -3,8 +3,6 @@ import SettingsLink from './SettingsLink';
 import { BiUserCircle } from 'react-icons/bi';
 import { PiUserListBold } from 'react-icons/pi';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import { MdOutlineNotifications } from 'react-icons/md';
-import { AiOutlineEye } from 'react-icons/ai';
 
 const SidebarContent = () => {
   return (
