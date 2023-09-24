@@ -46,7 +46,11 @@ const Chat = () => {
   const onError = () => {};
 
   const onGroupMessage = (payload: any) => {
-    setGroupMessages((prevState) => [JSON.parse(payload.body), ...prevState]);
+    const groupMessage = JSON.parse(payload.body);
+
+    if (groupMessage.groupId === group.id) {
+      setGroupMessages((prevState) => [JSON.parse(payload.body), ...prevState]);
+    }
   };
 
   const sendGroupMessage = () => {

@@ -15,7 +15,8 @@ public interface GroupMessageRepository extends JpaRepository<GroupMessage, Long
     @Query(value = """
                     SELECT new com.hart.cosettle.groupmessage.dto.GroupMessageDto(
                      gm.id AS id, u.id AS userId, u.firstName AS firstName,
-                     u.lastName AS lastName, p.avatarUrl AS avatarUrl, gm.message AS message
+                     u.lastName AS lastName, p.avatarUrl AS avatarUrl, gm.message AS message,
+                     g.id AS groupId
 
                     ) FROM GroupMessage gm
                     INNER JOIN gm.user u
@@ -29,10 +30,12 @@ public interface GroupMessageRepository extends JpaRepository<GroupMessage, Long
     @Query(value = """
                 SELECT new com.hart.cosettle.groupmessage.dto.GroupMessageDto(
                  gm.id AS id, u.id AS userId, u.firstName AS firstName,
-                 u.lastName AS lastName, p.avatarUrl AS avatarUrl, gm.message AS message
+                 u.lastName AS lastName, p.avatarUrl AS avatarUrl, gm.message AS message,
+                 g.id AS groupId
 
                 ) FROM GroupMessage gm
                 INNER JOIN gm.user u
+                INNER JOIN gm.group g
                 INNER JOIN gm.user.profile p
                 WHERE gm.id = :id
             """)

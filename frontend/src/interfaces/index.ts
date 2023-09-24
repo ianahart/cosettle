@@ -13,6 +13,7 @@ export interface IGroupMessage {
   lastName: string;
   message: string;
   userId: number;
+  groupId: number;
 }
 
 export interface IReview {

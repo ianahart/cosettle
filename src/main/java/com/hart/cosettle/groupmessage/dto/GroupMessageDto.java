@@ -7,6 +7,7 @@ public class GroupMessageDto {
     private String lastName;
     private String avatarUrl;
     private String message;
+    private Long groupId;
 
     public GroupMessageDto() {
 
@@ -18,7 +19,8 @@ public class GroupMessageDto {
             String firstName,
             String lastName,
             String avatarUrl,
-            String message) {
+            String message,
+           Long groupId) {
 
         this.id = id;
         this.userId = userId;
@@ -26,10 +28,15 @@ public class GroupMessageDto {
         this.lastName = lastName;
         this.avatarUrl = avatarUrl;
         this.message = message;
+        this.groupId = groupId;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getGroupId() {
+        return groupId;
     }
 
     public Long getUserId() {
@@ -74,5 +81,9 @@ public class GroupMessageDto {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 }
